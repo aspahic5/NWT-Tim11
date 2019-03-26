@@ -6,16 +6,20 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import java.sql.Date;
+
 import javax.persistence.Column;
 
 @Entity
 @Table(name = "varoa")
 public class Varoa {
 
-    public Varoa(Kosnica kosnice, int broj, String komentar){
+    public Varoa(Kosnica kosnice, int broj, Date primjecena, String komentar){
         super();
         this.kosnice = kosnice;
         this.broj = broj;
+        this.primjecena = primjecena;
         this.komentar = komentar;
     }
 
@@ -30,6 +34,9 @@ public class Varoa {
 
     @Column(name = "broj")
     private int broj;
+
+    @Column(name = "primjecena")
+    private Date primjecena;
 
     @Column(name = "komentar")
     private String komentar;
@@ -60,6 +67,20 @@ public class Varoa {
      */
     public void setBroj(int broj) {
         this.broj = broj;
+    }
+
+    /**
+     * @return Date return the primjecena
+     */
+    public Date getPrimjecena() {
+        return primjecena;
+    }
+
+    /**
+     * @param primjecena the primjecena to set
+     */
+    public void setPrimjecena(Date primjecena) {
+        this.primjecena = primjecena;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.example.demo.Entities;
 
+import java.sql.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 @Table( name = "kosnica")
 public class Kosnica {
 
-    public Kosnica(int vlasnik_id, String maticagod, int brojramova, int brojnastavaka, String kolstimulansa, String tipstimulansa, int brojhanemanki, String komentar, Kosnica kosnice, Set<Selidba> selidbe, Set<Aktivnost> aktivnosti){
+    public Kosnica(int vlasnik_id, Date maticagod, int brojramova, int brojnastavaka, double kolstimulansa, String tipstimulansa, int brojhanemanki, String komentar, Kosnica kosnice, Set<Selidba> selidbe, Set<Aktivnost> aktivnosti){
         super(); 
         this.vlasnik_id = vlasnik_id;
         this.maticagod = maticagod;
@@ -43,7 +44,7 @@ public class Kosnica {
     private Kosnica kosnice;
 
     @Column ( name = "maticagod", nullable = false)
-    private String maticagod;
+    private Date maticagod;
 
     @Column ( name = "brojramova", nullable = false)
     private int brojramova;
@@ -52,7 +53,7 @@ public class Kosnica {
     private int brojnastavaka;
 
     @Column ( name = "kolstimulansa", nullable = false)
-    private String kolstimulansa;
+    private double kolstimulansa;
 
     @Column ( name = "tipstimulansa", nullable = false)
     private String tipstimulansa;
@@ -64,9 +65,11 @@ public class Kosnica {
     private String komentar;  
 
     @ManyToMany
+    @Column(nullable = true)
     Set<Selidba> selidbe;
 
     @ManyToMany
+    @Column(nullable = true)
     Set<Aktivnost> aktivnosti;
 
 
@@ -99,16 +102,16 @@ public class Kosnica {
     }
 
     /**
-     * @return String return the maticagod
+     * @return Date return the maticagod
      */
-    public String getMaticagod() {
+    public Date getMaticagod() {
         return maticagod;
     }
 
     /**
      * @param maticagod the maticagod to set
      */
-    public void setMaticagod(String maticagod) {
+    public void setMaticagod(Date maticagod) {
         this.maticagod = maticagod;
     }
 
@@ -143,14 +146,14 @@ public class Kosnica {
     /**
      * @return String return the kolstimulansa
      */
-    public String getKolstimulansa() {
+    public double getKolstimulansa() {
         return kolstimulansa;
     }
 
     /**
      * @param kolstimulansa the kolstimulansa to set
      */
-    public void setKolstimulansa(String kolstimulansa) {
+    public void setKolstimulansa(double kolstimulansa) {
         this.kolstimulansa = kolstimulansa;
     }
 

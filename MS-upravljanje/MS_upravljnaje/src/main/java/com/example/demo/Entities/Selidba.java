@@ -1,5 +1,7 @@
 package com.example.demo.Entities;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,7 @@ import javax.persistence.Table;
 @Table( name = "selidba")
 public class Selidba {
 
-    public Selidba(int brojkosnica, String lokacija, String pocetak, String kraj, String dobit) {
+    public Selidba(int brojkosnica, String lokacija, Date pocetak, Date kraj, double dobit) {
         super();
         this.brojkosnica = brojkosnica;
         this.lokacija = lokacija;
@@ -31,13 +33,13 @@ public class Selidba {
     private String lokacija;
 
     @Column( name = "pocetak")
-    private String pocetak;
+    private Date pocetak;
 
     @Column( name = "kraj")
-    private String kraj;
+    private Date kraj;
 
     @Column( name = "dobit")
-    private String dobit;
+    private double dobit;
 
     /**
      * @return int return the id
@@ -84,42 +86,42 @@ public class Selidba {
     /**
      * @return String return the pocetak
      */
-    public String getPocetak() {
+    public Date getPocetak() {
         return pocetak;
     }
 
     /**
      * @param pocetak the pocetak to set
      */
-    public void setPocetak(String pocetak) {
+    public void setPocetak(Date pocetak) {
         this.pocetak = pocetak;
     }
 
     /**
      * @return String return the kraj
      */
-    public String getKraj() {
+    public Date getKraj() {
         return kraj;
     }
 
     /**
      * @param kraj the kraj to set
      */
-    public void setKraj(String kraj) {
+    public void setKraj(Date kraj) {
         this.kraj = kraj;
     }
 
     /**
      * @return String return the dobit
      */
-    public String getDobit() {
+    public double getDobit() {
         return dobit;
     }
 
     /**
      * @param dobit the dobit to set
      */
-    public void setDobit(String dobit) {
+    public void setDobit(double dobit) {
         this.dobit = dobit;
     }
 

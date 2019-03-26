@@ -1,5 +1,7 @@
 package com.example.demo.Entities;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,7 @@ import javax.persistence.Table;
 @Table( name = "rojenje")
 public class Rojenje {
 
-    public Rojenje(Kosnica kosnice, int brojmaticnjaka, String starostmaticnjaka, String tipmaticnjaka, String komentar) {
+    public Rojenje(Kosnica kosnice, int brojmaticnjaka, Date starostmaticnjaka, String tipmaticnjaka, String komentar) {
         super();
         this.kosnice = kosnice;
         this.brojmaticnjaka = brojmaticnjaka;
@@ -34,7 +36,7 @@ public class Rojenje {
     private int brojmaticnjaka;
 
     @Column( name = "starostmaticnjaka")
-    private String starostmaticnjaka;
+    private Date starostmaticnjaka;
 
     @Column ( name = "tipmaticnjaka")
     private String tipmaticnjaka;
@@ -75,14 +77,14 @@ public class Rojenje {
     /**
      * @return String return the starostmaticnjaka
      */
-    public String getStarostmaticnjaka() {
+    public Date getStarostmaticnjaka() {
         return starostmaticnjaka;
     }
 
     /**
      * @param starostmaticnjaka the starostmaticnjaka to set
      */
-    public void setStarostmaticnjaka(String starostmaticnjaka) {
+    public void setStarostmaticnjaka(Date starostmaticnjaka) {
         this.starostmaticnjaka = starostmaticnjaka;
     }
 
