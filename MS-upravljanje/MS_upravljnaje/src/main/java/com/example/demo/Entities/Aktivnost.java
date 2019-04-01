@@ -5,11 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table( name = "aktivnost")
 public class Aktivnost {
 
+    public Aktivnost() {}
     public Aktivnost (String mjesec, String aktivnost, int uradjeno){
         super();
         this.mjesec = mjesec;
@@ -23,9 +26,11 @@ public class Aktivnost {
     private int id;
 
     @Column ( name = "mjesec", nullable = false)
+    @Pattern(regexp = "^[jJ]anuar|[Ff]ebruar|[Mm]art|[Aa]pril|[Mm]aj|[Jj]uni|[Jj]uli|[Aa][uv]gust|[Ss]eptembar|[Oo]ktobar|[Nn]ovembar|[Dd]ecembar$", message = "Neispravno unesen mjesec")
     private String mjesec;
 
     @Column ( name = "aktivnost", nullable = false)
+    @Size(min = 10, message = "Tekst aktivnosti prekratak")
     private String aktivnost;
     
     @Column ( name = "uradjeno", nullable = false)

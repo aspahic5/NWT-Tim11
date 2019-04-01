@@ -11,12 +11,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table( name = "kosnica")
 public class Kosnica {
 
-    public Kosnica(int vlasnik_id, Date maticagod, int brojramova, int brojnastavaka, double kolstimulansa, String tipstimulansa, int brojhanemanki, String komentar, Kosnica kosnice, Set<Selidba> selidbe, Set<Aktivnost> aktivnosti){
+    public Kosnica() {}
+    public Kosnica(int vlasnik_id, Date maticagod, int brojramova, int brojnastavaka, double kolstimulansa, String tipstimulansa, int brojhanemanki, String komentar, Kosnica kosnice, Set<Aktivnost> aktivnosti, Set<Selidba> selidbe){
         super(); 
         this.vlasnik_id = vlasnik_id;
         this.maticagod = maticagod;
@@ -31,7 +35,7 @@ public class Kosnica {
         this.aktivnosti = aktivnosti;
     }
 
-    @Id
+	@Id
     @GeneratedValue
     @Column(name = "kosnica_id", unique = true, nullable = false)
     private int id;
@@ -44,21 +48,27 @@ public class Kosnica {
     private Kosnica kosnice;
 
     @Column ( name = "maticagod", nullable = false)
+    //@PastOrPresent( message = "Neispravno godište matice")
     private Date maticagod;
 
     @Column ( name = "brojramova", nullable = false)
+    @Min(value = 1, message = "Broj ramova mora biti veći od nule")
     private int brojramova;
 
     @Column ( name = "brojnastavaka", nullable = false)
+    @Min(value = 0, message = "Broj nastavaka ne može biti manji od nule")
     private int brojnastavaka;
 
     @Column ( name = "kolstimulansa", nullable = false)
+    @Min(value = 0, message = "Količina stimulansa ne može biti manja od nule")
     private double kolstimulansa;
 
     @Column ( name = "tipstimulansa", nullable = false)
+    @Size(min = 0, max = 20)
     private String tipstimulansa;
 
     @Column ( name = "brojhanemanki", nullable = false)
+    @Min(value = 0, message = "Broj hanemanki ne može biti manji od nule")
     private int brojhanemanki;
 
     @Column ( name = "komentar", nullable = false)
@@ -87,6 +97,14 @@ public class Kosnica {
         this.id = id;
     }
 
+    public void setSelidba(Selidba selidba) {
+        selidbe.add(selidba);
+    }
+
+    public void setAktivnosti(Aktivnost aktivnost) {
+        aktivnosti.add(aktivnost);
+    }
+
     /**
      * @return int return the vlasnik_id
      */
@@ -99,6 +117,20 @@ public class Kosnica {
      */
     public void setVlasnik_id(int vlasnik_id) {
         this.vlasnik_id = vlasnik_id;
+    }
+
+    /**
+     * @return Kosnica return the kosnice
+     */
+    public Kosnica getKosnice() {
+        return kosnice;
+    }
+
+    /**
+     * @param kosnice the kosnice to set
+     */
+    public void setKosnice(Kosnica kosnice) {
+        this.kosnice = kosnice;
     }
 
     /**
@@ -130,7 +162,7 @@ public class Kosnica {
     }
 
     /**
-     * @return String return the brojnastavaka
+     * @return int return the brojnastavaka
      */
     public int getBrojnastavaka() {
         return brojnastavaka;
@@ -144,7 +176,7 @@ public class Kosnica {
     }
 
     /**
-     * @return String return the kolstimulansa
+     * @return double return the kolstimulansa
      */
     public double getKolstimulansa() {
         return kolstimulansa;

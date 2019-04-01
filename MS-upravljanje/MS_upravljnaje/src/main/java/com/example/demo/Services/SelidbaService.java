@@ -30,4 +30,29 @@ public class SelidbaService {
         }
         return "Selidba saved";
     }
+
+    public String updateSelidba(int id, Selidba s){
+        try{
+            selidbaRepository.findById(id).map(selidba -> {
+                selidba.setBrojkosnica(s.getBrojkosnica());
+                selidba.setDobit(s.getDobit());
+                selidba.setKraj(s.getKraj());
+                selidba.setPocetak(s.getPocetak());
+                selidba.setLokacija(s.getLokacija());
+                return selidbaRepository.save(selidba);
+            }); 
+        } catch(Exception e) {
+            return "Update Selidba error: " + e.toString();
+        }
+        return "Selidba successfully updated";
+    }
+
+    public String delteSelidba(int id){
+        try{
+            selidbaRepository.deleteById(id);
+        } catch(Exception e){
+            return "Delete Selidba error: " + e.toString();
+        }
+        return "Selidba successfully deleted";
+    }
 }

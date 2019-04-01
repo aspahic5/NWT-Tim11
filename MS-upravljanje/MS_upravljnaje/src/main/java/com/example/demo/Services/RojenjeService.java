@@ -30,4 +30,29 @@ public class RojenjeService {
         }
         return "Rojenje saved";
     }
+
+    public String updateRojenje(int id, Rojenje r){
+        try {
+            rojenjeRepository.findById(id).map(rojenje -> {
+                rojenje.setBrojmaticnjaka(r.getBrojmaticnjaka());
+                rojenje.setKomentar(r.getKomentar());
+                rojenje.setStarostmaticnjaka(r.getStarostmaticnjaka());
+                rojenje.setTipmaticnjaka(r.getTipmaticnjaka());
+                return rojenjeRepository.save(rojenje);
+            });
+        } catch (Exception e) {
+            return "Update error: " + e.toString();
+        }
+        return "Rojenje successfully updated";
+    }
+
+    public String deleteRojenje(int id){
+        try{
+            rojenjeRepository.deleteById(id);;
+        }
+        catch(Exception e){
+            return "Delete error: " + e.toString();
+        }
+        return "Rojenje successfully deleted";
+    }
 }
