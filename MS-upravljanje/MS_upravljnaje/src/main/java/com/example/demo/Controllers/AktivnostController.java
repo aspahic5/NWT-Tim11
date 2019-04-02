@@ -29,9 +29,9 @@ public class AktivnostController {
         return aktivnostService.findById(id);
     }
 
-    @RequestMapping(value="/DodajAktivnost", method=RequestMethod.POST)
-    public String createAktivnost(@RequestBody Aktivnost a) {
-        return aktivnostService.addAktivnost(a);
+    @RequestMapping(value="/DodajAktivnost/{idk}", method=RequestMethod.POST)
+    public String createAktivnost(@RequestBody Aktivnost a, @PathVariable int idk) {
+        return aktivnostService.addAktivnost(a, idk);
     }
 
     @RequestMapping(value="/AzurirajAktivnost/{id}", method=RequestMethod.PUT)

@@ -3,6 +3,7 @@ package com.example.demo.Services;
 import java.util.Optional;
 
 import com.example.demo.Entities.Selidba;
+import com.example.demo.Repositories.KosnicaRepository;
 import com.example.demo.Repositories.SelidbaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class SelidbaService {
     @Autowired
     SelidbaRepository selidbaRepository;
 
+    @Autowired
+    KosnicaRepository kosnicaRepository;
+
     public Iterable<Selidba> findAll() {
         return selidbaRepository.findAll();
     }
@@ -23,9 +27,14 @@ public class SelidbaService {
         return selidbaRepository.findById(id);
     }
 
-    public String addSelidba(Selidba s) {
+    public String addSelidba(Selidba s, int idk) {
+        if(!kosnicaRepository.findById(idk).isPresent()) return "Kosnica does not exist";
         try {
+            kosnicaRepository.findById(idk).map(kosnica -> {
+            kosnica.setSelidba(s);
             selidbaRepository.save(s);
+            return kosnicaRepository.save(kosnica);
+        });
         } catch (TransactionSystemException  ex) {
             Throwable e = ex.getRootCause();
             return e.getMessage();

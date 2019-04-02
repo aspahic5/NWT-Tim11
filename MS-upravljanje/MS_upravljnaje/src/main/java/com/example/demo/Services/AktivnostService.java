@@ -7,6 +7,7 @@ import javax.validation.ConstraintViolationException;
 
 import com.example.demo.Entities.Aktivnost;
 import com.example.demo.Repositories.AktivnostRepositroy;
+import com.example.demo.Repositories.KosnicaRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,9 @@ public class AktivnostService {
     @Autowired
     AktivnostRepositroy aktivnostrepository;
 
+    @Autowired
+    KosnicaRepository kosnicaRepository;
+
     public Iterable<Aktivnost> findAll() {
         return aktivnostrepository.findAll();
     }
@@ -27,9 +31,14 @@ public class AktivnostService {
         return a;
     }
 
-    public String addAktivnost(Aktivnost a){
+    public String addAktivnost(Aktivnost a, int idk){
+        if(!kosnicaRepository.findById(idk).isPresent()) return "Kosnica does not exist";
         try {
-            aktivnostrepository.save(a);
+            kosnicaRepository.findById(idk).map(kosnica -> {
+                kosnica.setAktivnosti(a);
+                aktivnostrepository.save(a);
+                return kosnicaRepository.save(kosnica);
+            });
         }
         catch (TransactionSystemException  ex) {
             Throwable e = ex.getRootCause();

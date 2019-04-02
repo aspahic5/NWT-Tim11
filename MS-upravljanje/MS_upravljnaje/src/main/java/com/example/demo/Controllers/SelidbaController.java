@@ -30,9 +30,9 @@ public class SelidbaController {
         return selidbaServis.findById(id);
     }
 
-    @RequestMapping(value = "/DodajSelidbu", method = RequestMethod.POST)
-    public String createSelidba(@RequestBody Selidba s){
-        return selidbaServis.addSelidba(s);
+    @RequestMapping(value = "/DodajSelidbu/{idk}", method = RequestMethod.POST)
+    public String createSelidba(@RequestBody Selidba s, @PathVariable int idk){
+        return selidbaServis.addSelidba(s, idk);
     }
 
     @RequestMapping(value="/AzurirajSelidbu/{id}", method=RequestMethod.PUT)
