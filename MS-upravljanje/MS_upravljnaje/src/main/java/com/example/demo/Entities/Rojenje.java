@@ -69,6 +69,20 @@ public class Rojenje {
     }
 
     /**
+     * @return Kosnica return the kosnice
+     */
+    public Kosnica getKosnice() {
+        return kosnice;
+    }
+
+    /**
+     * @param kosnice the kosnice to set
+     */
+    public void setKosnice(Kosnica kosnice) {
+        this.kosnice = kosnice;
+    }
+
+    /**
      * @return int return the brojmaticnjaka
      */
     public int getBrojmaticnjaka() {
@@ -83,7 +97,7 @@ public class Rojenje {
     }
 
     /**
-     * @return String return the starostmaticnjaka
+     * @return Date return the starostmaticnjaka
      */
     public Date getStarostmaticnjaka() {
         return starostmaticnjaka;

@@ -63,6 +63,20 @@ public class Varoa {
     }
 
     /**
+     * @return Kosnica return the kosnice
+     */
+    public Kosnica getKosnice() {
+        return kosnice;
+    }
+
+    /**
+     * @param kosnice the kosnice to set
+     */
+    public void setKosnice(Kosnica kosnice) {
+        this.kosnice = kosnice;
+    }
+
+    /**
      * @return int return the broj
      */
     public int getBroj() {

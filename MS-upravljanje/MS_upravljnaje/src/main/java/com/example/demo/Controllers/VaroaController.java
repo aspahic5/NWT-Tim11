@@ -29,9 +29,9 @@ public class VaroaController {
         return varoaService.findById(id);
     }
 
-    @RequestMapping(value="/DodajVarou", method=RequestMethod.POST)
-    public String addVaroa(@RequestBody Varoa v) {
-        return varoaService.addVaroa(v);
+    @RequestMapping(value="/DodajVarou/{idk}", method=RequestMethod.POST)
+    public String addVaroa(@RequestBody Varoa v, @PathVariable int idk) {
+        return varoaService.addVaroa(v, idk);
     }
     @RequestMapping(value="/AzurirajVarou/{id}", method=RequestMethod.PUT)
     public String updateVaroa(@PathVariable int id, @RequestBody Varoa v) {

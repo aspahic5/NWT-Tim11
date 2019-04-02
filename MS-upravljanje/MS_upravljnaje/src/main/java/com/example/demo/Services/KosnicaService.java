@@ -11,6 +11,7 @@ import com.example.demo.Repositories.AktivnostRepositroy;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionSystemException;
 
 @Service
 public class KosnicaService {
@@ -35,7 +36,11 @@ public class KosnicaService {
     public String addKosnica(Kosnica k) {
         try {
             kosnicarepository.save(k);
-        } catch (Exception e) {
+        } catch (TransactionSystemException  ex) {
+            Throwable e = ex.getRootCause();
+            return e.getMessage();
+        } 
+        catch (Exception e) {
             return e.toString();
         }
         return "Kosnica saved";
@@ -43,6 +48,8 @@ public class KosnicaService {
 
     public String addSelidbaToKosnica(int ids, int id){
         Optional<Selidba> selidba = selidbaRepository.findById(ids);
+        if(!selidba.isPresent()) return "Selidba does not exist";
+        if(!kosnicarepository.findById(id).isPresent()) return "Kosnica does not exist";
         Selidba s = selidba.get();
         try {
             kosnicarepository.findById(id).map(kosnica -> {
@@ -57,6 +64,8 @@ public class KosnicaService {
 
     public String addAktivnostToKosnica(int ida, int id){
         Optional<Aktivnost> a = aktivnostRepositroy.findById(ida);
+        if(!a.isPresent()) return "Aktivnost does not exist";
+        if(!kosnicarepository.findById(id).isPresent()) return "Kosnica does not exist";
         Aktivnost akt = a.get();
         try {
             kosnicarepository.findById(id).map(kosnica -> {
@@ -71,6 +80,8 @@ public class KosnicaService {
     
     public String addKosnicaToKosnica(int idk, int id) {
         Optional<Kosnica> k = kosnicarepository.findById(idk);
+        if(!k.isPresent()) return "Kosnica does not exist";
+        if(!kosnicarepository.findById(id).isPresent()) return "Kosnica does not exist";
         Kosnica kosnica1 = k.get();
         try {
             kosnicarepository.findById(id).map(kosnica -> {
@@ -84,6 +95,7 @@ public class KosnicaService {
     }
 
     public String updateKosnica(int id, Kosnica k){
+        if(!kosnicarepository.findById(id).isPresent()) return "Kosnica does not exist";
         try {
             kosnicarepository.findById(id).map(kosnica -> {
                 kosnica.setBrojhanemanki(k.getBrojhanemanki());
@@ -96,13 +108,18 @@ public class KosnicaService {
                 kosnica.setTipstimulansa(k.getTipstimulansa());
                 return kosnicarepository.save(kosnica);
             });
-        } catch(Exception e) {
+        } catch (TransactionSystemException  ex) {
+            Throwable e = ex.getRootCause();
+            return "Update Kosnica error: " + e.getMessage();
+        } 
+        catch(Exception e) {
             return "Update Kosnica error: " + e.toString();
         }
         return "Kosnica successfully updated";
     }
 
     public String deleteKosnica(int id){
+        if(!kosnicarepository.findById(id).isPresent()) return "Kosnica does not exist";
         try{
             kosnicarepository.deleteById(id);
         } catch (Exception e) {

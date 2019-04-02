@@ -29,9 +29,9 @@ public class RojenjeController {
         return rojenjeService.findById(id);
     }
 
-    @RequestMapping(value="/DodajRojenje", method=RequestMethod.POST)
-    public String createRojenje(@RequestBody Rojenje r) {
-        return rojenjeService.addRojenje(r);
+    @RequestMapping(value="/DodajRojenje/{idk}", method=RequestMethod.POST)
+    public String createRojenje(@RequestBody Rojenje r, @PathVariable int idk) {
+        return rojenjeService.addRojenje(r, idk);
     }
 
     @RequestMapping(value = "/AzurirajRojenje/{id}", method=RequestMethod.PUT)
@@ -39,7 +39,7 @@ public class RojenjeController {
         return rojenjeService.updateRojenje(id, r);
     }
     
-    @RequestMapping(value = "/ObrisiRojenje/{id}", method=RequestMethod.PUT)
+    @RequestMapping(value = "/ObrisiRojenje/{id}", method=RequestMethod.DELETE)
     public String updateRojenje(@PathVariable int id) {
         return rojenjeService.deleteRojenje(id);
     }

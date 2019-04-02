@@ -54,16 +54,6 @@ public class KosnicaController {
     public String updateKosnica(@RequestBody Kosnica k, @PathVariable int id){
         return kosnicaService.updateKosnica(id, k);
     }
-    
-    /*@RequestMapping(value="/ObsisiSelidbeOdKosnice/{id}/{ids}", method = RequestMethod.PUT)
-    public String deleteSelidbeFromKosnice(@RequestParam int ids, @RequestParam int id){
-        return "";
-    }
-
-    @RequestMapping(value="/ObsisiAktivnostiOdKosnice/{id}/{idk}", method = RequestMethod.PUT)
-    public String deleteAktivnostiFromKosnice(@RequestParam int idk, @RequestParam int id){
-        return "";
-    }*/ //MOŽDA NE TREBA
 
     @RequestMapping(value="/ObrisiKosnicu/{id}", method=RequestMethod.DELETE)
     public String deleteKosnica(@PathVariable int id) {

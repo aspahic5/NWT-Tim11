@@ -62,9 +62,9 @@ public class MsUpravljnajeApplication implements CommandLineRunner {
 			Set<Selidba> selidbe = new HashSet<Selidba>();
 			selidbe.add(selidba1);
 			selidbe.add(selidba2);
-			Kosnica kosnica = new Kosnica(1, Date.valueOf("2019-4-1"), 10, 2, 200.23, "pogaca", 1, "bla blaf sdaf", null, selidbe, aktivnosti);
+			Kosnica kosnica = new Kosnica(1, Date.valueOf("2019-4-1"), 10, 2, 200.23, "pogaca", 1, "bla blaf sdaf", null, aktivnosti, selidbe);
 			Kosnica kosnica3 = new Kosnica(4, Date.valueOf(LocalDate.now()), 10, 2, 200.23, "pogaca", 1, "bla bla nbfdd", null, null, null);
-			Kosnica kosnica2 = new Kosnica(2, Date.valueOf(LocalDate.now()), 10, 2, 200.23, "pogaca", 1, "bla bla blas", kosnica, selidbe, aktivnosti);
+			Kosnica kosnica2 = new Kosnica(2, Date.valueOf(LocalDate.now()), 10, 2, 200.23, "pogaca", 1, "bla bla blas", kosnica, aktivnosti, selidbe);
 			
 			System.out.println(kosnicaService.addKosnica(kosnica));
 			System.out.println(kosnicaService.addKosnica(kosnica2));
