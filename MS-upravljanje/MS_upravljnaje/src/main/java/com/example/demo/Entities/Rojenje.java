@@ -9,11 +9,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table( name = "rojenje")
 public class Rojenje {
 
+    public Rojenje() {}
     public Rojenje(Kosnica kosnice, int brojmaticnjaka, Date starostmaticnjaka, String tipmaticnjaka, String komentar) {
         super();
         this.kosnice = kosnice;
@@ -33,15 +37,19 @@ public class Rojenje {
     private Kosnica kosnice;
 
     @Column( name = "brojmaticnjaka")
+    @Min(value = 0, message = "Broj matičnjaka ne može biti negativan")
     private int brojmaticnjaka;
 
     @Column( name = "starostmaticnjaka")
+    //@PastOrPresent( message = "Starost matičnjaka nije ispravno unešena")
     private Date starostmaticnjaka;
 
     @Column ( name = "tipmaticnjaka")
+    @Size(min = 5)
     private String tipmaticnjaka;
 
     @Column ( name = "komentar")
+    @Size(min = 10, message = "Prekratak komentar")
     private String komentar;
 
     
@@ -61,6 +69,20 @@ public class Rojenje {
     }
 
     /**
+     * @return Kosnica return the kosnice
+     */
+    public Kosnica getKosnice() {
+        return kosnice;
+    }
+
+    /**
+     * @param kosnice the kosnice to set
+     */
+    public void setKosnice(Kosnica kosnice) {
+        this.kosnice = kosnice;
+    }
+
+    /**
      * @return int return the brojmaticnjaka
      */
     public int getBrojmaticnjaka() {
@@ -75,7 +97,7 @@ public class Rojenje {
     }
 
     /**
-     * @return String return the starostmaticnjaka
+     * @return Date return the starostmaticnjaka
      */
     public Date getStarostmaticnjaka() {
         return starostmaticnjaka;

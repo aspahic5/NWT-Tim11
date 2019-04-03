@@ -45,7 +45,7 @@ public class MsProizvodnjaApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		
+		/*
 		Kosnica k1=new Kosnica(1);
 		Kosnica k2=new Kosnica(2);
 		
@@ -91,7 +91,7 @@ public class MsProizvodnjaApplication implements CommandLineRunner{
 		
 		System.out.println(vrcanjeService.addVrcanje(v1));
 		System.out.println(vrcanjeService.addVrcanje(v2));
-		
+		*/
 		
 		
 	}

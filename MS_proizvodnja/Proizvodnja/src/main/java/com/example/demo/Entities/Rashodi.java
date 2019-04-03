@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name="Rashodi")
@@ -21,6 +22,7 @@ public class Rashodi {
 
 	
 	@Column(name="cijena", nullable=false)
+	@Min(value = 0, message = "Potrebno je unijeti cijenu!")
 	private double cijena;
 	
 	
@@ -40,6 +42,9 @@ public class Rashodi {
 
 	public Set<Kosnica> getKosnice() {
 		return kosnice;
+	}
+	public void setCijena(double cijena) {
+		this.cijena = cijena;
 	}
 
 

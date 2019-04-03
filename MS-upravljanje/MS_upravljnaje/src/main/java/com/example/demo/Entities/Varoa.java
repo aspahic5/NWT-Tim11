@@ -6,6 +6,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 
 import java.sql.Date;
 
@@ -15,6 +18,7 @@ import javax.persistence.Column;
 @Table(name = "varoa")
 public class Varoa {
 
+    public Varoa(){}
     public Varoa(Kosnica kosnice, int broj, Date primjecena, String komentar){
         super();
         this.kosnice = kosnice;
@@ -33,12 +37,15 @@ public class Varoa {
     private Kosnica kosnice;
 
     @Column(name = "broj")
+    @Min(value = 1, message = "Broj varoe mora biti veći od nule.")
     private int broj;
 
     @Column(name = "primjecena")
+    //@PastOrPresent( message = "Neispravan datum.")
     private Date primjecena;
 
     @Column(name = "komentar")
+    @Size(min = 10, message = "Prekratak komentar.")
     private String komentar;
 
     /**
@@ -53,6 +60,20 @@ public class Varoa {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * @return Kosnica return the kosnice
+     */
+    public Kosnica getKosnice() {
+        return kosnice;
+    }
+
+    /**
+     * @param kosnice the kosnice to set
+     */
+    public void setKosnice(Kosnica kosnice) {
+        this.kosnice = kosnice;
     }
 
     /**

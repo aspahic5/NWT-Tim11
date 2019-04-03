@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name="Propolis")
@@ -19,10 +20,19 @@ public class Propolis {
 	private int id;
 
 	
+	public void setKolicina(double kolicina) {
+		this.kolicina = kolicina;
+	}
+	public void setKmkg(double kmkg) {
+		this.kmkg = kmkg;
+	}
+	
 	@Column(name="kolicina", nullable=false)
+	@Min(value = 0, message = "Neispravno unešena količina propolisa!")
 	private double kolicina;
 	
 	@Column(name="km_kg", nullable=false)
+	@Min(value = 0, message = "Potrebno je unijeti cijenu po kilogramu!")
 	private double kmkg;
 	
 	
@@ -45,9 +55,6 @@ public class Propolis {
 	}
 
 
-	public Set<Kosnica> getKosnice() {
-		return kosnice;
-	}
 
 
 	public Propolis(double kolicina, double kmkg, Set<Kosnica> kosnice) {

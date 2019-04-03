@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name="Maticana_mlijec")
@@ -20,11 +21,19 @@ public class Maticna_mlijec {
 
 	
 	@Column(name="kolicina", nullable=false)
+	@Min(value = 0, message = "Neispravno unešena količina matične mliječi!")
 	private double kolicina;
 	
 	@Column(name="km_kg", nullable=false)
+	@Min(value = 0, message = "Potrebno je unijeti cijenu po kilogramu!")
 	private double kmkg;
 	
+	public void setKolicina(double kolicina) {
+		this.kolicina = kolicina;
+	}
+	public void setKmkg(double kmkg) {
+		this.kmkg = kmkg;
+	}
 	
 	@ManyToMany
     Set<Kosnica> kosnice;

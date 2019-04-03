@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.PastOrPresent;
 
 @Entity
 @Table(name="Unos")
@@ -21,9 +23,11 @@ public class Unos {
 
 	
 	@Column(name="kolicina", nullable=false)
+	@Min(value = 0, message = "Neispravno unešena kolličina!")
 	private double kolicina;
 
 	@Column(name="date", nullable=false)
+	//@PastOrPresent(message = "Neispravno unešen datum unosa.")
     private Date date;
 	
 	@ManyToOne
@@ -33,9 +37,18 @@ public class Unos {
 	public int getId() {
 		return id;
 	}
+	public void setKosnica(Kosnica kosnica) {
+		this.kosnica = kosnica;
+	}
 
 	public double getKolicina() {
 		return kolicina;
+	}
+	public void setKolicina(double kolicina) {
+		this.kolicina = kolicina;
+	}
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public Date getDate() {

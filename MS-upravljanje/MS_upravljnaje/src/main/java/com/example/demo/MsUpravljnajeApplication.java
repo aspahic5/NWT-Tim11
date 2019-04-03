@@ -46,35 +46,39 @@ public class MsUpravljnajeApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Aktivnost aktivnost1 = new Aktivnost("januar", "uradi nesto", 0);
-		Selidba selidba1 = new Selidba(2, "Doboj", Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()), 1000.00);
-		Aktivnost aktivnost2 = new Aktivnost("februar", "uradi nesto2", 0);
-		Selidba selidba2 = new Selidba(2, "Čaršija", Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()), 120.00);
+	/*	try {
+			Aktivnost aktivnost1 = new Aktivnost("januar", "uradi nesto", 0);
+			Selidba selidba1 = new Selidba(2, "Doboj", Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()), 1000.00);
+			Aktivnost aktivnost2 = new Aktivnost("februar", "uradi nesto2", 0);
+			Selidba selidba2 = new Selidba(2, "Čaršija", Date.valueOf(LocalDate.now()), Date.valueOf(LocalDate.now()), 120.00);
 
-		System.out.println(aktivnostService.addAktivnost(aktivnost1));
-		System.out.println(aktivnostService.addAktivnost(aktivnost2));
-		System.out.println(selidbaService.addSelidba(selidba1));
-		System.out.println(selidbaService.addSelidba(selidba2));
-		Set<Aktivnost> aktivnosti = new HashSet<Aktivnost>();
-		aktivnosti.add(aktivnost1);
-		aktivnosti.add(aktivnost2);
-		Set<Selidba> selidbe = new HashSet<Selidba>();
-		selidbe.add(selidba1);
-		selidbe.add(selidba2);
-		Kosnica kosnica = new Kosnica(1, Date.valueOf(LocalDate.now()), 10, 2, 200.23, "pogaca", 1, "bla bla", null, selidbe, aktivnosti);
-		Kosnica kosnica3 = new Kosnica(4, Date.valueOf(LocalDate.now()), 10, 2, 200.23, "pogaca", 1, "bla bla", null, null, null);
-		Kosnica kosnica2 = new Kosnica(2, Date.valueOf(LocalDate.now()), 10, 2, 200.23, "pogaca", 1, "bla bla", kosnica, selidbe, aktivnosti);
-		
-		System.out.println(kosnicaService.addKosnica(kosnica));
-		System.out.println(kosnicaService.addKosnica(kosnica2));
-		System.out.println(kosnicaService.addKosnica(kosnica3));
+			System.out.println(aktivnostService.addAktivnost(aktivnost1));
+			System.out.println(aktivnostService.addAktivnost(aktivnost2));
+			System.out.println(selidbaService.addSelidba(selidba1));
+			System.out.println(selidbaService.addSelidba(selidba2));
+			Set<Aktivnost> aktivnosti = new HashSet<Aktivnost>();
+			aktivnosti.add(aktivnost1);
+			aktivnosti.add(aktivnost2);
+			Set<Selidba> selidbe = new HashSet<Selidba>();
+			selidbe.add(selidba1);
+			selidbe.add(selidba2);
+			Kosnica kosnica = new Kosnica(1, Date.valueOf("2019-4-1"), 10, 2, 200.23, "pogaca", 1, "bla blaf sdaf", null, aktivnosti, selidbe);
+			Kosnica kosnica3 = new Kosnica(4, Date.valueOf(LocalDate.now()), 10, 2, 200.23, "pogaca", 1, "bla bla nbfdd", null, null, null);
+			Kosnica kosnica2 = new Kosnica(2, Date.valueOf(LocalDate.now()), 10, 2, 200.23, "pogaca", 1, "bla bla blas", kosnica, aktivnosti, selidbe);
+			
+			System.out.println(kosnicaService.addKosnica(kosnica));
+			System.out.println(kosnicaService.addKosnica(kosnica2));
+			System.out.println(kosnicaService.addKosnica(kosnica3));
 
-		Rojenje rojenje = new Rojenje(kosnica, 1, Date.valueOf(LocalDate.now()), "Za rojenje", "Neki komentar");
+			Rojenje rojenje = new Rojenje(kosnica, 1, Date.valueOf(LocalDate.now()), "Za rojenje", "Neki komentar");
 
-		System.out.println(rojenjeService.addRojenje(rojenje));
-		Varoa varoa = new Varoa(kosnica, 23, Date.valueOf(LocalDate.now()), "Neki komentar za varou");
+			System.out.println(rojenjeService.addRojenje(rojenje));
+			Varoa varoa = new Varoa(kosnica, 23, Date.valueOf(LocalDate.now()), "Neki komentar za varou tako da");
 
-		System.out.println(varoaService.addVaroa(varoa));
+			System.out.println(varoaService.addVaroa(varoa));
+		} catch(Exception e) {
+			e.printStackTrace();
+		} */
 
 		
 	}

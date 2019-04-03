@@ -7,11 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table( name = "selidba")
 public class Selidba {
 
+    public Selidba() {}
     public Selidba(int brojkosnica, String lokacija, Date pocetak, Date kraj, double dobit) {
         super();
         this.brojkosnica = brojkosnica;
@@ -27,18 +32,23 @@ public class Selidba {
     private int id;
 
     @Column( name = "brojkosnica")
+    @Min(value = 1, message = "Neispravan broj košnica.")
     private int brojkosnica;
 
     @Column( name = "lokacija")
+    @Size(min = 3, message = "Neispravno unešena lokacija.")
     private String lokacija;
 
     @Column( name = "pocetak")
+    //@PastOrPresent( message = "Neispravno unešen datum početka selidbe.")
     private Date pocetak;
 
     @Column( name = "kraj")
+    //@FutureOrPresent( message = "Neispravno unešen datum kraja selidbe.")
     private Date kraj;
 
     @Column( name = "dobit")
+    @Min( value = 0, message = "Vrijednost dobiti mora biti pozitivna.")
     private double dobit;
 
     /**
