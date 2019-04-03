@@ -1,11 +1,14 @@
 package com.example.demo.Services;
 
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.example.demo.Entities.Rojenje;
 import com.example.demo.Repositories.KosnicaRepository;
 import com.example.demo.Repositories.RojenjeRepository;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
@@ -28,7 +31,11 @@ public class RojenjeService {
     }
 
     public String addRojenje(Rojenje r, int idk) {
-        if(!kosnicaRepository.findById(idk).isPresent()) return "Kosnica does not exist";
+        if(!kosnicaRepository.findById(idk).isPresent()) {
+            JSONObject o1 = new JSONObject();
+            o1.put("poruka",  "Košnica ne postoji");
+            return o1.toString();
+        }
         try {
             kosnicaRepository.findById(idk).map(kosnica -> {
                 r.setKosnice(kosnica);
@@ -37,15 +44,34 @@ public class RojenjeService {
             
         } catch (TransactionSystemException  ex) {
             Throwable e = ex.getRootCause();
-            return e.getMessage();
+            String poruka = e.getMessage();
+            Pattern pattern = Pattern.compile("'(.*?)'");
+            Matcher matcher = pattern.matcher(poruka);
+            JSONObject o = new JSONObject();
+            o.put("poruka", e.getMessage());
+            if(matcher.find()) {
+                String temp = matcher.group(1);
+                JSONObject o1 = new JSONObject();
+                o1.put("poruka", temp);
+                return o1.toString();
+            }
+            return o.toString();
         } catch (Exception e) {
-            return e.toString();
+            JSONObject o1 = new JSONObject();
+            o1.put("poruka",  e.toString());
+            return o1.toString();
         }
-        return "Rojenje saved";
+        JSONObject o1 = new JSONObject();
+        o1.put("poruka", "Rojenje spremljeno");
+        return o1.toString();
     }
 
     public String updateRojenje(int id, Rojenje r){
-        if(!rojenjeRepository.findById(id).isPresent()) return "Rojenje does not exist";
+        if(!rojenjeRepository.findById(id).isPresent()) {
+            JSONObject o1 = new JSONObject();
+            o1.put("poruka",  "Rojenje ne postoji");
+            return o1.toString();
+        }
         try {
             rojenjeRepository.findById(id).map(rojenje -> {
                 rojenje.setBrojmaticnjaka(r.getBrojmaticnjaka());
@@ -56,21 +82,44 @@ public class RojenjeService {
             });
         } catch (TransactionSystemException  ex) {
             Throwable e = ex.getRootCause();
-            return "Update error: " + e.getMessage();
+            String poruka = e.getMessage();
+            Pattern pattern = Pattern.compile("'(.*?)'");
+            Matcher matcher = pattern.matcher(poruka);
+            JSONObject o = new JSONObject();
+            o.put("poruka", e.getMessage());
+            if(matcher.find()) {
+                String temp = matcher.group(1);
+                JSONObject o1 = new JSONObject();
+                o1.put("poruka", temp);
+                return o1.toString();
+            }
+            return o.toString();
         } catch (Exception e) {
-            return "Update error: " + e.toString();
+            JSONObject o1 = new JSONObject();
+            o1.put("poruka",  e.toString());
+            return o1.toString();
         }
-        return "Rojenje successfully updated";
+        JSONObject o1 = new JSONObject();
+        o1.put("poruka",  "Rojenje uspješno ažurirano");
+        return o1.toString();
     }
 
     public String deleteRojenje(int id){
-        if(!rojenjeRepository.findById(id).isPresent()) return "Rojenje does not exist";
+        if(!rojenjeRepository.findById(id).isPresent()) {
+            JSONObject o1 = new JSONObject();
+            o1.put("poruka",  "Rojenje ne postoji");
+            return o1.toString();
+        }
         try{
             rojenjeRepository.deleteById(id);;
         }
         catch(Exception e){
-            return "Delete error: " + e.toString();
+            JSONObject o1 = new JSONObject();
+            o1.put("poruka",  e.toString());
+            return o1.toString();
         }
-        return "Rojenje successfully deleted";
+        JSONObject o1 = new JSONObject();
+        o1.put("poruka",  "Rojenje uspješno obrisano");
+        return o1.toString();
     }
 }

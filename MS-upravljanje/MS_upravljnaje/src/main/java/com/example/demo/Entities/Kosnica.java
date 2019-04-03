@@ -12,7 +12,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -48,7 +47,6 @@ public class Kosnica {
     private Kosnica kosnice;
 
     @Column ( name = "maticagod", nullable = false)
-    //@PastOrPresent( message = "Neispravno godište matice")
     private Date maticagod;
 
     @Column ( name = "brojramova", nullable = false)

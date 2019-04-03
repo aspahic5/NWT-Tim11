@@ -24,22 +24,22 @@ public class RojenjeController {
         return rojenjeService.findAll();
     }
 
-    @RequestMapping(value = "/DajRojenje/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/Rojenje/{id}", method = RequestMethod.GET)
     public Optional<Rojenje> getRojenjeById(@PathVariable int id) {
         return rojenjeService.findById(id);
     }
 
-    @RequestMapping(value="/DodajRojenje/{idk}", method=RequestMethod.POST)
+    @RequestMapping(value="/Rojenje/{idk}", method=RequestMethod.POST)
     public String createRojenje(@RequestBody Rojenje r, @PathVariable int idk) {
         return rojenjeService.addRojenje(r, idk);
     }
 
-    @RequestMapping(value = "/AzurirajRojenje/{id}", method=RequestMethod.PUT)
+    @RequestMapping(value = "/Rojenje/{id}", method=RequestMethod.PUT)
     public String updateRojenje(@PathVariable int id, @RequestBody Rojenje r) {
         return rojenjeService.updateRojenje(id, r);
     }
     
-    @RequestMapping(value = "/ObrisiRojenje/{id}", method=RequestMethod.DELETE)
+    @RequestMapping(value = "/Rojenje/{id}", method=RequestMethod.DELETE)
     public String updateRojenje(@PathVariable int id) {
         return rojenjeService.deleteRojenje(id);
     }

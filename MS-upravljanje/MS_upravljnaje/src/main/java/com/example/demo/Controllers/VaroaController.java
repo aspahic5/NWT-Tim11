@@ -24,21 +24,21 @@ public class VaroaController {
         return varoaService.findAll();
     }
 
-    @RequestMapping(value = "/DajVarou/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/Varoa/{id}", method = RequestMethod.GET)
     public Optional<Varoa> getVaroaById(@PathVariable int id) {
         return varoaService.findById(id);
     }
 
-    @RequestMapping(value="/DodajVarou/{idk}", method=RequestMethod.POST)
+    @RequestMapping(value="/Varoa/{idk}", method=RequestMethod.POST)
     public String addVaroa(@RequestBody Varoa v, @PathVariable int idk) {
         return varoaService.addVaroa(v, idk);
     }
-    @RequestMapping(value="/AzurirajVarou/{id}", method=RequestMethod.PUT)
+    @RequestMapping(value="/Varoa/{id}", method=RequestMethod.PUT)
     public String updateVaroa(@PathVariable int id, @RequestBody Varoa v) {
         return varoaService.updateVaroa(id, v);
     }
     
-    @RequestMapping(value="/ObrisiVarou/{id}", method=RequestMethod.DELETE)
+    @RequestMapping(value="/Varoa/{id}", method=RequestMethod.DELETE)
     public String deleteVaroa(@PathVariable int id) {
         return varoaService.deleteVaroa(id);
     }

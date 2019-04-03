@@ -7,7 +7,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
 import java.sql.Date;
@@ -41,7 +40,6 @@ public class Varoa {
     private int broj;
 
     @Column(name = "primjecena")
-    //@PastOrPresent( message = "Neispravan datum.")
     private Date primjecena;
 
     @Column(name = "komentar")

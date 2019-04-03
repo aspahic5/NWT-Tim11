@@ -7,9 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -40,11 +38,9 @@ public class Selidba {
     private String lokacija;
 
     @Column( name = "pocetak")
-    //@PastOrPresent( message = "Neispravno unešen datum početka selidbe.")
     private Date pocetak;
 
     @Column( name = "kraj")
-    //@FutureOrPresent( message = "Neispravno unešen datum kraja selidbe.")
     private Date kraj;
 
     @Column( name = "dobit")

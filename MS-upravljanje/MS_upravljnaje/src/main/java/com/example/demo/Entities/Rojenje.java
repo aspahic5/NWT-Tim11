@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -41,7 +40,6 @@ public class Rojenje {
     private int brojmaticnjaka;
 
     @Column( name = "starostmaticnjaka")
-    //@PastOrPresent( message = "Starost matičnjaka nije ispravno unešena")
     private Date starostmaticnjaka;
 
     @Column ( name = "tipmaticnjaka")

@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.example.demo.Entities.Aktivnost;
 import com.example.demo.Services.AktivnostService;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,22 +25,22 @@ public class AktivnostController {
         return aktivnostService.findAll();
     }
 
-    @RequestMapping(value = "/DajAktivnost/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/Aktivnost/{id}", method = RequestMethod.GET)
     public Optional<Aktivnost> getAktivnostById(@PathVariable int id) {
         return aktivnostService.findById(id);
     }
 
-    @RequestMapping(value="/DodajAktivnost/{idk}", method=RequestMethod.POST)
+    @RequestMapping(value="/Aktivnost/{idk}", method=RequestMethod.POST)
     public String createAktivnost(@RequestBody Aktivnost a, @PathVariable int idk) {
         return aktivnostService.addAktivnost(a, idk);
     }
 
-    @RequestMapping(value="/AzurirajAktivnost/{id}", method=RequestMethod.PUT)
+    @RequestMapping(value="/Aktivnost/{id}", method=RequestMethod.PUT)
     public String updateAktivnost(@PathVariable int id, @RequestBody Aktivnost a) {
         return aktivnostService.updateAktivnost(id, a);
     }
 
-    @RequestMapping(value="/ObrisiAktivnost/{id}", method=RequestMethod.DELETE)
+    @RequestMapping(value="/Aktivnost/{id}", method=RequestMethod.DELETE)
     public String deleteAktivnost(@PathVariable int id) {
         return aktivnostService.deleteAktivnost(id);
     }
