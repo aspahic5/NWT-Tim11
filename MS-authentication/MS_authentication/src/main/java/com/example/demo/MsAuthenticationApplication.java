@@ -32,18 +32,10 @@ public class MsAuthenticationApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		
 
-		Role rola1=new Role("admin");
-		Role rola2=new Role("korisnik");
-		
-		System.out.println(roleService.addRole(rola1));
-		System.out.println(roleService.addRole(rola2));
+		Role rola1=new Role("8");
 		
 		
-		Korisnik korisnik1=new Korisnik("korisnik1-ime","krisnik1-prezime","korisnik1-username","korisnik1-password","korisnik1-brojtelefona",rola1);
-		Korisnik korisnik2=new Korisnik("korisnik2-ime","krisnik2-prezime","korisnik2-username","korisnik2-password","korisnik2-brojtelefona",rola1);
-	
-		System.out.println(korisnikService.addKorisnik(korisnik1));
-		System.out.println(korisnikService.addKorisnik(korisnik2));
+		System.out.println(rola1.getRole());
 		
 		
 	}

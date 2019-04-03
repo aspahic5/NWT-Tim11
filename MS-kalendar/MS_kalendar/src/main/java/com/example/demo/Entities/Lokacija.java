@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name="Lokacija")
@@ -18,6 +19,7 @@ public class Lokacija {
     @Column(name = "lokacija_id", unique = true, nullable = false)
 	private int id;
 	
+	@Pattern(regexp = "^[a-zA-Z-čćžš]{3,30}$",message="naziv lokacije može sadržavati samo slova")
 	@Column(name = "lokacija", nullable = false)
 	private String lokcaija;
 
@@ -41,6 +43,8 @@ public class Lokacija {
 		super();
 		this.lokcaija = lokcaija;
 	}
+	
+	public Lokacija(){}
 	
 	
 

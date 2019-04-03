@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name="Biljka")
@@ -18,12 +19,15 @@ public class Biljka {
     @Column(name = "biljka_id", unique = true, nullable = false)
 	private int id;
 	
+	@Pattern(regexp = "^[a-zA-Z-čćžš]{3,30}$", message="naziv biljke može sadržavati samo slova i mora imati dužinu 3-30 slova")
 	@Column(name = "biljka", nullable = false)
 	private String biljka;
 
+	@Pattern(regexp = "^[a-zA-Z-čćžš]{3,30}$", message="naziv mjeseca može sadržavati samo slova")
 	@Column(name = "poc_mjesec", nullable = false)
 	private String poc_mjesec;
 	
+	@Pattern(regexp = "^[a-zA-Z-čćžš]{3,30}$",message="naziv mjeseca može sadržavati samo slova")
 	@Column(name = "kraj_mjesec", nullable = false)
 	private String kraj_mjesec;
 	
@@ -77,6 +81,8 @@ public class Biljka {
 		this.kraj_mjesec = kraj_mjesec;
 		this.lokacije = lokacije;
 	}
+	
+	public Biljka() {}
 	
 	
 }

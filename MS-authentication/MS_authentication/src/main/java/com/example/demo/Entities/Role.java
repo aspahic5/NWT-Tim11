@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "Roles")
@@ -15,7 +17,10 @@ public class Role {
     @Column(name = "role_id", unique = true, nullable = false)
 	private int id;
 	
+	
+	
 	@Column(name = "role",nullable = false, unique=true)
+	@Pattern(regexp = "^[a-zA-Z]{4,30}$", message="nepravilan unos")
 	private String role;
 
 	public int getId() {
@@ -39,7 +44,7 @@ public class Role {
 		this.role = role;
 	}
 	
-	
+	public Role() {}
 	
 
 }

@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionSystemException;
 
 import com.example.demo.Entities.Role;
 import com.example.demo.Repositories.RoleRepository;
@@ -20,7 +21,7 @@ public class RoleService {
 		
 	}
 	
-	public Optional<Role> getRoleId(int id) {
+	public Optional<Role> getRoleById(int id) {
 		
 		return roleRepository.findById(id);
 		
@@ -31,12 +32,36 @@ public class RoleService {
 		try {
 			roleRepository.save(r);
 		}
-		catch(Exception e) {
-			return e.toString();
+		catch(TransactionSystemException ex) {
+			return ex.getRootCause().getMessage().toString();
+			
 		}
 		
 		return "Role saved";
 		
 	}
 
+	
+	public String updateRole(Role r) {
+		
+		try {
+		roleRepository.save(r);
+		}
+		catch(TransactionSystemException ex) {
+			return ex.getRootCause().getMessage().toString();
+			
+		}
+		return "Role updated";
+	}
+	
+	public String deleteRole(int id) {
+		try {
+		roleRepository.deleteById(id);
+		}
+		catch(TransactionSystemException ex) {
+			return ex.getRootCause().getMessage().toString();
+			
+		}
+		return "Role deleted";
+	}
 }

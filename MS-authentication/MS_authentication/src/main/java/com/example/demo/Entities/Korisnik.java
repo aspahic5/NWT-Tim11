@@ -7,6 +7,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 
 
@@ -19,18 +22,28 @@ public class Korisnik {
     @Column(name = "korisnik_id", unique = true, nullable = false)
 	private int id;
 	
+	@NotNull
+	@Pattern(regexp = "^[a-zA-Z-čćžš]{3,30}$")
 	@Column(name = "ime", nullable = false)
 	private String ime;
 	
+	@NotNull
+	@Pattern(regexp = "^[a-zA-Z-čćžš]{3,30}$")
 	@Column(name = "prezime",nullable = false)
 	private String prezime;
 	
+	@NotNull
+	@Pattern(regexp = "^[a-zA-Z-1-9]{4,30}$")
 	@Column(name = "username",nullable = false, unique=true)
 	private String username;
 
+	@NotNull
+	@Pattern(regexp = "^[a-zA-Z-1-9]{4,30}$")
 	@Column(name = "password",nullable = false)
 	private String password;
 	
+	@NotNull
+	@Pattern(regexp = "^\\d{3}\\/\\d{3}\\-\\d{3}$")
 	@Column(name = "broj_telefona",nullable = false)
 	private String broj_telefona;
 	
@@ -85,6 +98,15 @@ public class Korisnik {
 	public void setBroj_telefona(String broj_telefona) {
 		this.broj_telefona = broj_telefona;
 	}
+	
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
 
 	public Korisnik(String ime, String prezime, String username, String password, String broj_telefona, Role role) {
 		super();
@@ -96,6 +118,7 @@ public class Korisnik {
 		this.role = role;
 	}
 
+	public Korisnik() {}
 	
 	
 	

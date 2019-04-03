@@ -30,6 +30,7 @@ public class MsKalendarApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
+		/*
 		Lokacija lokacija1=new Lokacija("Zenica");
 		Lokacija lokacija2=new Lokacija("Sarajevo");
 		
@@ -45,7 +46,7 @@ public class MsKalendarApplication implements CommandLineRunner {
 		
 		System.out.println(biljkaService.addBiljka(biljka1));
 		System.out.println(biljkaService.addBiljka(biljka2));
-		
+		*/
 	}
 
 }
