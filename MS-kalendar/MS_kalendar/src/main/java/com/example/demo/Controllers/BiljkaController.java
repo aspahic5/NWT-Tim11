@@ -2,6 +2,7 @@ package com.example.demo.Controllers;
 
 import java.util.Optional;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,43 +24,43 @@ public class BiljkaController {
 	@Autowired
 	private LokacijaService lokacijaService;
 	
-	@RequestMapping("/getAllBiljke")
+	@RequestMapping("/Biljka")
 	public Iterable<Biljka> getBiljke(){
 		return biljkaService.findAll();
 	}
 	
-	@RequestMapping("/getBiljkaByID/{id}")
+	@RequestMapping("/Biljka/{id}")
 	public Optional<Biljka> getBiljkaID(@PathVariable int id){
 		return biljkaService.findById(id);
 	}
 	
-	@RequestMapping(value="/deleteBiljka/{id}", method= RequestMethod.DELETE )
-	public String deleteBiljka(@PathVariable int id) {
+	@RequestMapping(value="/Biljka/{id}", method= RequestMethod.DELETE )
+	public JSONObject deleteBiljka(@PathVariable int id) {
 		Optional<Biljka> b=biljkaService.findById(id);
-		if(!b.isPresent())return "Ne postoji biljka sa datim id identifikatorom";
+		if(!b.isPresent())return new JSONObject().put("message","Ne postoji biljka sa datim id identifikatorom");
 		return biljkaService.deleteBiljka(id);
 	}
 	
-	@RequestMapping(value="/addBiljka", method= RequestMethod.PUT )
-	public String addBiljka(@RequestBody Biljka b) {
+	@RequestMapping(value="/Biljka", method= RequestMethod.PUT )
+	public JSONObject addBiljka(@RequestBody Biljka b) {
 		Iterable<Lokacija> Lokacije= b.getLokacije();
 		for (Lokacija l : Lokacije) {
 			int id =l.getId();
 			Optional<Lokacija> ln=lokacijaService.findById(id);
-			if(!ln.isPresent() || !l.equals(ln) )return "ne postoje unesene lokacije";
+			if(!ln.isPresent() || !l.equals(ln) )return new JSONObject().put("message","ne postoje unesene lokacije");
 		}
 		Biljka newb= new Biljka(b.getBiljka(),b.getPoc_mjesec(),b.getKraj_mjesec(),b.getLokacije());
 		
 		return biljkaService.addBiljka(newb);
 	}
 	
-	@RequestMapping(value="/updateBiljka", method= RequestMethod.POST )
-	public String updateBiljka(@RequestBody Biljka b) {
+	@RequestMapping(value="/Biljka", method= RequestMethod.POST )
+	public JSONObject updateBiljka(@RequestBody Biljka b) {
 		Iterable<Lokacija> Lokacije= b.getLokacije();
 		for (Lokacija l : Lokacije) {
 			int id =l.getId();
 			Optional<Lokacija> ln=lokacijaService.findById(id);
-			if(!ln.isPresent() || !l.getLokcaija().equals(ln.get().getLokcaija()) )return "ne postoje unesene lokacije";
+			if(!ln.isPresent() || !l.getLokcaija().equals(ln.get().getLokcaija()) )return new JSONObject().put("message","ne postoje unesene lokacije");
 		}
 		return biljkaService.updateBiljka(b);
 	}

@@ -2,6 +2,7 @@ package com.example.demo.Services;
 
 import java.util.Optional;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
@@ -24,40 +25,51 @@ public class BiljkaService {
 		return biljkaRepository.findById(id);
 	}
 	
-	public String addBiljka(Biljka l) {
-		
+	public JSONObject addBiljka(Biljka l) {
+		JSONObject o = new JSONObject();
 		try {
 			biljkaRepository.save(l);
 		}
 		catch(TransactionSystemException ex) {
-			return ex.getRootCause().getMessage().toString();
+			o.put("message",ex.getRootCause().getMessage().toString());
+			return o;
 			
 		}
 		
-		return "Biljka saved";
+		o.put("message", "Biljka saved");
+		
+		return o;
 	}
 	
-	public String updateBiljka(Biljka b) {
+	public JSONObject updateBiljka(Biljka b) {
+		JSONObject o = new JSONObject();
 		try {
 			biljkaRepository.save(b);
 		}
 		catch(TransactionSystemException ex) {
-			return ex.getRootCause().getMessage().toString();
+			o.put("message",ex.getRootCause().getMessage().toString());
+			return o;
 			
 		}
 		
-		return "Biljka updated";
+		o.put("message", "Biljka updated");
+		
+		return o;
 	}
 	
-	public String deleteBiljka(int id) {
+	public JSONObject deleteBiljka(int id) {
+		JSONObject o = new JSONObject();
 		try {
 			biljkaRepository.deleteById(id);
 		}
 		catch(TransactionSystemException ex) {
-			return ex.getRootCause().getMessage().toString();
+			o.put("message",ex.getRootCause().getMessage().toString());
+			return o;
 			
 		}
 		
-		return "Biljka deleted";
+		o.put("message", "Biljka deleted");
+		
+		return o;
 	}
 }

@@ -2,6 +2,7 @@ package com.example.demo.Controllers;
 
 import java.util.Optional;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,33 +20,33 @@ public class KorisnikController {
 	@Autowired
 	private KorisnikService korisnikService;
 	
-	@RequestMapping("/getKorisnik/{id}")
+	@RequestMapping("/Korisnik/{id}")
 	public Optional<Korisnik> getKorisnikByID(@PathVariable Integer id){
 		return korisnikService.getKorisnikById(id);
 	}
 
-	@RequestMapping(value="/addKorisnik",method=RequestMethod.PUT)
-	public String addKorisnik(@RequestBody Korisnik k){
+	@RequestMapping(value="/Korisnik",method=RequestMethod.PUT)
+	public JSONObject addKorisnik(@RequestBody Korisnik k){
 		
 		Korisnik newk= new Korisnik(k.getIme(),k.getPrezime(),k.getUsername(),k.getPassword(),k.getBroj_telefona(),k.getRole());
 		
-		return korisnikService.addKorisnik(newk).toString();
+		return korisnikService.addKorisnik(newk);
 		
 		
 	}
 	
-	@RequestMapping(value="/deleteKorisnik/{id}",method=RequestMethod.DELETE)
-	public String deleteKorisnik(@PathVariable int id) {
+	@RequestMapping(value="/Korisnik/{id}",method=RequestMethod.DELETE)
+	public JSONObject deleteKorisnik(@PathVariable int id) {
 		Optional<Korisnik> k=korisnikService.getKorisnikById(id);
-		if(!k.isPresent())return "Ne postoji korisnik sa datim id identifikatorom";
-		return korisnikService.deleteKorisnik(id).toString();
+		if(!k.isPresent())return new JSONObject().put("message","Ne postoji korisnik sa datim id identifikatorom");
+		return korisnikService.deleteKorisnik(id);
 	}
 
-	@RequestMapping(value="/updateKorisnik",method=RequestMethod.POST)
-	public String update(@RequestBody Korisnik k){
+	@RequestMapping(value="/Korisnik",method=RequestMethod.POST)
+	public JSONObject update(@RequestBody Korisnik k){
 		
 		
-		return korisnikService.updateKorisnik(k).toString();
+		return korisnikService.updateKorisnik(k);
 		
 		
 	}

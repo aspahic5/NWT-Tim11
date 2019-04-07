@@ -9,6 +9,8 @@ import org.springframework.transaction.TransactionSystemException;
 import com.example.demo.Entities.Korisnik;
 import com.example.demo.Repositories.KorisnikRepository;
 
+import org.json.JSONObject;
+
 
 @Service
 public class KorisnikService {
@@ -24,43 +26,53 @@ public class KorisnikService {
 		
 	}
 	
-	public String addKorisnik(Korisnik k) {
-		
+	public JSONObject addKorisnik(Korisnik k) {
+		JSONObject o = new JSONObject();
 		try {
 			korisnikRepository.save(k);
 		}
 		catch(TransactionSystemException ex) {
-			return ex.getRootCause().getMessage().toString();
+			
+			o.put("message",ex.getRootCause().getMessage().toString());
+			return o;
 			
 		}
+		o.put("message", "Korisnik saved");
 		
-		return "Korisnik saved";
+		return o;
 		
 	}
 	
-	public String deleteKorisnik(int id) {
+	public JSONObject deleteKorisnik(int id) {
+		JSONObject o = new JSONObject();
 		try {
 			korisnikRepository.deleteById(id);
 		}
 		catch(TransactionSystemException ex) {
-			return ex.getRootCause().getMessage().toString();
+			o.put("message",ex.getRootCause().getMessage().toString());
+			return o;
 			
 		}
 		
-		return "Korisnik deleted";
+		o.put("message", "Korisnik deleted");
+		
+		return o;
 	}
 	
-public String updateKorisnik(Korisnik k) {
-		
+public JSONObject updateKorisnik(Korisnik k) {
+		JSONObject o = new JSONObject();
 		try {
 			korisnikRepository.save(k);
 		}
 		catch(TransactionSystemException ex) {
-			return ex.getRootCause().getMessage().toString();
+			o.put("message",ex.getRootCause().getMessage().toString());
+			return o;
 			
 		}
 		
-		return "Korisnik updated";
+		o.put("message", "Korisnik updated");
+		
+		return o;
 		
 	}
 

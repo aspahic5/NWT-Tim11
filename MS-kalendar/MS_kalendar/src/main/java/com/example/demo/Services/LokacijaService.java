@@ -2,6 +2,7 @@ package com.example.demo.Services;
 
 import java.util.Optional;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
@@ -23,41 +24,48 @@ public class LokacijaService {
 		return lokacijaRepository.findById(id);
 	}
 	
-	public String addLokacija(Lokacija l) {
-		
+	public JSONObject addLokacija(Lokacija l) {
+		JSONObject o = new JSONObject();
 		try {
 			lokacijaRepository.save(l);
 		}
 		catch(TransactionSystemException ex) {
-			return ex.getRootCause().getMessage().toString();
+			o.put("message",ex.getRootCause().getMessage().toString());
+			return o;
 			
 		}
 		
-		return "Lokacija saved";
+		o.put("message", "Lokacija saved");
+		return o;
 	}
 	
-	public String updateLokacija(Lokacija l) {
+	public JSONObject updateLokacija(Lokacija l) {
+		JSONObject o = new JSONObject();
 		try {
 			lokacijaRepository.save(l);
 		}
 		catch(TransactionSystemException ex) {
-			return ex.getRootCause().getMessage().toString();
+			o.put("message",ex.getRootCause().getMessage().toString());
+			return o;
 			
 		}
 		
-		return" Lokacija updated";
+		o.put("message", "Lokacija updated");
+		return o;
 	}
 	
-public String deleteLokacija(int id) {
-		
+public JSONObject deleteLokacija(int id) {
+		JSONObject o = new JSONObject();
 		try {
 			lokacijaRepository.deleteById(id);;
 		}
 		catch(TransactionSystemException ex) {
-			return ex.getRootCause().getMessage().toString();
+			o.put("message",ex.getRootCause().getMessage().toString());
+			return o;
 			
 		}
 		
-		return "Lokacija deleted";
+		o.put("message", "Lokacija deleted");
+		return o;
 	}
 }

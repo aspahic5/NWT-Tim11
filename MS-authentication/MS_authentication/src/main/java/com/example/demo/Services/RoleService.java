@@ -2,6 +2,7 @@ package com.example.demo.Services;
 
 import java.util.Optional;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
@@ -27,41 +28,53 @@ public class RoleService {
 		
 	}
 	
-	public String addRole(Role r) {
-		
+	public JSONObject addRole(Role r) {
+		JSONObject o = new JSONObject();
 		try {
 			roleRepository.save(r);
 		}
 		catch(TransactionSystemException ex) {
-			return ex.getRootCause().getMessage().toString();
+			o.put("message",ex.getRootCause().getMessage().toString());
+			return o;
 			
 		}
 		
-		return "Role saved";
+		o.put("message", "Role saved");
+		
+		return o;
 		
 	}
 
 	
-	public String updateRole(Role r) {
-		
+	public JSONObject updateRole(Role r) {
+		JSONObject o = new JSONObject();
 		try {
 		roleRepository.save(r);
 		}
 		catch(TransactionSystemException ex) {
-			return ex.getRootCause().getMessage().toString();
+			o.put("message",ex.getRootCause().getMessage().toString());
+			return o;
 			
 		}
-		return "Role updated";
+		
+		o.put("message", "Role updated");
+		
+		return o;
 	}
 	
-	public String deleteRole(int id) {
+	public JSONObject deleteRole(int id) {
+		JSONObject o = new JSONObject();
 		try {
 		roleRepository.deleteById(id);
 		}
 		catch(TransactionSystemException ex) {
-			return ex.getRootCause().getMessage().toString();
+			o.put("message",ex.getRootCause().getMessage().toString());
+			return o;
 			
 		}
-		return "Role deleted";
+		
+		o.put("message", "Role deleted");
+		
+		return o;
 	}
 }

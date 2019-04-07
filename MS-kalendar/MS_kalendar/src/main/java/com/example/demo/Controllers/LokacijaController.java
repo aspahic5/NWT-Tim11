@@ -2,6 +2,7 @@ package com.example.demo.Controllers;
 
 import java.util.Optional;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,30 +21,30 @@ public class LokacijaController {
 	@Autowired
 	public LokacijaService lokacijaService;
 	
-	@RequestMapping(value="/getlokacija/{id}",method=RequestMethod.GET)
+	@RequestMapping(value="/lokacija/{id}",method=RequestMethod.GET)
 	public Optional<Lokacija> Lokacija(@PathVariable int id){
 		return lokacijaService.findById(id);
 	}
 	
-	@RequestMapping(value="/getlokacije",method=RequestMethod.GET)
+	@RequestMapping(value="/lokacije",method=RequestMethod.GET)
 	public Iterable<Lokacija> Lokacije(){
 		return lokacijaService.findAll();
 	}
 	
-	@RequestMapping(value="/updatelokacija",method=RequestMethod.POST)
-	public String updateLokacija(@RequestBody Lokacija l ){
+	@RequestMapping(value="/lokacija",method=RequestMethod.POST)
+	public JSONObject updateLokacija(@RequestBody Lokacija l ){
 		return lokacijaService.updateLokacija(l);
 	}
 	
-	@RequestMapping(value="/deletelokacija/{id}",method=RequestMethod.DELETE)
-	public String deleteLokacija(@PathVariable int id){
+	@RequestMapping(value="/lokacija/{id}",method=RequestMethod.DELETE)
+	public JSONObject deleteLokacija(@PathVariable int id){
 		Optional<Lokacija> l=lokacijaService.findById(id);
-		if(!l.isPresent())return "ne postoji lokacija sa datim id identifikatorom";
+		if(!l.isPresent())return new JSONObject().put("message","ne postoji lokacija sa datim id identifikatorom");
 		return lokacijaService.deleteLokacija(id);
 	}
 	
-	@RequestMapping(value="/addlokacija/{name}",method=RequestMethod.PUT)
-	public String addLokacija(@PathVariable String name ){
+	@RequestMapping(value="/lokacija/{name}",method=RequestMethod.PUT)
+	public JSONObject addLokacija(@PathVariable String name ){
 		return lokacijaService.addLokacija(new Lokacija(name));
 	}
 
