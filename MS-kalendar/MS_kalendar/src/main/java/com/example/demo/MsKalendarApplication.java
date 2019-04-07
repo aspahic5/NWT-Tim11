@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import com.example.demo.Entities.Biljka;
 import com.example.demo.Entities.Lokacija;
 import com.example.demo.Services.BiljkaService;
 import com.example.demo.Services.LokacijaService;
 
+@EnableDiscoveryClient
 @SpringBootApplication
 public class MsKalendarApplication implements CommandLineRunner {
 	

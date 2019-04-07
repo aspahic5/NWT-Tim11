@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 import com.example.demo.Entities.Kosnica;
 import com.example.demo.Entities.Maticna_mlijec;
@@ -23,6 +24,7 @@ import com.example.demo.Services.RashodiService;
 import com.example.demo.Services.UnosService;
 import com.example.demo.Services.VrcanjeService;
 
+@EnableDiscoveryClient
 @SpringBootApplication
 public class MsProizvodnjaApplication implements CommandLineRunner{
 
