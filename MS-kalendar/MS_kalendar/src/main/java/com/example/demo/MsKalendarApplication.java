@@ -9,13 +9,14 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 import com.example.demo.Entities.Biljka;
 import com.example.demo.Entities.Lokacija;
 import com.example.demo.Services.BiljkaService;
 import com.example.demo.Services.LokacijaService;
 
-@EnableDiscoveryClient
+@EnableEurekaClient
 @SpringBootApplication
 public class MsKalendarApplication implements CommandLineRunner {
 	

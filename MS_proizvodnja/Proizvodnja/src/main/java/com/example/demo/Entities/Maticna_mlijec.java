@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
@@ -35,8 +36,8 @@ public class Maticna_mlijec {
 		this.kmkg = kmkg;
 	}
 	
-	@ManyToMany
-    Set<Kosnica> kosnice;
+	@ManyToOne
+    Kosnica kosnice;
 
 
 	public int getId() {
@@ -54,12 +55,12 @@ public class Maticna_mlijec {
 	}
 
 
-	public Set<Kosnica> getKosnice() {
+	public Kosnica getKosnica() {
 		return kosnice;
 	}
 
 
-	public Maticna_mlijec(double kolicina, double kmkg, Set<Kosnica> kosnice) {
+	public Maticna_mlijec(double kolicina, double kmkg, Kosnica kosnice) {
 		super();
 		this.kolicina = kolicina;
 		this.kmkg = kmkg;

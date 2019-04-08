@@ -1,5 +1,7 @@
 package com.example.demo.Controllers;
 
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 
 import org.json.JSONObject;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Entities.Korisnik;
@@ -20,6 +23,13 @@ public class KorisnikController {
 	@Autowired
 	private KorisnikService korisnikService;
 	
+	@RequestMapping(value="/provjeri",method=RequestMethod.POST)
+	public String provjeri(@RequestPart("username") String username, @RequestPart("password") String password) {
+		
+		return korisnikService.provjeri(username, password).toString();
+	}
+	
+	
 	@RequestMapping("/Korisnik/{id}")
 	public Optional<Korisnik> getKorisnikByID(@PathVariable Integer id){
 		return korisnikService.getKorisnikById(id);
@@ -27,7 +37,6 @@ public class KorisnikController {
 
 	@RequestMapping(value="/Korisnik",method=RequestMethod.PUT)
 	public JSONObject addKorisnik(@RequestBody Korisnik k){
-		
 		Korisnik newk= new Korisnik(k.getIme(),k.getPrezime(),k.getUsername(),k.getPassword(),k.getBroj_telefona(),k.getRole());
 		
 		return korisnikService.addKorisnik(newk);

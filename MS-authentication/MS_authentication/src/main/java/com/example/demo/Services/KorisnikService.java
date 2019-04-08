@@ -19,6 +19,21 @@ public class KorisnikService {
 	private KorisnikRepository korisnikRepository;
 	
 	
+	public JSONObject provjeri(String username,String password) {
+		Korisnik k= korisnikRepository.provjeriKorisnik(username,password);
+		System.out.println(username+" "+password );
+		JSONObject n = new JSONObject();
+		if(k != null) {
+			n.put("id", k.getId());
+			n.put("prijavljen", true);
+		}
+		else {
+			n.put("id", -1);
+			n.put("prijavljen", false);
+		}
+		
+		return n;
+	}
 	
 	public Optional<Korisnik> getKorisnikById(int id) {
 		

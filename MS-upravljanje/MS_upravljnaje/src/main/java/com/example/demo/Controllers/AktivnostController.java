@@ -3,6 +3,7 @@ package com.example.demo.Controllers;
 import java.util.Optional;
 
 import com.example.demo.Entities.Aktivnost;
+import com.example.demo.Entities.Korisnik;
 import com.example.demo.Services.AktivnostService;
 
 import org.json.JSONObject;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 
 @RestController
@@ -19,6 +21,9 @@ public class AktivnostController {
 
     @Autowired
     AktivnostService aktivnostService;
+    
+    @Autowired
+    private RestTemplate restTemplate;
 
     @RequestMapping(value = "/DajSveAktivnosti", method = RequestMethod.GET)
     public Iterable<Aktivnost> getAllAktivnosti() {
@@ -27,11 +32,13 @@ public class AktivnostController {
 
     @RequestMapping(value = "/Aktivnost/{id}", method = RequestMethod.GET)
     public Optional<Aktivnost> getAktivnostById(@PathVariable int id) {
+    	
         return aktivnostService.findById(id);
     }
 
     @RequestMapping(value="/Aktivnost/{idk}", method=RequestMethod.POST)
     public String createAktivnost(@RequestBody Aktivnost a, @PathVariable int idk) {
+    	
         return aktivnostService.addAktivnost(a, idk);
     }
 
