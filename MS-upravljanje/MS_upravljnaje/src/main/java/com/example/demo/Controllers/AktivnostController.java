@@ -1,12 +1,15 @@
 package com.example.demo.Controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Optional;
 
 import com.example.demo.Entities.Aktivnost;
 import com.example.demo.Entities.Korisnik;
 import com.example.demo.Services.AktivnostService;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +64,14 @@ public class AktivnostController {
     	catch(Exception e) {
     		return e.getMessage().toString();
     	}
-    	return aktivnostService.findAll().toString();
+    	Iterable<Aktivnost> a = aktivnostService.findAll();
+    	ArrayList<Aktivnost> aktivnosti = new ArrayList<Aktivnost>();
+    	Iterator itr = a.iterator();
+    	while(itr.hasNext()) {
+    		aktivnosti.add((Aktivnost) itr.next());
+    	}
+    	String json = new Gson().toJson(aktivnosti);
+    	return json; 
     	
     }
 
@@ -73,29 +83,34 @@ public class AktivnostController {
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return aktivnostService.findById(id).toString();
+    	JSONObject o1 = new JSONObject(aktivnostService.findById(id).get());
+        return o1.toString();
     }
 
     @RequestMapping(value="/Aktivnost/{idk}", method=RequestMethod.POST)
-    public String createAktivnost(@PathVariable("Aktivnost") Aktivnost a, @PathVariable int idk, @RequestPart("username") String username, @RequestPart("password") String password) {
+    public String createAktivnost(@RequestPart("Aktivnost") String a, @PathVariable int idk, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         	}
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return aktivnostService.addAktivnost(a, idk);
+    	JSONObject o1 = new JSONObject(a);
+    	Aktivnost aktivnost = new Aktivnost(o1.getString("mjesec"),o1.getString("aktivnost"),o1.getInt("uradjeno"));
+        return aktivnostService.addAktivnost(aktivnost, idk);
     }
 
     @RequestMapping(value="/Aktivnost/{id}", method=RequestMethod.PUT)
-    public String updateAktivnost(@PathVariable int id, @RequestPart("Aktivnost") Aktivnost a, @RequestPart("username") String username, @RequestPart("password") String password) {
+    public String updateAktivnost(@PathVariable int id, @RequestPart("Aktivnost") String a, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         	}
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return aktivnostService.updateAktivnost(id, a);
+    	JSONObject o1 = new JSONObject(a);
+    	Aktivnost aktivnost = new Aktivnost(o1.getString("mjesec"),o1.getString("aktivnost"),o1.getInt("uradjeno"));
+        return aktivnostService.updateAktivnost(id, aktivnost);
     }
 
     @RequestMapping(value="/Aktivnost/{id}", method=RequestMethod.DELETE)

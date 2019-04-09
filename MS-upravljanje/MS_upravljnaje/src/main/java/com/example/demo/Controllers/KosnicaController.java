@@ -68,7 +68,8 @@ public class KosnicaController {
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-        return kosnicaService.findById(id).toString();
+    	JSONObject o1 = new JSONObject(kosnicaService.findById(id).get());
+        return o1.toString();
     }
 
     @RequestMapping(value="/Kosnica", method=RequestMethod.POST)
