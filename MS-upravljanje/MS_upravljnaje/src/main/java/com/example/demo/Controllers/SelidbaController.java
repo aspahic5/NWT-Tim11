@@ -1,11 +1,13 @@
 package com.example.demo.Controllers;
 
+import java.sql.Date;
 import java.util.Optional;
 
 import javax.validation.Validator;
 
 import com.example.demo.Entities.Selidba;
 import com.example.demo.Services.SelidbaService;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +62,7 @@ public class SelidbaController {
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-        return selidbaServis.findAll().toString();
+    	return new Gson().toJson(selidbaServis.findAll());
     }
 
     @RequestMapping(value = "/Selidba/{id}", method = RequestMethod.OPTIONS)
@@ -71,18 +73,21 @@ public class SelidbaController {
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-        return selidbaServis.findById(id).toString();
+    	JSONObject o1 = new JSONObject(selidbaServis.findById(id).get());
+        return o1.toString();
     }
 
     @RequestMapping(value = "/Selidba/{idk}", method = RequestMethod.POST)
-    public String createSelidba(@RequestPart("Selidba") Selidba s, @PathVariable int idk, @RequestPart("username") String username, @RequestPart("password") String password) {
+    public String createSelidba( @PathVariable int idk, @RequestPart("Selidba") String s, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         }
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-        return selidbaServis.addSelidba(s, idk);
+    	JSONObject o1 = new JSONObject(s);
+    	Selidba s1 = new Selidba(o1.getInt("brojkosnica"), o1.getString("lokacija"), Date.valueOf(o1.getString("pocetak")), Date.valueOf(o1.getString("kraj")), o1.getDouble("dobit"));
+        return selidbaServis.addSelidba(s1, idk);
     }
 
     @RequestMapping(value="/Selidba/{id}", method=RequestMethod.PUT)
@@ -93,7 +98,9 @@ public class SelidbaController {
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-        return selidbaServis.updateSelidba(id, s);
+    	JSONObject o1 = new JSONObject(s);
+    	Selidba s1 = new Selidba(o1.getInt("brojkosnica"), o1.getString("lokacija"), Date.valueOf(o1.getString("pocetak")), Date.valueOf(o1.getString("kraj")), o1.getDouble("dobit"));
+        return selidbaServis.updateSelidba(id, s1);
     }
     
     @RequestMapping(value="/Selidba/{id}", method=RequestMethod.DELETE)

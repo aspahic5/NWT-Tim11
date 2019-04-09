@@ -39,7 +39,7 @@ public class Kosnica {
     @Column(name = "kosnica_id", unique = true, nullable = false)
     private int id;
 
-    @Column( name = "vlasnik_id", unique = true, nullable = false)
+    @Column( name = "vlasnik_id", unique = false, nullable = false)
     private int vlasnik_id;
 
     @ManyToOne
