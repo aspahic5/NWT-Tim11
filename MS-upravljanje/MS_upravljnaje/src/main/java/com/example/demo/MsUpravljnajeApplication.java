@@ -91,12 +91,7 @@ public class MsUpravljnajeApplication implements CommandLineRunner {
 		} catch(Exception e) {
 			e.printStackTrace();
 		} */
-<<<<<<< HEAD
-		
-		
-=======
-		System.out.println(kosnicaService.addKosnicaToKosnica(46, 44));
->>>>>>> 1a3f3533b0fa02851f763cbb4e975d10fde5b92b
+
 		
 	}
 
