@@ -209,4 +209,7 @@ public class KosnicaService {
         o1.put("poruka",  "Košnica uspješno obrisana");
         return o1.toString();
     }
+    public  Iterable<Kosnica> getKosniceOdVlasnika(int idv) {
+    	return kosnicarepository.dajKosniceOdVlasnika(idv);
+    }
 }

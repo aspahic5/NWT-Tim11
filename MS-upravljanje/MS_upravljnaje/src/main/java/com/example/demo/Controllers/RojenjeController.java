@@ -1,9 +1,11 @@
 package com.example.demo.Controllers;
 
+import java.sql.Date;
 import java.util.Optional;
 
 import com.example.demo.Entities.Rojenje;
 import com.example.demo.Services.RojenjeService;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +59,7 @@ public class RojenjeController {
     	catch(Exception e) {
     		return e.getMessage().toString();
     	}
-        return rojenjeService.findAll().toString();
+    	return new Gson().toJson(rojenjeService.findAll()); 
     }
 
     @RequestMapping(value = "/Rojenje/{id}", method = RequestMethod.OPTIONS)
@@ -68,29 +70,34 @@ public class RojenjeController {
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-        return rojenjeService.findById(id).toString();
+    	JSONObject o1 = new JSONObject(rojenjeService.findById(id).get());
+        return o1.toString();
     }
 
     @RequestMapping(value="/Rojenje/{idk}", method=RequestMethod.POST)
-    public String createRojenje(@RequestPart("Rojenje") Rojenje r, @PathVariable int idk, @RequestPart("username") String username, @RequestPart("password") String password) {
+    public String createRojenje(@PathVariable int idk, @RequestPart("Rojenje") String r, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         }
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-        return rojenjeService.addRojenje(r, idk);
+    	JSONObject o1 = new JSONObject(r);
+    	Rojenje r1 = new Rojenje(null, o1.getInt("brojmaticnjaka"), Date.valueOf(o1.getString("starostmaticnjaka")), o1.getString("tipmaticnjaka"), o1.getString("komentar"));
+        return rojenjeService.addRojenje(r1, idk);
     }
 
     @RequestMapping(value = "/Rojenje/{id}", method=RequestMethod.PUT)
-    public String updateRojenje(@PathVariable int id, @RequestPart Rojenje r, @RequestPart("username") String username, @RequestPart("password") String password) {
+    public String updateRojenje(@PathVariable int id, @RequestPart("Rojenje") String r, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
     		JSONObject o=provjeri(username,password);
         }
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-        return rojenjeService.updateRojenje(id, r);
+    	JSONObject o1 = new JSONObject(r);
+    	Rojenje r1 = new Rojenje(null, o1.getInt("brojmaticnjaka"), Date.valueOf(o1.getString("starostmaticnjaka")), o1.getString("tipmaticnjaka"), o1.getString("komentar"));
+        return rojenjeService.updateRojenje(id, r1);
     }
     
     @RequestMapping(value = "/Rojenje/{id}", method=RequestMethod.DELETE)

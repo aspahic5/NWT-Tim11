@@ -1,9 +1,14 @@
 package com.example.demo.Controllers;
 
+import java.sql.Date;
 import java.util.Optional;
+import java.util.Set;
 
+import com.example.demo.Entities.Aktivnost;
 import com.example.demo.Entities.Kosnica;
+import com.example.demo.Entities.Selidba;
 import com.example.demo.Services.KosnicaService;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +48,7 @@ public class KosnicaController {
     	ResponseEntity<String> response = restTemplate.postForEntity("http://autentifikacija/provjeri", requestEntity, String.class);
     	JSONObject o=new JSONObject(response.getBody().toString());
     	if(!o.getBoolean("prijavljen")) {
-    		throw new Exception("{\"message\":\"Pogresan username ili password \"}");
+    		throw new Exception("{\"message\":\"Pogresan username ili password\"}");
     	}
     	
     	return o;
@@ -57,7 +62,7 @@ public class KosnicaController {
     	catch(Exception e) {
     		return e.getMessage().toString();
     	}
-        return kosnicaService.findAll().toString();
+        return new Gson().toJson(kosnicaService.findAll()); 
     }
 
     @RequestMapping(value = "/Kosnica/{id}", method = RequestMethod.OPTIONS)
@@ -73,14 +78,16 @@ public class KosnicaController {
     }
 
     @RequestMapping(value="/Kosnica", method=RequestMethod.POST)
-    public String createKosnica(@RequestPart("Kosnica") Kosnica k, @RequestPart("username") String username, @RequestPart("password") String password) {
+    public String createKosnica(@RequestPart("Kosnica") String k, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         }
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-        return kosnicaService.addKosnica(k);
+    	JSONObject o1 = new JSONObject(k);
+    	Kosnica k1 = new Kosnica(o1.getInt("vlasnik_id"), Date.valueOf(o1.getString("maticagod")), o1.getInt("brojramova"), o1.getInt("brojnastavaka"), o1.getDouble("kolstimulansa"), o1.getString("tipstimulansa"), o1.getInt("brojhanemanki"), o1.getString("komentar"), null, null, null); 
+        return kosnicaService.addKosnica(k1);
     }
 
     @RequestMapping(value="/SelidbaNaKosnicu/{id}/{ids}", method=RequestMethod.PUT)
@@ -118,14 +125,16 @@ public class KosnicaController {
     }
     
     @RequestMapping(value="/Kosnica/{id}", method = RequestMethod.PUT)
-    public String updateKosnica(@RequestPart("Kosnica") Kosnica k, @PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
+    public String updateKosnica(@RequestPart("Kosnica") String k, @PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         }
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-        return kosnicaService.updateKosnica(id, k);
+    	JSONObject o1 = new JSONObject(k);
+    	Kosnica k1 = new Kosnica(o1.getInt("vlasnik_id"), Date.valueOf(o1.getString("maticagod")), o1.getInt("brojramova"), o1.getInt("brojnastavaka"), o1.getDouble("kolstimulansa"), o1.getString("tipstimulansa"), o1.getInt("brojhanemanki"), o1.getString("komentar"), null, null, null); 
+        return kosnicaService.updateKosnica(id, k1);
     }
 
     @RequestMapping(value="/Kosnica/{id}", method=RequestMethod.DELETE)
@@ -139,4 +148,14 @@ public class KosnicaController {
         return kosnicaService.deleteKosnica(id);
     }
     
+    @RequestMapping(value="/Kosnica/{idv}", method=RequestMethod.PATCH)
+	public String getKosniceOdVlasnika(@PathVariable int idv, @RequestPart("username") String username, @RequestPart("password") String password) {
+    	try {
+        	JSONObject o=provjeri(username,password);
+        }
+        catch(Exception e) {
+        	return e.getMessage().toString();
+        }
+    	 return new Gson().toJson(kosnicaService.getKosniceOdVlasnika(idv)); 
+	}
 }
