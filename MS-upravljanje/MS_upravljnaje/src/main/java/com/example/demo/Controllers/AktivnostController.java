@@ -77,7 +77,7 @@ public class AktivnostController {
     }
 
     @RequestMapping(value="/Aktivnost/{idk}", method=RequestMethod.POST)
-    public String createAktivnost(@RequestBody Aktivnost a, @PathVariable int idk, @RequestPart("username") String username, @RequestPart("password") String password) {
+    public String createAktivnost(@PathVariable("Aktivnost") Aktivnost a, @PathVariable int idk, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         	}
