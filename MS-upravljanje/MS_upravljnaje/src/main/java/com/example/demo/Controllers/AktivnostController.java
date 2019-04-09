@@ -65,25 +65,47 @@ public class AktivnostController {
     	
     }
 
-    @RequestMapping(value = "/Aktivnost/{id}", method = RequestMethod.GET)
-    public Optional<Aktivnost> getAktivnostById(@PathVariable int id) {
-    	
-        return aktivnostService.findById(id);
+    @RequestMapping(value = "/Aktivnost/{id}", method = RequestMethod.OPTIONS)
+    public String getAktivnostById(@PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
+    	try {
+        	JSONObject o=provjeri(username,password);
+        	}
+        	catch(Exception e) {
+        		return e.getMessage().toString();
+        	}
+        return aktivnostService.findById(id).toString();
     }
 
     @RequestMapping(value="/Aktivnost/{idk}", method=RequestMethod.POST)
-    public String createAktivnost(@RequestBody Aktivnost a, @PathVariable int idk) {
-    	
+    public String createAktivnost(@PathVariable("Aktivnost") Aktivnost a, @PathVariable int idk, @RequestPart("username") String username, @RequestPart("password") String password) {
+    	try {
+        	JSONObject o=provjeri(username,password);
+        	}
+        	catch(Exception e) {
+        		return e.getMessage().toString();
+        	}
         return aktivnostService.addAktivnost(a, idk);
     }
 
     @RequestMapping(value="/Aktivnost/{id}", method=RequestMethod.PUT)
-    public String updateAktivnost(@PathVariable int id, @RequestBody Aktivnost a) {
+    public String updateAktivnost(@PathVariable int id, @RequestPart("Aktivnost") Aktivnost a, @RequestPart("username") String username, @RequestPart("password") String password) {
+    	try {
+        	JSONObject o=provjeri(username,password);
+        	}
+        	catch(Exception e) {
+        		return e.getMessage().toString();
+        	}
         return aktivnostService.updateAktivnost(id, a);
     }
 
     @RequestMapping(value="/Aktivnost/{id}", method=RequestMethod.DELETE)
-    public String deleteAktivnost(@PathVariable int id) {
+    public String deleteAktivnost(@PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
+    	try {
+        	JSONObject o=provjeri(username,password);
+        	}
+        	catch(Exception e) {
+        		return e.getMessage().toString();
+        	}
         return aktivnostService.deleteAktivnost(id);
     }
     
