@@ -75,7 +75,7 @@ public class RojenjeController {
     }
 
     @RequestMapping(value="/Rojenje/{idk}", method=RequestMethod.POST)
-    public String createRojenje(@RequestPart("Rojenje") String r, @PathVariable int idk, @RequestPart("username") String username, @RequestPart("password") String password) {
+    public String createRojenje(@PathVariable int idk, @RequestPart("Rojenje") String r, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         }
@@ -88,7 +88,7 @@ public class RojenjeController {
     }
 
     @RequestMapping(value = "/Rojenje/{id}", method=RequestMethod.PUT)
-    public String updateRojenje(@PathVariable int id, @RequestPart Rojenje r, @RequestPart("username") String username, @RequestPart("password") String password) {
+    public String updateRojenje(@PathVariable int id, @RequestPart("Rojenje") String r, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
     		JSONObject o=provjeri(username,password);
         }

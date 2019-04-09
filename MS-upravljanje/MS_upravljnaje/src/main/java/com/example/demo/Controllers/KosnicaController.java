@@ -125,14 +125,16 @@ public class KosnicaController {
     }
     
     @RequestMapping(value="/Kosnica/{id}", method = RequestMethod.PUT)
-    public String updateKosnica(@RequestPart("Kosnica") Kosnica k, @PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
+    public String updateKosnica(@RequestPart("Kosnica") String k, @PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         }
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-        return kosnicaService.updateKosnica(id, k);
+    	JSONObject o1 = new JSONObject(k);
+    	Kosnica k1 = new Kosnica(o1.getInt("vlasnik_id"), Date.valueOf(o1.getString("maticagod")), o1.getInt("brojramova"), o1.getInt("brojnastavaka"), o1.getDouble("kolstimulansa"), o1.getString("tipstimulansa"), o1.getInt("brojhanemanki"), o1.getString("komentar"), null, null, null); 
+        return kosnicaService.updateKosnica(id, k1);
     }
 
     @RequestMapping(value="/Kosnica/{id}", method=RequestMethod.DELETE)
@@ -146,4 +148,14 @@ public class KosnicaController {
         return kosnicaService.deleteKosnica(id);
     }
     
+    @RequestMapping(value="/Kosnica/{idv}", method=RequestMethod.PATCH)
+	public String getKosniceOdVlasnika(@PathVariable int idv, @RequestPart("username") String username, @RequestPart("password") String password) {
+    	try {
+        	JSONObject o=provjeri(username,password);
+        }
+        catch(Exception e) {
+        	return e.getMessage().toString();
+        }
+    	 return new Gson().toJson(kosnicaService.getKosniceOdVlasnika(idv)); 
+	}
 }

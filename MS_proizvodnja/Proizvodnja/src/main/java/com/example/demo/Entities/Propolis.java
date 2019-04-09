@@ -44,7 +44,6 @@ public class Propolis {
 		return id;
 	}
 
-
 	public double getKolicina() {
 		return kolicina;
 	}

@@ -130,4 +130,5 @@ public class AktivnostService {
         o.put("poruka", "Aktivnost uspješno obrisana");
         return o.toString();
     }
+    
 }
