@@ -1,13 +1,7 @@
 package com.example.demo.Controllers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Optional;
 
 import com.example.demo.Entities.Aktivnost;
-import com.example.demo.Entities.Korisnik;
 import com.example.demo.Services.AktivnostService;
 import com.google.gson.Gson;
 
@@ -15,13 +9,11 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -64,14 +56,7 @@ public class AktivnostController {
     	catch(Exception e) {
     		return e.getMessage().toString();
     	}
-    	Iterable<Aktivnost> a = aktivnostService.findAll();
-    	ArrayList<Aktivnost> aktivnosti = new ArrayList<Aktivnost>();
-    	Iterator itr = a.iterator();
-    	while(itr.hasNext()) {
-    		aktivnosti.add((Aktivnost) itr.next());
-    	}
-    	String json = new Gson().toJson(aktivnosti);
-    	return json; 
+    	return new Gson().toJson(aktivnostService.findAll()); 
     	
     }
 
