@@ -7,43 +7,107 @@ import com.example.demo.Entities.Propolis;
 import com.example.demo.Services.MaticnaMlijecService;
 import com.example.demo.Services.PropolisService;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 
 @RestController
 public class Maticna_mlijecController {
 
+	
+	public JSONObject provjeri(String username,String password) throws Exception {
+		HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+    	MultiValueMap<String, Object> body= new LinkedMultiValueMap<>();
+    	body.add("username",username);
+    	body.add("password", password);
+    	
+    	HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
+    	 
+    	ResponseEntity<String> response = restTemplate.postForEntity("http://autentifikacija/provjeri", requestEntity, String.class);
+    	JSONObject o=new JSONObject(response.getBody().toString());
+    	if(!o.getBoolean("prijavljen")) {
+    		throw new Exception("{\"message\":\"Pogresan username ili password \"}");
+    	}
+    	
+    	return o;
+	}
+	
+	 @Autowired
+	 private RestTemplate restTemplate;
+	 
     @Autowired
     MaticnaMlijecService pS;
+    
+   
 
-    @RequestMapping(value = "/DajSveMaticne", method = RequestMethod.GET)
-    public Iterable<Maticna_mlijec> GetAllMaticne() {
-        return pS.findAll();
+    @RequestMapping(value = "/DajSveMaticne", method = RequestMethod.OPTIONS)
+    public String GetAllMaticne(@RequestPart("username") String username, @RequestPart("password") String password) {
+    	try {
+        	JSONObject o=provjeri(username,password);
+        	}
+        	catch(Exception e) {
+        		return e.getMessage().toString();
+        	}
+    	
+    	return pS.findAll().toString();
     }
 
-    @RequestMapping(value = "/DajMaticnu/{id}", method = RequestMethod.GET)
-    public Optional<Maticna_mlijec> getMaticnaById(@PathVariable int id) {
-        return pS.findById(id);
+    @RequestMapping(value = "/DajMaticnu/{id}", method = RequestMethod.OPTIONS)
+    public String getMaticnaById(@PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
+    	try {
+        	JSONObject o=provjeri(username,password);
+        	}
+        	catch(Exception e) {
+        		return e.getMessage().toString();
+        	}
+        return pS.findById(id).toString();
     }
 
     @RequestMapping(value="/DodajMaticnu/{id}", method=RequestMethod.POST)
-    public String createMaticna(@RequestBody Maticna_mlijec p, @PathVariable int id) {
-        return pS.addMaticna(p, id);
+    public String createMaticna(@RequestPart("json") Maticna_mlijec p, @PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
+    	try {
+        	JSONObject o=provjeri(username,password);
+        	}
+        	catch(Exception e) {
+        		return e.getMessage().toString();
+        	}
+        return pS.addMaticna(p, id).toString();
     }
 
     @RequestMapping(value="/AzurirajMaticnu/{id}", method = RequestMethod.PUT)
-    public String updateMaticna(@RequestBody Maticna_mlijec p, @PathVariable int id){
-        return pS.updateMaticna(p, id);
+    public String updateMaticna(@RequestPart("json") Maticna_mlijec p, @PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
+    	try {
+        	JSONObject o=provjeri(username,password);
+        	}
+        	catch(Exception e) {
+        		return e.getMessage().toString();
+        	}
+        return pS.updateMaticna(p, id).toString();
     }
 
     @RequestMapping(value="/ObrisiMaticnu/{id}", method=RequestMethod.DELETE)
-    public String deleteMaticna(@PathVariable int id) {
-        return pS.deleteMaticna(id);
+    public String deleteMaticna(@PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
+    	try {
+        	JSONObject o=provjeri(username,password);
+        	}
+        	catch(Exception e) {
+        		return e.getMessage().toString();
+        	}
+        return pS.deleteMaticna(id).toString();
     }
     
 }

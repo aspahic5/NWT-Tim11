@@ -36,26 +36,26 @@ public class KorisnikController {
 	}
 
 	@RequestMapping(value="/Korisnik",method=RequestMethod.PUT)
-	public JSONObject addKorisnik(@RequestBody Korisnik k){
+	public String addKorisnik(@RequestBody Korisnik k){
 		Korisnik newk= new Korisnik(k.getIme(),k.getPrezime(),k.getUsername(),k.getPassword(),k.getBroj_telefona(),k.getRole());
 		
-		return korisnikService.addKorisnik(newk);
+		return korisnikService.addKorisnik(newk).toString();
 		
 		
 	}
 	
 	@RequestMapping(value="/Korisnik/{id}",method=RequestMethod.DELETE)
-	public JSONObject deleteKorisnik(@PathVariable int id) {
+	public String deleteKorisnik(@PathVariable int id) {
 		Optional<Korisnik> k=korisnikService.getKorisnikById(id);
-		if(!k.isPresent())return new JSONObject().put("message","Ne postoji korisnik sa datim id identifikatorom");
-		return korisnikService.deleteKorisnik(id);
+		if(!k.isPresent())return new JSONObject().put("message","Ne postoji korisnik sa datim id identifikatorom").toString();
+		return korisnikService.deleteKorisnik(id).toString();
 	}
 
 	@RequestMapping(value="/Korisnik",method=RequestMethod.POST)
-	public JSONObject update(@RequestBody Korisnik k){
+	public String update(@RequestBody Korisnik k){
 		
 		
-		return korisnikService.updateKorisnik(k);
+		return korisnikService.updateKorisnik(k).toString();
 		
 		
 	}

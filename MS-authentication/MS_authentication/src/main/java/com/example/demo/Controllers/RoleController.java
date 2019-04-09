@@ -27,24 +27,24 @@ public class RoleController {
 	}
 	
 	@RequestMapping(value="/Role/{role}",method=RequestMethod.PUT)
-	public JSONObject addRole(@PathVariable String role){
+	public String addRole(@PathVariable String role){
 		
 		Role r=new Role(role.toString());
-		return roleService.addRole(r);
+		return roleService.addRole(r).toString();
 		
 		
 	}
 	
 	@RequestMapping(value="/Role/{id}",method=RequestMethod.DELETE)
-	public JSONObject deleteRole(@PathVariable int id) {
+	public String deleteRole(@PathVariable int id) {
 		Optional<Role> r=roleService.getRoleById(id);
-		if(!r.isPresent())return new JSONObject().put("message","Ne postoji rola sa datim id identifikatorom");
-		return roleService.deleteRole(id);
+		if(!r.isPresent())return new JSONObject().put("message","Ne postoji rola sa datim id identifikatorom").toString();
+		return roleService.deleteRole(id).toString();
 	}
 	
 	@RequestMapping(value="/Role",method=RequestMethod.POST)
-	public JSONObject updateRole(@RequestBody Role r) {
-		return roleService.updateRole(r);
+	public String updateRole(@RequestBody Role r) {
+		return roleService.updateRole(r).toString();
 	}
 	
 	
