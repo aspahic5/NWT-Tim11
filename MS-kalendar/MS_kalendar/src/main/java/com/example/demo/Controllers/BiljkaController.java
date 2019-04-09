@@ -1,5 +1,6 @@
 package com.example.demo.Controllers;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.json.JSONObject;
@@ -29,38 +30,45 @@ public class BiljkaController {
 		return biljkaService.findAll();
 	}
 	
+	@RequestMapping("/BiljkaLokacija/{lokacija}")
+	public ArrayList<Biljka> getBiljkaLokacija(@PathVariable String lokacija){
+		return biljkaService.biljkaLokacija(lokacija);
+	}
+	
 	@RequestMapping("/Biljka/{id}")
 	public Optional<Biljka> getBiljkaID(@PathVariable int id){
 		return biljkaService.findById(id);
 	}
 	
 	@RequestMapping(value="/Biljka/{id}", method= RequestMethod.DELETE )
-	public JSONObject deleteBiljka(@PathVariable int id) {
+	public String deleteBiljka(@PathVariable int id) {
 		Optional<Biljka> b=biljkaService.findById(id);
-		if(!b.isPresent())return new JSONObject().put("message","Ne postoji biljka sa datim id identifikatorom");
+		if(!b.isPresent())return new JSONObject().put("message","Ne postoji biljka sa datim id identifikatorom").toString();
 		return biljkaService.deleteBiljka(id);
 	}
 	
 	@RequestMapping(value="/Biljka", method= RequestMethod.PUT )
-	public JSONObject addBiljka(@RequestBody Biljka b) {
+	public String addBiljka(@RequestBody Biljka b) {
 		Iterable<Lokacija> Lokacije= b.getLokacije();
 		for (Lokacija l : Lokacije) {
+			System.out.println(l.getId()+" "+l.getLokcaija());
 			int id =l.getId();
 			Optional<Lokacija> ln=lokacijaService.findById(id);
-			if(!ln.isPresent() || !l.equals(ln) )return new JSONObject().put("message","ne postoje unesene lokacije");
+			if(!ln.isPresent())return new JSONObject().put("message","ne postoje unesene lokacije").toString();
 		}
+		
 		Biljka newb= new Biljka(b.getBiljka(),b.getPoc_mjesec(),b.getKraj_mjesec(),b.getLokacije());
 		
 		return biljkaService.addBiljka(newb);
 	}
 	
 	@RequestMapping(value="/Biljka", method= RequestMethod.POST )
-	public JSONObject updateBiljka(@RequestBody Biljka b) {
+	public String updateBiljka(@RequestBody Biljka b) {
 		Iterable<Lokacija> Lokacije= b.getLokacije();
 		for (Lokacija l : Lokacije) {
 			int id =l.getId();
 			Optional<Lokacija> ln=lokacijaService.findById(id);
-			if(!ln.isPresent() || !l.getLokcaija().equals(ln.get().getLokcaija()) )return new JSONObject().put("message","ne postoje unesene lokacije");
+			if(!ln.isPresent() || !l.getLokcaija().equals(ln.get().getLokcaija()) )return new JSONObject().put("message","ne postoje unesene lokacije").toString();
 		}
 		return biljkaService.updateBiljka(b);
 	}

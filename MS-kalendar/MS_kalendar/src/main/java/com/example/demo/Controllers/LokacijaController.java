@@ -32,19 +32,19 @@ public class LokacijaController {
 	}
 	
 	@RequestMapping(value="/lokacija",method=RequestMethod.POST)
-	public JSONObject updateLokacija(@RequestBody Lokacija l ){
+	public String updateLokacija(@RequestBody Lokacija l ){
 		return lokacijaService.updateLokacija(l);
 	}
 	
 	@RequestMapping(value="/lokacija/{id}",method=RequestMethod.DELETE)
-	public JSONObject deleteLokacija(@PathVariable int id){
+	public String deleteLokacija(@PathVariable int id){
 		Optional<Lokacija> l=lokacijaService.findById(id);
-		if(!l.isPresent())return new JSONObject().put("message","ne postoji lokacija sa datim id identifikatorom");
+		if(!l.isPresent())return new JSONObject().put("message","ne postoji lokacija sa datim id identifikatorom").toString();
 		return lokacijaService.deleteLokacija(id);
 	}
 	
 	@RequestMapping(value="/lokacija/{name}",method=RequestMethod.PUT)
-	public JSONObject addLokacija(@PathVariable String name ){
+	public String addLokacija(@PathVariable String name ){
 		return lokacijaService.addLokacija(new Lokacija(name));
 	}
 

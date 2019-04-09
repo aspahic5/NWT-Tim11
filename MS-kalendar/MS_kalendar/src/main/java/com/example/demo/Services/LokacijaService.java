@@ -24,48 +24,48 @@ public class LokacijaService {
 		return lokacijaRepository.findById(id);
 	}
 	
-	public JSONObject addLokacija(Lokacija l) {
+	public String addLokacija(Lokacija l) {
 		JSONObject o = new JSONObject();
 		try {
 			lokacijaRepository.save(l);
 		}
 		catch(TransactionSystemException ex) {
 			o.put("message",ex.getRootCause().getMessage().toString());
-			return o;
+			return o.toString();
 			
 		}
 		
 		o.put("message", "Lokacija saved");
-		return o;
+		return o.toString();
 	}
 	
-	public JSONObject updateLokacija(Lokacija l) {
+	public String updateLokacija(Lokacija l) {
 		JSONObject o = new JSONObject();
 		try {
 			lokacijaRepository.save(l);
 		}
 		catch(TransactionSystemException ex) {
 			o.put("message",ex.getRootCause().getMessage().toString());
-			return o;
+			return o.toString();
 			
 		}
 		
 		o.put("message", "Lokacija updated");
-		return o;
+		return o.toString();
 	}
 	
-public JSONObject deleteLokacija(int id) {
+public String deleteLokacija(int id) {
 		JSONObject o = new JSONObject();
 		try {
 			lokacijaRepository.deleteById(id);;
 		}
 		catch(TransactionSystemException ex) {
 			o.put("message",ex.getRootCause().getMessage().toString());
-			return o;
+			return o.toString();
 			
 		}
 		
 		o.put("message", "Lokacija deleted");
-		return o;
+		return o.toString();
 	}
 }

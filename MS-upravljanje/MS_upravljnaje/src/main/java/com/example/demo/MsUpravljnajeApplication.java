@@ -91,12 +91,7 @@ public class MsUpravljnajeApplication implements CommandLineRunner {
 		} catch(Exception e) {
 			e.printStackTrace();
 		} */
-		Aktivnost aktivnost1 = new Aktivnost("januar", "uradihjdtrnesto", 0);
 		
-		Aktivnost aktivnost2 = new Aktivnost("februar", "uradi nesto2", 0);
-		
-		System.out.println(aktivnostService.addAktivnost(aktivnost1,44));
-		System.out.println(aktivnostService.addAktivnost(aktivnost2,44));
 		
 		
 	}
