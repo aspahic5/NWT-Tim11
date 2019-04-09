@@ -91,7 +91,7 @@ public class MsUpravljnajeApplication implements CommandLineRunner {
 		} catch(Exception e) {
 			e.printStackTrace();
 		} */
-
+		
 		
 	}
 
