@@ -104,6 +104,32 @@ public class MsProizvodnjaApplication implements CommandLineRunner{
 		System.out.println(vrcanjeService.addVrcanje(v1));
 		System.out.println(vrcanjeService.addVrcanje(v2));
 		*/
+		Kosnica k1=new Kosnica(1);
+		Kosnica k2=new Kosnica(2);
+		
+		System.out.println(kosnicaService.addKosnica(k1));
+		System.out.println(kosnicaService.addKosnica(k2));
+		
+		Set<Kosnica> setKosnica1= new HashSet<Kosnica>(); 
+		Set<Kosnica> setKosnica2= new HashSet<Kosnica>(); 
+		
+		setKosnica1.add(k1);
+		
+		setKosnica2.add(k1);
+		setKosnica2.add(k2);
+		
+		
+		Rashodi r1=new Rashodi(123.0,setKosnica1);
+		Rashodi r2=new Rashodi(123.0,setKosnica2);
+		
+		System.out.println(rashodiService.addRashod(r1,1));
+		System.out.println(rashodiService.addRashod(r2,2));
+		
+		Maticna_mlijec mm1 = new Maticna_mlijec(1, 1000, setKosnica1);
+		Maticna_mlijec mm2 = new Maticna_mlijec(1.5, 1000, setKosnica2);
+		
+		System.out.println(mlijecService.addMaticna(mm1,1));
+		System.out.println(mlijecService.addMaticna(mm2,2));
 		
 		
 	}

@@ -1,5 +1,6 @@
 package com.example.demo.Services;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
@@ -29,7 +30,11 @@ public class RashodiService {
 	
 
 	public String addRashod(Rashodi k, int idk) {
-		if(!kR.findById(idk).isPresent()) return "Kosnica ne postoji";
+		JSONObject o = new JSONObject();
+		if(!kR.findById(idk).isPresent()){
+			 o.put("poruka", "Košnica ne postoji");
+			 return o.toString();
+		}
 		try {
 			kR.findById(idk).map(kosnica -> {
                 kosnica.setRashod(k);
@@ -38,17 +43,23 @@ public class RashodiService {
             });
 		}
 		catch (TransactionSystemException  ex) {
-            Throwable e = ex.getRootCause();
-            return e.getMessage();
+			o.put("poruka",ex.getRootCause().getMessage().toString());
+			return o.toString();
         } 
         catch (Exception e) {
-            return e.getMessage();
+            o.put("poruka", e.getMessage());
+			return o.toString();
         }
-		return "Rashod spremljen";
+		o.put("poruka", "Rashod spremljen");
+		return o.toString();
 	}
 
 	public String updateRashod(Rashodi k, int id){
-		if(!pR.findById(id).isPresent()) return "Nemoguće je unijeti podatke za rashod";
+		JSONObject o = new JSONObject();
+		if(!pR.findById(id).isPresent()){
+			o.put("poruka", "Nemoguće je unijeti podatke za rashod");
+			 return o.toString();
+		};
 		try{
 			pR.findById(id).map(rashod -> {
 				rashod.setCijena(k.getCijena());
@@ -56,24 +67,33 @@ public class RashodiService {
 			});
 		}
 		catch (TransactionSystemException  ex) {
-            Throwable e = ex.getRootCause();
-            return "Update Rashod error: " + e.getMessage();
+			Throwable e = ex.getRootCause();
+			o.put("Update Rashod error", e.getMessage());
+            return o.toString();
         }  
         catch(Exception e) {
-            return "Update Rashod error: " + e.toString();
-        }
-		return "Rashod promijenjen";
+            o.put("Update Rashod error", e.getMessage());
+            return o.toString();
+		}
+		o.put("poruka", "Rashod promijenjen");
+		return o.toString();
 	}
 
 	public String deleteRashod(int id){
-		if(!pR.findById(id).isPresent()) return "Nemoguće je obrisati podatke za rashod";
+		JSONObject o = new JSONObject();
+		if(!pR.findById(id).isPresent()){
+			o.put("poruka", "Nemoguće je obrisati podatke za rashod");
+			return o.toString();
+		} 
 		try{
 			pR.deleteById(id);
 		}
 		catch(Exception e){
-			return "delete Rashod error: " + e.toString();
+			o.put("delete Rashod error", e.getMessage());
+            return o.toString();
 		}
-		return "Rashod obrisan";
+		o.put("poruka", "Rashod obrisan");
+		return o.toString();
 	}
 
 }

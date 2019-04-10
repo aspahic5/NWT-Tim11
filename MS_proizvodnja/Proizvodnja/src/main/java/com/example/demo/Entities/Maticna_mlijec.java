@@ -36,8 +36,8 @@ public class Maticna_mlijec {
 		this.kmkg = kmkg;
 	}
 	
-	@ManyToOne
-    Kosnica kosnice;
+	@ManyToMany
+	Set<Kosnica> kosnice;
 
 
 	public int getId() {
@@ -55,16 +55,18 @@ public class Maticna_mlijec {
 	}
 
 
-	public Kosnica getKosnica() {
-		return kosnice;
-	}
 
-
-	public Maticna_mlijec(double kolicina, double kmkg, Kosnica kosnice) {
+	public Maticna_mlijec(double kolicina, double kmkg, Set<Kosnica> kosnice) {
 		super();
 		this.kolicina = kolicina;
 		this.kmkg = kmkg;
 		this.kosnice = kosnice;
+	}
+	
+	public Maticna_mlijec(double kolicina, double kmkg) {
+		super();
+		this.kolicina = kolicina;
+		this.kmkg = kmkg;
 	}
 	
 	public Maticna_mlijec() {

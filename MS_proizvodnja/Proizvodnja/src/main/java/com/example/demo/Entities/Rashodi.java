@@ -54,6 +54,11 @@ public class Rashodi {
 		this.kosnice = kosnice;
 	}
 	
+	public Rashodi(double cijena) {
+		super();
+		this.cijena = cijena;
+	}
+	
 	public Rashodi() {
 		
 	}

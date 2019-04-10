@@ -1,5 +1,6 @@
 package com.example.demo.Services;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
@@ -31,7 +32,11 @@ public class PropolisService {
 	
 
 	public String addPropolis(Propolis k, int idk) {
-		if(!kR.findById(idk).isPresent()) return "Kosnica ne postoji";
+		JSONObject o = new JSONObject();
+		if(!kR.findById(idk).isPresent()){
+			 o.put("poruka", "Košnica ne postoji");
+			 return o.toString();
+		}
 		try {
 			kR.findById(idk).map(kosnica -> {
                 kosnica.setPropolis(k);
@@ -40,17 +45,23 @@ public class PropolisService {
             });
 		}
 		catch (TransactionSystemException  ex) {
-            Throwable e = ex.getRootCause();
-            return e.getMessage();
+			o.put("poruka",ex.getRootCause().getMessage().toString());
+			return o.toString();
         } 
         catch (Exception e) {
-            return e.getMessage();
+            o.put("poruka", e.getMessage());
+			return o.toString();
         }
-		return "Propolis spremljen";
+		o.put("poruka", "Propolis spremljen");
+		return o.toString();
 	}
 
 	public String updatePropolis(Propolis k, int id){
-		if(!pR.findById(id).isPresent()) return "Nemoguće je unijeti podatke za propolis";
+		JSONObject o = new JSONObject();
+		if(!pR.findById(id).isPresent()){
+			o.put("poruka", "Nemoguće je unijeti podatke za propolis");
+			 return o.toString();
+		};
 		try{
 			pR.findById(id).map(propolis -> {
 				propolis.setKolicina(k.getKolicina());
@@ -59,24 +70,33 @@ public class PropolisService {
 			});
 		}
 		catch (TransactionSystemException  ex) {
-            Throwable e = ex.getRootCause();
-            return "Update Propolis error: " + e.getMessage();
+			Throwable e = ex.getRootCause();
+			o.put("Update Propolis error", e.getMessage());
+            return o.toString();
         }  
         catch(Exception e) {
-            return "Update Propolis error: " + e.toString();
-        }
-		return "Propolis promijenjen";
+            o.put("Update Propolis error", e.getMessage());
+            return o.toString();
+		}
+		o.put("poruka", "Propolis promijenjen");
+		return o.toString();
 	}
 
 	public String deletePropolis(int id){
-		if(!pR.findById(id).isPresent()) return "Nemoguće je obrisati podatke za propolis";
+		JSONObject o = new JSONObject();
+		if(!pR.findById(id).isPresent()){
+			o.put("poruka", "Nemoguće je obrisati podatke za propolis");
+			return o.toString();
+		} 
 		try{
 			pR.deleteById(id);
 		}
 		catch(Exception e){
-			return "delete Propolis error: " + e.toString();
+			o.put("delete Propolis error", e.getMessage());
+            return o.toString();
 		}
-		return "Propolis obrisan";
+		o.put("poruka", "Propolis obrisan");
+		return o.toString();
 	}
 	
 }

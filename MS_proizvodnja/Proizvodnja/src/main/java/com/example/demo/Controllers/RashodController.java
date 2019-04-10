@@ -2,8 +2,10 @@ package com.example.demo.Controllers;
 
 import java.util.Optional;
 
+import com.example.demo.Entities.Maticna_mlijec;
 import com.example.demo.Entities.Rashodi;
 import com.example.demo.Services.RashodiService;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +58,10 @@ public class RashodController {
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return pS.findAll().toString();
+    	return new Gson().toJson(pS.findAll());
     }
 
-    @RequestMapping(value = "/DajRashod/{id}", method = RequestMethod.OPTIONS)
+    @RequestMapping(value = "/Rashod/{id}", method = RequestMethod.OPTIONS)
     public String getPRashodById(@PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
@@ -67,32 +69,37 @@ public class RashodController {
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return pS.findById(id).toString();
+    	JSONObject o1 = new JSONObject(pS.findById(id).get());
+        return o1.toString();
     }
 
-    @RequestMapping(value="/DodajRashod/{id}", method=RequestMethod.POST)
-    public String createRashod(@RequestPart("json") Rashodi p, @PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
+    @RequestMapping(value="/Rashod/{id}", method=RequestMethod.POST)
+    public String createRashod(@RequestPart("json") String p, @PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         	}
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return pS.addRashod(p, id);
+    	JSONObject o1 = new JSONObject(p);
+    	Rashodi m = new Rashodi(o1.getDouble("cijena"));
+        return pS.addRashod(m, id);
     }
 
-    @RequestMapping(value="/AzurirajRashod/{id}", method = RequestMethod.PUT)
-    public String updateRashod(@RequestPart("json") Rashodi p, @PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
+    @RequestMapping(value="/Rashod/{id}", method = RequestMethod.PUT)
+    public String updateRashod(@RequestPart("json") String p, @PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         	}
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return pS.updateRashod(p, id);
+    	JSONObject o1 = new JSONObject(p);
+    	Rashodi m = new Rashodi(o1.getDouble("cijena"));
+        return pS.updateRashod(m, id);
     }
 
-    @RequestMapping(value="/ObrisiRashod/{id}", method=RequestMethod.DELETE)
+    @RequestMapping(value="/Rashod/{id}", method=RequestMethod.DELETE)
     public String deleteRashod(@PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);

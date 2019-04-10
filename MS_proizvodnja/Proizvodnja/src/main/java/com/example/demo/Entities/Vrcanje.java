@@ -64,6 +64,13 @@ public class Vrcanje {
 		this.kmkg = kmkg;
 		this.kosnice = kosnice;
 	}
+	
+	public Vrcanje(double kolicina, double kmkg) {
+		super();
+		this.kolicina = kolicina;
+		this.kmkg = kmkg;
+	}
+	
 	public Vrcanje() {
 		
 	}

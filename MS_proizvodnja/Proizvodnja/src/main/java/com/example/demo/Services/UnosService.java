@@ -1,5 +1,6 @@
 package com.example.demo.Services;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
@@ -30,8 +31,11 @@ public class UnosService {
 	}
 	
 	public String addUnos(Unos k, int idk) {
-		
-		if(!kR.findById(idk).isPresent()) return "Kosnica ne postoji";
+		JSONObject o = new JSONObject();
+		if(!kR.findById(idk).isPresent()){
+			 o.put("poruka", "Košnica ne postoji");
+			 return o.toString();
+		}
 		try {
 			kR.findById(idk).map(kosnica -> {
                 k.setKosnica(kosnica);
@@ -40,17 +44,23 @@ public class UnosService {
             });
 		}
 		catch (TransactionSystemException  ex) {
-            Throwable e = ex.getRootCause();
-            return e.getMessage();
+			o.put("poruka",ex.getRootCause().getMessage().toString());
+			return o.toString();
         } 
         catch (Exception e) {
-            return e.getMessage();
+            o.put("poruka", e.getMessage());
+			return o.toString();
         }
-		return "Unos spremljen";
+		o.put("poruka", "Unos spremljen");
+		return o.toString();
 	}
 
 	public String updateUnos(Unos k, int id){
-		if(!pR.findById(id).isPresent()) return "Nemoguće je unijeti podatke za unos";
+		JSONObject o = new JSONObject();
+		if(!pR.findById(id).isPresent()){
+			o.put("poruka", "Nemoguće je unijeti podatke za unos");
+			 return o.toString();
+		};
 		try{
 			pR.findById(id).map(unos -> {
 				unos.setKolicina(k.getKolicina());
@@ -59,24 +69,33 @@ public class UnosService {
 			});
 		}
 		catch (TransactionSystemException  ex) {
-            Throwable e = ex.getRootCause();
-            return "Update Unos error: " + e.getMessage();
+			Throwable e = ex.getRootCause();
+			o.put("Update Unos error", e.getMessage());
+            return o.toString();
         }  
         catch(Exception e) {
-            return "Update Unos error: " + e.toString();
-        }
-		return "Unos promijenjen";
+            o.put("Update Unos error", e.getMessage());
+            return o.toString();
+		}
+		o.put("poruka", "Unos promijenjen");
+		return o.toString();
 	}
 
 	public String deleteUnos(int id){
-		if(!pR.findById(id).isPresent()) return "Nemoguće je obrisati podatke za unos";
+		JSONObject o = new JSONObject();
+		if(!pR.findById(id).isPresent()){
+			o.put("poruka", "Nemoguće je obrisati podatke za unos");
+			return o.toString();
+		} 
 		try{
 			pR.deleteById(id);
 		}
 		catch(Exception e){
-			return "delete Unos error: " + e.toString();
+			o.put("delete Unos error", e.getMessage());
+            return o.toString();
 		}
-		return "Unos obrisan";
+		o.put("poruka", "Unos obrisan");
+		return o.toString();
 	}
 	
 }

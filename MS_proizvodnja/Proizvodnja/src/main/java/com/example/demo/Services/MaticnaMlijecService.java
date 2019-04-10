@@ -10,6 +10,8 @@ import com.example.demo.Entities.Maticna_mlijec;
 import com.example.demo.Repositories.KosnicaRepository;
 import com.example.demo.Repositories.MaticnaMlijecRepository;
 
+import org.json.JSONObject;
+
 @Service
 public class MaticnaMlijecService {
 	
@@ -29,8 +31,11 @@ public class MaticnaMlijecService {
 	}
 	
 	public String addMaticna(Maticna_mlijec m, int idk) {
-		
-		if(!kR.findById(idk).isPresent()) return "Kosnica ne postoji";
+		JSONObject o = new JSONObject();
+		if(!kR.findById(idk).isPresent()){
+			 o.put("poruka", "Košnica ne postoji");
+			 return o.toString();
+		}
 		try {
 			kR.findById(idk).map(kosnica -> {
                 kosnica.setMaticna(m);
@@ -39,17 +44,23 @@ public class MaticnaMlijecService {
             });
 		}
 		catch (TransactionSystemException  ex) {
-            Throwable e = ex.getRootCause();
-            return e.getMessage();
+			o.put("poruka",ex.getRootCause().getMessage().toString());
+			return o.toString();
         } 
         catch (Exception e) {
-            return e.getMessage();
+            o.put("poruka", e.getMessage());
+			return o.toString();
         }
-		return "Matična mliječ spremljena";
+		o.put("poruka", "Matična mliječ spremljena");
+		return o.toString();
 	}
 
 	public String updateMaticna(Maticna_mlijec m, int id){
-		if(!mR.findById(id).isPresent()) return "Nemoguće je unijeti podatke za matičnu mliječ";
+		JSONObject o = new JSONObject();
+		if(!mR.findById(id).isPresent()){
+			o.put("poruka", "Nemoguće je unijeti podatke za matičnu mliječ");
+			 return o.toString();
+		};
 		try{
 			mR.findById(id).map(maticna -> {
 				maticna.setKolicina(m.getKolicina());
@@ -58,24 +69,33 @@ public class MaticnaMlijecService {
 			});
 		}
 		catch (TransactionSystemException  ex) {
-            Throwable e = ex.getRootCause();
-            return "Update Matična mliječ error: " + e.getMessage();
+			Throwable e = ex.getRootCause();
+			o.put("Update Matična mliječ error", e.getMessage());
+            return o.toString();
         }  
         catch(Exception e) {
-            return "Update Matična mliječ error: " + e.toString();
-        }
-		return "Matična mliječ promijenjena";
+            o.put("Update Matična mliječ error", e.getMessage());
+            return o.toString();
+		}
+		o.put("poruka", "Matična mliječ promijenjena");
+		return o.toString();
 	}
 
 	public String deleteMaticna(int id){
-		if(!mR.findById(id).isPresent()) return "Nemoguće je obrisati podatke za matičnu mliječ";
+		JSONObject o = new JSONObject();
+		if(!mR.findById(id).isPresent()){
+			o.put("poruka", "Nemoguće je obrisati podatke za matičnu mliječ");
+			return o.toString();
+		} 
 		try{
 			mR.deleteById(id);
 		}
 		catch(Exception e){
-			return "delete Matična mliječ error: " + e.toString();
+			o.put("delete Matična mliječ error", e.getMessage());
+            return o.toString();
 		}
-		return "Matična mliječ obrisana";
+		o.put("poruka", "Matična mliječ obrisana");
+		return o.toString();
 	}
 
 }

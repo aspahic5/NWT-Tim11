@@ -44,6 +44,7 @@ public class Propolis {
 		return id;
 	}
 
+
 	public double getKolicina() {
 		return kolicina;
 	}
@@ -61,6 +62,12 @@ public class Propolis {
 		this.kolicina = kolicina;
 		this.kmkg = kmkg;
 		this.kosnice = kosnice;
+	}
+	
+	public Propolis(double kolicina, double kmkg) {
+		super();
+		this.kolicina = kolicina;
+		this.kmkg = kmkg;
 	}
 	
 	public Propolis(){

@@ -1,9 +1,12 @@
 package com.example.demo.Controllers;
 
+import java.sql.Date;
 import java.util.Optional;
 
+import com.example.demo.Entities.Rashodi;
 import com.example.demo.Entities.Unos;
 import com.example.demo.Services.UnosService;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +59,10 @@ public class UnosController {
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return pS.findAll().toString();
+    	return new Gson().toJson(pS.findAll());
     }
 
-    @RequestMapping(value = "/DajUnos/{id}", method = RequestMethod.OPTIONS)
+    @RequestMapping(value = "/Unos/{id}", method = RequestMethod.OPTIONS)
     public String getUnosById(@PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
@@ -67,10 +70,11 @@ public class UnosController {
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return pS.findById(id).toString();
+    	JSONObject o1 = new JSONObject(pS.findById(id).get());
+        return o1.toString();
     }
 
-    @RequestMapping(value="/DodajUnos/{id}", method=RequestMethod.POST)
+    @RequestMapping(value="/Unos/{id}", method=RequestMethod.POST)
     public String createUnos(@RequestPart("json") Unos p, @PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
@@ -78,10 +82,12 @@ public class UnosController {
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return pS.addUnos(p, id);
+    	JSONObject o1 = new JSONObject(p);
+    	Unos m = new Unos(o1.getDouble("kolicina"), Date.valueOf(o1.getString("date")));
+        return pS.addUnos(m, id);
     }
 
-    @RequestMapping(value="/AzurirajUnos/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value="/Unos/{id}", method = RequestMethod.PUT)
     public String updateUnos(@RequestPart("json") Unos p, @PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
@@ -92,7 +98,7 @@ public class UnosController {
         return pS.updateUnos(p, id);
     }
 
-    @RequestMapping(value="/ObrisiUnos/{id}", method=RequestMethod.DELETE)
+    @RequestMapping(value="/Unos/{id}", method=RequestMethod.DELETE)
     public String deleteUnos(@PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);

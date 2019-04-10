@@ -2,8 +2,10 @@ package com.example.demo.Controllers;
 
 import java.util.Optional;
 
+import com.example.demo.Entities.Maticna_mlijec;
 import com.example.demo.Entities.Propolis;
 import com.example.demo.Services.PropolisService;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +59,7 @@ public class PropolisController {
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return pS.findAll().toString();
+    	return new Gson().toJson(pS.findAll());
     }
 
     @RequestMapping(value = "/Propolis/{id}", method = RequestMethod.OPTIONS)
@@ -68,32 +70,37 @@ public class PropolisController {
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return pS.findById(id).toString();
+    	JSONObject o1 = new JSONObject(pS.findById(id).get());
+        return o1.toString();
     }
 
-    @RequestMapping(value="/DodajPropolis/{id}", method=RequestMethod.POST)
-    public String createPropolis(@RequestPart("json") Propolis p, @PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
+    @RequestMapping(value="/Propolis/{id}", method=RequestMethod.POST)
+    public String createPropolis(@RequestPart("json") String p, @PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         	}
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return pS.addPropolis(p, id).toString();
+    	JSONObject o1 = new JSONObject(p);
+    	Propolis m = new Propolis(o1.getDouble("kolicina"), o1.getDouble("km_kg"));
+        return pS.addPropolis(m, id);
     }
 
-    @RequestMapping(value="/AzurirajPropolis/{id}", method = RequestMethod.PUT)
-    public String updatePropolis(@RequestPart("json") Propolis p, @PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
+    @RequestMapping(value="/Propolis/{id}", method = RequestMethod.PUT)
+    public String updatePropolis(@RequestPart("json") String p, @PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         	}
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return pS.updatePropolis(p, id);
+    	JSONObject o1 = new JSONObject(p);
+    	Propolis m = new Propolis(o1.getDouble("kolicina"), o1.getDouble("km_kg"));
+        return pS.updatePropolis(m, id);
     }
 
-    @RequestMapping(value="/ObrisiPropolis/{id}", method=RequestMethod.DELETE)
+    @RequestMapping(value="/Propolis/{id}", method=RequestMethod.DELETE)
     public String deletePropolis(@PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);

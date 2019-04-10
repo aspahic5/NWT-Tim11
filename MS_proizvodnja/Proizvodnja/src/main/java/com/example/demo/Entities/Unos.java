@@ -66,6 +66,12 @@ public class Unos {
 		this.kosnica = kosnica;
 	}
 	
+	public Unos(double kolicina, Date date) {
+		super();
+		this.kolicina = kolicina;
+		this.date = date;
+	}
+	
 	public Unos() {
 		
 	}

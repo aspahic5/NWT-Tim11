@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import com.example.demo.Entities.Kosnica;
 import com.example.demo.Repositories.KosnicaRepository;
 
+import org.json.JSONObject;;
+
 @Service
 public class KosnicaService {
 	
@@ -13,14 +15,16 @@ public class KosnicaService {
 	private KosnicaRepository kosnicaRepository;
 	
 	public String addKosnica(Kosnica k) {
-		
+		JSONObject o = new JSONObject();
 		try {
 			kosnicaRepository.save(k);
 		}
 		catch(Exception e) {
-			return e.toString();
+			o.put("poruka", e.getMessage());
+			return o.toString();
 		}
-		return "Kosnica saved";
+		o.put("poruka", "Košnica spremljena");
+		return o.toString();
 	}
 
 }

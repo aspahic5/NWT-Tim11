@@ -1,5 +1,6 @@
 package com.example.demo.Services;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
@@ -29,7 +30,11 @@ public class VrcanjeService {
 	}
 	
 	public String addVrcanje(Vrcanje k, int idk) {
-		if(!kR.findById(idk).isPresent()) return "Kosnica ne postoji";
+		JSONObject o = new JSONObject();
+		if(!kR.findById(idk).isPresent()){
+			 o.put("poruka", "Košnica ne postoji");
+			 return o.toString();
+		}
 		try {
 			kR.findById(idk).map(kosnica -> {
                 kosnica.setVrcanje(k);
@@ -38,17 +43,23 @@ public class VrcanjeService {
             });
 		}
 		catch (TransactionSystemException  ex) {
-            Throwable e = ex.getRootCause();
-            return e.getMessage();
+			o.put("poruka",ex.getRootCause().getMessage().toString());
+			return o.toString();
         } 
         catch (Exception e) {
-            return e.getMessage();
+            o.put("poruka", e.getMessage());
+			return o.toString();
         }
-		return "Vrcanje spremljeno";
+		o.put("poruka", "Vrcanje spremljeno");
+		return o.toString();
 	}
 
 	public String updateVrcanje(Vrcanje k, int id){
-		if(!pR.findById(id).isPresent()) return "Nemoguće je unijeti podatke za vrcanje";
+		JSONObject o = new JSONObject();
+		if(!pR.findById(id).isPresent()){
+			o.put("poruka", "Nemoguće je unijeti podatke za vrcanje");
+			 return o.toString();
+		};
 		try{
 			pR.findById(id).map(vrcanje -> {
 				vrcanje.setKolicina(k.getKolicina());
@@ -57,23 +68,32 @@ public class VrcanjeService {
 			});
 		}
 		catch (TransactionSystemException  ex) {
-            Throwable e = ex.getRootCause();
-            return "Update Vrcanje error: " + e.getMessage();
+			Throwable e = ex.getRootCause();
+			o.put("Update Vrcanje error", e.getMessage());
+            return o.toString();
         }  
         catch(Exception e) {
-            return "Update Vrcanje error: " + e.toString();
-        }
-		return "Vrcanje promijenjeno";
+            o.put("Update Vrcanje error", e.getMessage());
+            return o.toString();
+		}
+		o.put("poruka", "Vrcanje promijenjeno");
+		return o.toString();
 	}
 
 	public String deleteVrcanje(int id){
-		if(!pR.findById(id).isPresent()) return "Nemoguće je obrisati podatke za vrcanje";
+		JSONObject o = new JSONObject();
+		if(!pR.findById(id).isPresent()){
+			o.put("poruka", "Nemoguće je obrisati podatke za vrcanje");
+			return o.toString();
+		} 
 		try{
 			pR.deleteById(id);
 		}
 		catch(Exception e){
-			return "delete Vrcanje error: " + e.toString();
+			o.put("delete Vrcanje error", e.getMessage());
+            return o.toString();
 		}
-		return "Vrcanje obrisano";
+		o.put("poruka", "Vrcanje obrisano");
+		return o.toString();
 	}
 }

@@ -7,6 +7,8 @@ import com.example.demo.Entities.Propolis;
 import com.example.demo.Services.MaticnaMlijecService;
 import com.example.demo.Services.PropolisService;
 
+import com.google.gson.Gson;
+
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -63,10 +65,10 @@ public class Maticna_mlijecController {
         		return e.getMessage().toString();
         	}
     	
-    	return pS.findAll().toString();
+    	return new Gson().toJson(pS.findAll());
     }
 
-    @RequestMapping(value = "/DajMaticnu/{id}", method = RequestMethod.OPTIONS)
+    @RequestMapping(value = "/Maticna/{id}", method = RequestMethod.OPTIONS)
     public String getMaticnaById(@PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
@@ -74,32 +76,37 @@ public class Maticna_mlijecController {
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return pS.findById(id).toString();
+    	JSONObject o1 = new JSONObject(pS.findById(id).get());
+        return o1.toString();
     }
 
-    @RequestMapping(value="/DodajMaticnu/{id}", method=RequestMethod.POST)
-    public String createMaticna(@RequestPart("json") Maticna_mlijec p, @PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
+    @RequestMapping(value="/Maticna/{id}", method=RequestMethod.POST)
+    public String createMaticna(@RequestPart("json") String p, @PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         	}
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return pS.addMaticna(p, id).toString();
+    	JSONObject o1 = new JSONObject(p);
+    	Maticna_mlijec m = new Maticna_mlijec(o1.getDouble("kolicina"), o1.getDouble("km_kg"));
+        return pS.addMaticna(m, id);
     }
 
-    @RequestMapping(value="/AzurirajMaticnu/{id}", method = RequestMethod.PUT)
-    public String updateMaticna(@RequestPart("json") Maticna_mlijec p, @PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
+    @RequestMapping(value="/Maticna/{id}", method = RequestMethod.PUT)
+    public String updateMaticna(@RequestPart("json") String p, @PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         	}
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return pS.updateMaticna(p, id).toString();
+    	JSONObject o1 = new JSONObject(p);
+    	Maticna_mlijec m = new Maticna_mlijec(o1.getDouble("kolicina"), o1.getDouble("km_kg"));
+        return pS.updateMaticna(m, id);
     }
 
-    @RequestMapping(value="/ObrisiMaticnu/{id}", method=RequestMethod.DELETE)
+    @RequestMapping(value="/Maticna/{id}", method=RequestMethod.DELETE)
     public String deleteMaticna(@PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
@@ -107,7 +114,7 @@ public class Maticna_mlijecController {
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return pS.deleteMaticna(id).toString();
+        return pS.deleteMaticna(id);
     }
     
 }

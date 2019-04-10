@@ -2,9 +2,11 @@ package com.example.demo.Controllers;
 
 import java.util.Optional;
 
+import com.example.demo.Entities.Maticna_mlijec;
 import com.example.demo.Entities.Vrcanje;
 import com.example.demo.Repositories.VrcanjeRepository;
 import com.example.demo.Services.VrcanjeService;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,10 +59,10 @@ public class VrcanjeController {
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-        return pS.findAll().toString();
+    	return new Gson().toJson(pS.findAll());
     }
 
-    @RequestMapping(value = "/DajVrcanje/{id}", method = RequestMethod.OPTIONS)
+    @RequestMapping(value = "/Vrcanje/{id}", method = RequestMethod.OPTIONS)
     public String getVrcanjeById(@PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
@@ -68,21 +70,24 @@ public class VrcanjeController {
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-        return pS.findById(id).toString();
+    	JSONObject o1 = new JSONObject(pS.findById(id).get());
+        return o1.toString();
     }
 
-    @RequestMapping(value="/DodajVrcanje/{id}", method=RequestMethod.POST)
-    public String createVrcanje(@RequestPart("json") Vrcanje p, @PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
+    @RequestMapping(value="/Vrcanje/{id}", method=RequestMethod.POST)
+    public String createVrcanje(@RequestPart("json") String p, @PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         }
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-        return pS.addVrcanje(p, id);
+    	JSONObject o1 = new JSONObject(p);
+    	Vrcanje m = new Vrcanje(o1.getDouble("kolicina"), o1.getDouble("km_kg"));
+        return pS.addVrcanje(m, id);
     }
 
-    @RequestMapping(value="/AzurirajVrcanje/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value="/Vrcanje/{id}", method = RequestMethod.PUT)
     public String updateVrcanje(@RequestPart("json") Vrcanje p, @PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
@@ -90,10 +95,12 @@ public class VrcanjeController {
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-        return pS.updateVrcanje(p, id);
+    	JSONObject o1 = new JSONObject(p);
+    	Vrcanje m = new Vrcanje(o1.getDouble("kolicina"), o1.getDouble("km_kg"));
+        return pS.updateVrcanje(m, id);
     }
 
-    @RequestMapping(value="/ObrisiVrcanje/{id}", method=RequestMethod.DELETE)
+    @RequestMapping(value="/Vrcanje/{id}", method=RequestMethod.DELETE)
     public String deleteVrcanje(@PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
