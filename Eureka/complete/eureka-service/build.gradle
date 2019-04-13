@@ -36,7 +36,11 @@ dependencyManagement {
 
 dependencies {
 	compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server')
+	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.4.0-b180725.0427'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile('javax.xml.bind:jaxb-api:2.3.0')
+	compile('javax.activation:activation:1.1')
+	compile('org.glassfish.jaxb:jaxb-runtime:2.3.0')
 }
 
 eclipse {

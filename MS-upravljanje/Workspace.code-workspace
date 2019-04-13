@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "C:\\Users\\Admir\\NWT\\Eureka\\complete\\eureka-service"
+		},
+		{
+			"path": "C:\\Users\\Admir\\NWT\\MS-authentication"
+		},
+		{
+			"path": "C:\\Users\\Admir\\NWT\\MS_proizvodnja"
+		},
+		{
+			"path": "C:\\Users\\Admir\\NWT\\MS-kalendar"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "interactive",
+		"java.dependency.packagePresentation": "hierarchical"
+	}
+}

@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - MsAuthenticationApplication",
+            "request": "launch",
+            "mainClass": "com.example.demo.MsAuthenticationApplication",
+            "projectName": "MS_authentication"
+        }
+    ]
+}
