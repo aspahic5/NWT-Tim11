@@ -131,4 +131,15 @@ public class AktivnostService {
         return o.toString();
     }
     
+    //daj aktivnosti od košnice
+    public Iterable<Aktivnost>  getAktivnostiOdKosnica(int idk) throws Exception {
+        if(!kosnicaRepository.findById(idk).isPresent()) 
+            throw new Exception("{\"poruka\":\"Kosnica ne postoji\"}");
+        try {
+            return aktivnostrepository.dajAktinvostiOdKosnice(idk);
+        } catch(Exception e) {
+            throw new Exception("{\"poruka\":\"" + e.toString() + "\"}");
+        }
+    }
+
 }

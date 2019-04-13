@@ -122,4 +122,16 @@ public class SelidbaService {
         o1.put("poruka",  "Selidba uspješno obrisana");
         return o1.toString();
     }
+
+    //Daj selidbe od kosnice
+    public Iterable<Selidba> getSelidbeOdKosnica(int idk) throws Exception {
+        if(!kosnicaRepository.findById(idk).isPresent()) {
+            throw new Exception("{\"poruka\":\"Kosnica ne postoji\"}");
+        }
+        try {
+            return selidbaRepository.dajSelidbeOdKosnice(idk);
+        } catch (Exception e) {
+            throw new Exception("{\"poruka\":\"" + e.toString() + "\"}");
+        }
+    }
 }

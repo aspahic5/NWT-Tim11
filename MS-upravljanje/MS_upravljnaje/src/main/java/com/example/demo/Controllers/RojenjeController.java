@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -109,6 +111,18 @@ public class RojenjeController {
         	return e.getMessage().toString();
         }
         return rojenjeService.deleteRojenje(id);
-    }
+	}
+	
+	@RequestMapping(value="/Rojenje/{idk}", method=RequestMethod.PATCH)
+	public String getRojenjaOdKosnica(@PathVariable int idk, @RequestPart("username") String username, @RequestPart("password") String password) {
+    	try {
+			JSONObject o=provjeri(username,password);
+			return new Gson().toJson(rojenjeService.getRojenjaOdKosnice(idk));
+        }
+        catch(Exception e) {
+        	return e.getMessage().toString();
+        }
+	}
+	
 
 }

@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -109,7 +111,17 @@ public class VaroaController {
         }
         return varoaService.deleteVaroa(id);
     }
-    
+     @RequestMapping(value="/Varoa/{idk}", method=RequestMethod.PATCH)
+     public String getVaroeOdKosnica(@PathVariable int idk, @RequestPart("username") String username, @RequestPart("password") String password) {
+    	try {
+            JSONObject o=provjeri(username,password);
+            return new Gson().toJson(varoaService.getVaroeOdKosnica(idk));
+        }
+        catch(Exception e) {
+        	return e.getMessage().toString();
+        }
+     }
+     
 
     
 }

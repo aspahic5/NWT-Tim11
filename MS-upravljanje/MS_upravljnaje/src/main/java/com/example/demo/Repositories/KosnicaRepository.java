@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface KosnicaRepository extends CrudRepository<Kosnica,Integer> {
 	
 	@Query(value="SELECT * FROM kosnica WHERE vlasnik_id = :id", nativeQuery = true)
-	public Iterable<Kosnica> dajKosniceOdVlasnika(@Param("id") int idk); 
+	public Iterable<Kosnica> dajKosniceOdVlasnika(@Param("id") int idk);
+
 
 }

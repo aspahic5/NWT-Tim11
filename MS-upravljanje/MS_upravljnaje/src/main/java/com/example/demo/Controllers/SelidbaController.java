@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.validation.Validator;
 
 import com.example.demo.Entities.Selidba;
+import com.example.demo.Repositories.SelidbaRepository;
 import com.example.demo.Services.SelidbaService;
 import com.google.gson.Gson;
 
@@ -112,6 +113,17 @@ public class SelidbaController {
         	return e.getMessage().toString();
         }
         return selidbaServis.delteSelidba(id);
+    }
+    
+    @RequestMapping(value="/Selidba/{idk}", method=RequestMethod.PATCH)
+    public String getSelidbeOdKosnica(@PathVariable int idk, @RequestPart("username") String username, @RequestPart("password") String password) {
+            try {
+                JSONObject o=provjeri(username,password);
+                return new Gson().toJson(selidbaServis.getSelidbeOdKosnica(idk));
+            }
+            catch(Exception e) {
+                return e.getMessage().toString();
+            }
     }
     
 

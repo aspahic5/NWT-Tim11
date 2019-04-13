@@ -122,4 +122,16 @@ public class RojenjeService {
         o1.put("poruka",  "Rojenje uspješno obrisano");
         return o1.toString();
     }
+
+    //Daj Rojenja od Košnice
+    public Iterable<Rojenje> getRojenjaOdKosnice(int idk) throws Exception{
+        if(!kosnicaRepository.findById(idk).isPresent()) {
+            throw new Exception("{\"poruka\":\"Kosnica ne postoji\"}");
+        }
+        try {
+            return rojenjeRepository.dajRojenjaOdKosnice(idk);
+        } catch (Exception e) {
+            throw new Exception("{\"poruka\":\"" + e.toString() + "\"}");
+        }
+    }
 }
