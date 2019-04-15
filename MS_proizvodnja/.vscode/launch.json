@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - MsProizvodnjaApplication",
+            "request": "launch",
+            "mainClass": "com.example.demo.MsProizvodnjaApplication",
+            "projectName": "MS_proizvodnja"
+        }
+    ]
+}
