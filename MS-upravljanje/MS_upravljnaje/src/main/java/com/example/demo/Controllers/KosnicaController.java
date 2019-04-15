@@ -67,7 +67,7 @@ public class KosnicaController {
     	return "Poslana poruka = "+poruka;
     }
     
-    @RequestMapping(value = "/DajSveKosnice", method = RequestMethod.OPTIONS)
+    @RequestMapping(value = "/DajSveKosnice", method = RequestMethod.POST)
     public String GetAllKosnice(@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
     		JSONObject o=provjeri(username,password);
