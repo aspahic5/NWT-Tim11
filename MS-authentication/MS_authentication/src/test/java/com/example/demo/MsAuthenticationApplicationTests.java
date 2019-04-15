@@ -24,7 +24,7 @@ public class MsAuthenticationApplicationTests {
 
 	
 	@Test
-	public void testPravilnaAutentifikacija() throws Exception
+	public void testUspjesnaAutentifikacija() throws Exception
 	{
 		
 		RestTemplate restTemplate = new RestTemplate();
@@ -46,7 +46,7 @@ public class MsAuthenticationApplicationTests {
 }
 	
 	@Test
-	public void testPogrenaAutentifikacija() throws Exception
+	public void testNeuspjesnaAutentifikacija() throws Exception
 	{
 		
 		RestTemplate restTemplate = new RestTemplate();
