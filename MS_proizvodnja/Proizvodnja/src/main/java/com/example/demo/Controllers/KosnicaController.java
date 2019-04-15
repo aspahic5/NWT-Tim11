@@ -26,6 +26,7 @@ public class KosnicaController {
     	return "Poslana poruka = "+poruka;
     }
 	
+		
     /*
     @Autowired
     KosnicaService kS;
