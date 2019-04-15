@@ -16,6 +16,7 @@ import com.example.demo.Services.RojenjeService;
 import com.example.demo.Services.SelidbaService;
 import com.example.demo.Services.VaroaService;
 
+import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,7 +26,7 @@ import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
-
+@EnableRabbit
 @EnableEurekaClient
 @SpringBootApplication
 public class MsUpravljnajeApplication implements CommandLineRunner {

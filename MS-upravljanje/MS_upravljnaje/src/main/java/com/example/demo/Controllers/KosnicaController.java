@@ -8,9 +8,12 @@ import com.example.demo.Entities.Aktivnost;
 import com.example.demo.Entities.Kosnica;
 import com.example.demo.Entities.Selidba;
 import com.example.demo.Services.KosnicaService;
+import com.example.demo.config.MessageProducer;
+import com.example.demo.config.RabbitMqConfig;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -30,8 +33,12 @@ import org.springframework.web.client.RestTemplate;
 @RestController
 public class KosnicaController {
 
+	
+	@Autowired
+	private MessageProducer messageProducer;
+	
     @Autowired
-    KosnicaService kosnicaService;
+    private KosnicaService kosnicaService;
     
     @Autowired
     private RestTemplate restTemplate;
@@ -54,6 +61,12 @@ public class KosnicaController {
     	return o;
 	}
     
+    @RequestMapping(value="/poruka",method=RequestMethod.POST)
+    public String poruka(@RequestPart("message") String poruka) {
+    	 messageProducer.sendMessage(poruka);
+    	return "Poslana poruka = "+poruka;
+    }
+    
     @RequestMapping(value = "/DajSveKosnice", method = RequestMethod.OPTIONS)
     public String GetAllKosnice(@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
@@ -62,7 +75,9 @@ public class KosnicaController {
     	catch(Exception e) {
     		return e.getMessage().toString();
     	}
-        return new Gson().toJson(kosnicaService.findAll()); 
+    	messageProducer.sendMessage(new Gson().toJson(kosnicaService.findAll()).toString());
+    	return "Poslana poruka ";
+         
     }
 
     @RequestMapping(value = "/Kosnica/{id}", method = RequestMethod.OPTIONS)
@@ -79,14 +94,15 @@ public class KosnicaController {
 
     @RequestMapping(value="/Kosnica", method=RequestMethod.POST)
     public String createKosnica(@RequestPart("Kosnica") String k, @RequestPart("username") String username, @RequestPart("password") String password) {
+    	JSONObject o;
     	try {
-        	JSONObject o=provjeri(username,password);
+        	o=provjeri(username,password);
         }
         catch(Exception e) {
         	return e.getMessage().toString();
         }
     	JSONObject o1 = new JSONObject(k);
-    	Kosnica k1 = new Kosnica(o1.getInt("vlasnik_id"), Date.valueOf(o1.getString("maticagod")), o1.getInt("brojramova"), o1.getInt("brojnastavaka"), o1.getDouble("kolstimulansa"), o1.getString("tipstimulansa"), o1.getInt("brojhanemanki"), o1.getString("komentar"), null, null, null); 
+    	Kosnica k1 = new Kosnica(o.getInt("id"), Date.valueOf(o1.getString("maticagod")), o1.getInt("brojramova"), o1.getInt("brojnastavaka"), o1.getDouble("kolstimulansa"), o1.getString("tipstimulansa"), o1.getInt("brojhanemanki"), o1.getString("komentar"), null, null, null); 
         return kosnicaService.addKosnica(k1);
     }
 

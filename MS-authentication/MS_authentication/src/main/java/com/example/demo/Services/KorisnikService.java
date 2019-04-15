@@ -19,6 +19,8 @@ public class KorisnikService {
 	private KorisnikRepository korisnikRepository;
 	
 	
+	
+	
 	public JSONObject provjeri(String username,String password) {
 		Korisnik k= korisnikRepository.provjeriKorisnik(username,password);
 		System.out.println(username+" "+password );
@@ -26,6 +28,7 @@ public class KorisnikService {
 		if(k != null) {
 			n.put("id", k.getId());
 			n.put("prijavljen", true);
+			n.put("role",k.getRole().getRole());
 		}
 		else {
 			n.put("id", -1);
