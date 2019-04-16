@@ -10,7 +10,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Kosnica")
+@Table(name="kosnica_ids")
 public class Kosnica {
 	
 	@Id

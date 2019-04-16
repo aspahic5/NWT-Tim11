@@ -26,13 +26,13 @@ public class MessageListenerImpl implements MessageListener{
 		   int[] ids = new int[a.length()];
 		   for(int i=0; i<a.length(); i++) {
 			   JSONObject o = a.getJSONObject(i);
-			   ids[i] = o.getInt("kosnica_id");
+			   ids[i] = o.getInt("id");
 		   }
 		   kS.addKosnica(ids);
 	   }
 	   catch(Exception e) {
-		   System.out.println("Greška u poruci");
-		   return;
+		   System.out.println(e.getMessage().toString());
+		   
 	   }
 	   System.out.println("Message Received:"+message);
 	  }
