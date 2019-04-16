@@ -30,14 +30,20 @@ public class KorisnikController {
 	}
 	
 	
-	@RequestMapping("/Korisnik/{id}")
-	public Optional<Korisnik> getKorisnikByID(@PathVariable Integer id){
+	@RequestMapping(value="/Korisnik/{id}",method=RequestMethod.OPTIONS)
+	public Optional<Korisnik> getKorisnikByID(@PathVariable Integer id,@RequestPart("username") String username, @RequestPart("password") String password){
+		JSONObject o= korisnikService.provjeri(username, password);
+		if(!o.getBoolean("prijavljen"))return null;
 		return korisnikService.getKorisnikById(id);
 	}
 
 	@RequestMapping(value="/Korisnik",method=RequestMethod.PUT)
-	public String addKorisnik(@RequestBody Korisnik k){
-		Korisnik newk= new Korisnik(k.getIme(),k.getPrezime(),k.getUsername(),k.getPassword(),k.getBroj_telefona(),k.getRole());
+	public String addKorisnik(@RequestPart("korisnik") String korisnik,@RequestPart("role") String role,@RequestPart("username") String username, @RequestPart("password") String password){
+		JSONObject o= korisnikService.provjeri(username, password);
+		if(!o.getBoolean("prijavljen"))return o.toString();
+		JSONObject k=new JSONObject(korisnik);
+		JSONObject r= new JSONObject(role);
+		Korisnik newk= new Korisnik(k.getString("ime"),k.getString("prezime"),k.getString("username"),k.getString("password"),k.getString("broj_telefona"),new Role(r.getString("role"),r.getInt("id")));
 		
 		return korisnikService.addKorisnik(newk).toString();
 		
@@ -45,17 +51,23 @@ public class KorisnikController {
 	}
 	
 	@RequestMapping(value="/Korisnik/{id}",method=RequestMethod.DELETE)
-	public String deleteKorisnik(@PathVariable int id) {
+	public String deleteKorisnik(@PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
 		Optional<Korisnik> k=korisnikService.getKorisnikById(id);
+		JSONObject o= korisnikService.provjeri(username, password);
+		if(!o.getBoolean("prijavljen"))return o.toString();
 		if(!k.isPresent())return new JSONObject().put("message","Ne postoji korisnik sa datim id identifikatorom").toString();
 		return korisnikService.deleteKorisnik(id).toString();
 	}
 
 	@RequestMapping(value="/Korisnik",method=RequestMethod.POST)
-	public String update(@RequestBody Korisnik k){
+	public String update(@RequestPart("korisnik") String korisnik,@RequestPart("role") String role,@RequestPart("username") String username, @RequestPart("password") String password){
+		JSONObject o= korisnikService.provjeri(username, password);
+		if(!o.getBoolean("prijavljen"))return o.toString();
+		JSONObject k=new JSONObject(korisnik);
+		JSONObject r= new JSONObject(role);
+		Korisnik newk= new Korisnik(k.getString("ime"),k.getString("prezime"),k.getString("username"),k.getString("password"),k.getString("broj_telefona"),new Role(r.getString("role"),r.getInt("id")));
 		
-		
-		return korisnikService.updateKorisnik(k).toString();
+		return korisnikService.updateKorisnik(newk).toString();
 		
 		
 	}

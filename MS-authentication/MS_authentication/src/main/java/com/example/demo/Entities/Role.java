@@ -44,6 +44,12 @@ public class Role {
 		this.role = role;
 	}
 	
+	public Role(String role,int id) {
+		super();
+		this.id=id;
+		this.role = role;
+	}
+	
 	public Role() {}
 	
 
