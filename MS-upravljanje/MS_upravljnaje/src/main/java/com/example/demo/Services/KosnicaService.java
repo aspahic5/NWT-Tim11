@@ -4,11 +4,13 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.example.demo.Validation;
 import com.example.demo.Entities.Aktivnost;
 import com.example.demo.Entities.Kosnica;
 import com.example.demo.Entities.Selidba;
 import com.example.demo.Repositories.KosnicaRepository;
 import com.example.demo.Repositories.SelidbaRepository;
+import com.netflix.discovery.converters.Auto;
 import com.example.demo.Repositories.AktivnostRepositroy;
 
 import org.json.JSONObject;
@@ -27,6 +29,9 @@ public class KosnicaService {
 
     @Autowired
     AktivnostRepositroy aktivnostRepositroy;
+
+    @Autowired
+    Validation val;
 
     public Iterable<Kosnica> findAll() {
         return kosnicarepository.findAll();
@@ -64,27 +69,18 @@ public class KosnicaService {
         return o1.toString();
     }
 
-    public String addSelidbaToKosnica(int ids, int id){
-        Optional<Selidba> selidba = selidbaRepository.findById(ids);
-        if(!selidba.isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Selidba ne postoji");
-            return o1.toString();
-        }
-        if(!kosnicarepository.findById(id).isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Košnica ne postoji");
-            return o1.toString();
-        }
-        Selidba s = selidba.get();
-        try {
+    public String addSelidbaToKosnica(int ids, int id){     
+        try { 
+            val.PostojiSelidba(ids);
+            val.PostojiKosnica(id);
+            Selidba s = selidbaRepository.findById(ids).get();
             kosnicarepository.findById(id).map(kosnica -> {
                 kosnica.setSelidba(s);
                 return kosnicarepository.save(kosnica);
             });
         } catch(Exception e) {
             JSONObject o1 = new JSONObject();
-            o1.put("poruka",  e.toString());
+            o1.put("poruka",  e.getMessage().toString());
             return o1.toString();
         }
         JSONObject o1 = new JSONObject();
@@ -93,26 +89,17 @@ public class KosnicaService {
     }
 
     public String addAktivnostToKosnica(int ida, int id){
-        Optional<Aktivnost> a = aktivnostRepositroy.findById(ida);
-        if(!a.isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Aktivnost ne postoji");
-            return o1.toString();
-        }
-        if(!kosnicarepository.findById(id).isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Košnica ne postoji");
-            return o1.toString();
-        }
-        Aktivnost akt = a.get();
-        try {
+        try {        
+            val.PostojiAktivnost(ida);
+            val.PostojiKosnica(id);
+            Aktivnost akt = aktivnostRepositroy.findById(ida).get();
             kosnicarepository.findById(id).map(kosnica -> {
                 kosnica.setAktivnosti(akt);
                 return kosnicarepository.save(kosnica);
             });
         } catch(Exception e) {
             JSONObject o1 = new JSONObject();
-            o1.put("poruka",  e.toString());
+            o1.put("poruka",  e.getMessage().toString());
             return o1.toString();
         }
         JSONObject o1 = new JSONObject();
@@ -120,27 +107,18 @@ public class KosnicaService {
             return o1.toString();
     }
     
-    public String addKosnicaToKosnica(int idk, int id) {
-        Optional<Kosnica> k = kosnicarepository.findById(idk);
-        if(!k.isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Košnica ne postoji");
-            return o1.toString();
-        }
-        if(!kosnicarepository.findById(id).isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Košnica ne postoji");
-            return o1.toString();
-        } 
-        Kosnica kosnica1 = k.get();
-        try {
+    public String addKosnicaToKosnica(int idk, int id) {     
+        try { 
+            val.PostojiKosnica(idk);
+            val.PostojiKosnica(id);
+            Kosnica kosnica1 = kosnicarepository.findById(idk).get();
             kosnicarepository.findById(id).map(kosnica -> {
                 kosnica.setKosnice(kosnica1);
                 return kosnicarepository.save(kosnica1);
             });
         } catch(Exception e) {
             JSONObject o1 = new JSONObject();
-            o1.put("poruka",  e.toString());
+            o1.put("poruka",  e.getMessage().toString());
             return o1.toString();
         }
 
@@ -150,12 +128,8 @@ public class KosnicaService {
     }
 
     public String updateKosnica(int id, Kosnica k){
-        if(!kosnicarepository.findById(id).isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Košnica ne postoji");
-            return o1.toString();
-        }
         try {
+            val.PostojiKosnica(id);
             kosnicarepository.findById(id).map(kosnica -> {
                 kosnica.setBrojhanemanki(k.getBrojhanemanki());
                 kosnica.setBrojnastavaka(k.getBrojnastavaka());
@@ -184,7 +158,7 @@ public class KosnicaService {
         } 
         catch(Exception e) {
             JSONObject o1 = new JSONObject();
-            o1.put("poruka",  e.toString());
+            o1.put("poruka",  e.getMessage().toString());
             return o1.toString();
         }
         JSONObject o1 = new JSONObject();
@@ -193,12 +167,8 @@ public class KosnicaService {
     }
 
     public String deleteKosnica(int id){
-        if(!kosnicarepository.findById(id).isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Košnica ne postoji");
-            return o1.toString();
-        }
         try{
+            val.PostojiKosnica(id);
             kosnicarepository.deleteById(id);
         } catch (Exception e) {
             JSONObject o1 = new JSONObject();

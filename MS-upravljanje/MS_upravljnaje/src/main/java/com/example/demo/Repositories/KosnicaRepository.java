@@ -15,5 +15,8 @@ public interface KosnicaRepository extends CrudRepository<Kosnica,Integer> {
 	@Query(value="SELECT * FROM kosnica WHERE vlasnik_id = :id", nativeQuery = true)
 	public Iterable<Kosnica> dajKosniceOdVlasnika(@Param("id") int idk);
 
+	@Query(value="", nativeQuery = true)
+	public Iterable<Kosnica> dajKosniceOdSelidbeZaVlasnika(@Param("id") int ids, @Param("vlasnik") int vlasnik);
+
 
 }

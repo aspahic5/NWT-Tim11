@@ -4,9 +4,9 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 import javax.validation.ConstraintViolationException;
 
+import com.example.demo.Validation;
 import com.example.demo.Entities.Aktivnost;
 import com.example.demo.Repositories.AktivnostRepositroy;
 import com.example.demo.Repositories.KosnicaRepository;
@@ -27,6 +27,9 @@ public class AktivnostService {
     @Autowired
     KosnicaRepository kosnicaRepository;
 
+    @Autowired
+    Validation val;
+
     public Iterable<Aktivnost> findAll() {
         return aktivnostrepository.findAll();
     }
@@ -37,12 +40,8 @@ public class AktivnostService {
     }
 
     public String addAktivnost(Aktivnost a, int idk){
-        if(!kosnicaRepository.findById(idk).isPresent()) {
-            JSONObject o = new JSONObject();
-            o.put("poruka", "kosnica ne postoji");
-            return o.toString();
-        }
         try {
+            val.PostojiKosnica(idk);
             kosnicaRepository.findById(idk).map(kosnica -> {
                 kosnica.setAktivnosti(a);
                 aktivnostrepository.save(a);
@@ -75,12 +74,8 @@ public class AktivnostService {
     }
 
     public String updateAktivnost(int id, Aktivnost a) {
-        if(!aktivnostrepository.findById(id).isPresent()) {
-            JSONObject o = new JSONObject();
-            o.put("poruka", "Aktivnost ne postoji");
-            return o.toString();
-        }
         try {
+            val.PostojiAktivnost(id);
             aktivnostrepository.findById(id).map(aktivnost -> {
                 aktivnost.setMjesec(a.getMjesec());
                 aktivnost.setUradjeno(a.getUradjeno());
@@ -105,7 +100,7 @@ public class AktivnostService {
         }  
         catch(Exception e) {
             JSONObject o1 = new JSONObject();
-            o1.put("poruka",  e.toString());
+            o1.put("poruka",  e.getMessage().toString());
             return o1.toString();
         }
         JSONObject o1 = new JSONObject();
@@ -114,12 +109,8 @@ public class AktivnostService {
     }
 
     public String deleteAktivnost(int id){
-        if(!aktivnostrepository.findById(id).isPresent()) {
-            JSONObject o = new JSONObject();
-            o.put("poruka", "Aktivnost ne postoji");
-            return o.toString();
-        }
         try {
+            val.PostojiAktivnost(id);
             aktivnostrepository.deleteById(id);
         } catch(Exception e) {
             JSONObject o = new JSONObject();
@@ -133,12 +124,11 @@ public class AktivnostService {
     
     //daj aktivnosti od košnice
     public Iterable<Aktivnost>  getAktivnostiOdKosnica(int idk) throws Exception {
-        if(!kosnicaRepository.findById(idk).isPresent()) 
-            throw new Exception("{\"poruka\":\"Kosnica ne postoji\"}");
         try {
+            val.PostojiKosnica(idk);
             return aktivnostrepository.dajAktinvostiOdKosnice(idk);
         } catch(Exception e) {
-            throw new Exception("{\"poruka\":\"" + e.toString() + "\"}");
+            throw new Exception("{\"poruka\":\"" + e.getMessage().toString() + "\"}");
         }
     }
 

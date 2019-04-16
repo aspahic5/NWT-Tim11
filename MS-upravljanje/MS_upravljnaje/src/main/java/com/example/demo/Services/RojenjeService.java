@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.example.demo.Validation;
 import com.example.demo.Entities.Rojenje;
 import com.example.demo.Repositories.KosnicaRepository;
 import com.example.demo.Repositories.RojenjeRepository;
@@ -22,6 +23,9 @@ public class RojenjeService {
     @Autowired
     KosnicaRepository kosnicaRepository;
 
+    @Autowired
+    Validation val;
+
     public Iterable<Rojenje> findAll() {
         return rojenjeRepository.findAll();
     }
@@ -31,12 +35,8 @@ public class RojenjeService {
     }
 
     public String addRojenje(Rojenje r, int idk) {
-        if(!kosnicaRepository.findById(idk).isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Košnica ne postoji");
-            return o1.toString();
-        }
         try {
+            val.PostojiKosnica(idk);
             kosnicaRepository.findById(idk).map(kosnica -> {
                 r.setKosnice(kosnica);
                 return rojenjeRepository.save(r);
@@ -58,7 +58,7 @@ public class RojenjeService {
             return o.toString();
         } catch (Exception e) {
             JSONObject o1 = new JSONObject();
-            o1.put("poruka",  e.toString());
+            o1.put("poruka",  e.getMessage().toString());
             return o1.toString();
         }
         JSONObject o1 = new JSONObject();
@@ -67,12 +67,8 @@ public class RojenjeService {
     }
 
     public String updateRojenje(int id, Rojenje r){
-        if(!rojenjeRepository.findById(id).isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Rojenje ne postoji");
-            return o1.toString();
-        }
         try {
+            val.PostojiRojenje(id);
             rojenjeRepository.findById(id).map(rojenje -> {
                 rojenje.setBrojmaticnjaka(r.getBrojmaticnjaka());
                 rojenje.setKomentar(r.getKomentar());
@@ -96,7 +92,7 @@ public class RojenjeService {
             return o.toString();
         } catch (Exception e) {
             JSONObject o1 = new JSONObject();
-            o1.put("poruka",  e.toString());
+            o1.put("poruka",  e.getMessage().toString());
             return o1.toString();
         }
         JSONObject o1 = new JSONObject();
@@ -105,17 +101,13 @@ public class RojenjeService {
     }
 
     public String deleteRojenje(int id){
-        if(!rojenjeRepository.findById(id).isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Rojenje ne postoji");
-            return o1.toString();
-        }
         try{
+            val.PostojiRojenje(id);
             rojenjeRepository.deleteById(id);;
         }
         catch(Exception e){
             JSONObject o1 = new JSONObject();
-            o1.put("poruka",  e.toString());
+            o1.put("poruka",  e.getMessage().toString());
             return o1.toString();
         }
         JSONObject o1 = new JSONObject();
@@ -125,13 +117,11 @@ public class RojenjeService {
 
     //Daj Rojenja od Košnice
     public Iterable<Rojenje> getRojenjaOdKosnice(int idk) throws Exception{
-        if(!kosnicaRepository.findById(idk).isPresent()) {
-            throw new Exception("{\"poruka\":\"Kosnica ne postoji\"}");
-        }
         try {
+            val.PostojiKosnica(idk);
             return rojenjeRepository.dajRojenjaOdKosnice(idk);
         } catch (Exception e) {
-            throw new Exception("{\"poruka\":\"" + e.toString() + "\"}");
+            throw new Exception("{\"poruka\":\"" + e.getMessage().toString() + "\"}");
         }
     }
 }

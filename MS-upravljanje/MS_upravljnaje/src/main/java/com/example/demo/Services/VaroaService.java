@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.example.demo.Validation;
 import com.example.demo.Entities.Varoa;
 import com.example.demo.Repositories.KosnicaRepository;
 import com.example.demo.Repositories.VaroaRepository;
@@ -22,6 +23,9 @@ public class VaroaService {
     @Autowired
     KosnicaRepository kosnicaRepository;
 
+    @Autowired
+    Validation val;
+
     public Iterable<Varoa> findAll() {
         return varoaRepository.findAll();
     }
@@ -31,12 +35,8 @@ public class VaroaService {
     }
 
     public String addVaroa(Varoa v, int idk) {
-        if(!kosnicaRepository.findById(idk).isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Košnica ne postoji");
-            return o1.toString();
-        }
         try {
+            val.PostojiKosnica(idk);
             kosnicaRepository.findById(idk).map(kosnica -> {
                 v.setKosnice(kosnica);
                 return varoaRepository.save(v);
@@ -57,7 +57,7 @@ public class VaroaService {
             return o.toString();
         } catch (Exception e) {
             JSONObject o1 = new JSONObject();
-            o1.put("poruka",  e.toString());
+            o1.put("poruka",  e.getMessage().toString());
             return o1.toString();
         }
         JSONObject o1 = new JSONObject();
@@ -66,12 +66,8 @@ public class VaroaService {
     }
 
     public String updateVaroa(int id, Varoa v) {
-        if(!varoaRepository.findById(id).isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Varoa ne postoji");
-            return o1.toString();
-        }
         try {
+            val.PostojiVaroa(id);
             varoaRepository.findById(id).map(varoa -> {
                 varoa.setBroj(v.getBroj());
                 varoa.setKomentar(v.getKomentar());
@@ -94,7 +90,7 @@ public class VaroaService {
             return o.toString();
         } catch (Exception e) {
             JSONObject o1 = new JSONObject();
-            o1.put("poruka",  e.toString());
+            o1.put("poruka", e.getMessage().toString());
             return o1.toString();
         }
         JSONObject o1 = new JSONObject();
@@ -103,16 +99,12 @@ public class VaroaService {
     }
 
     public String deleteVaroa(int id){
-        if(!varoaRepository.findById(id).isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Varoa ne postoji");
-            return o1.toString();
-        }
         try{
+            val.PostojiVaroa(id);
             varoaRepository.deleteById(id);
         } catch(Exception e) {
             JSONObject o1 = new JSONObject();
-            o1.put("poruka",  e.toString());
+            o1.put("poruka",  e.getMessage().toString());
             return o1.toString();
         }
         JSONObject o1 = new JSONObject();
@@ -122,13 +114,11 @@ public class VaroaService {
 
     //daj varoe od košnice
     public Iterable<Varoa> getVaroeOdKosnica(int idk) throws Exception {
-        if(!kosnicaRepository.findById(idk).isPresent()) {
-            throw new Exception("{\"poruka\":\"Kosnica ne postoji\"}");
-        }
         try {
+            val.PostojiKosnica(idk);
             return varoaRepository.dajVarouOdKosnice(idk);
         } catch (Exception e) {
-            throw new Exception("{\"poruka\":\"" + e.toString() + "\"}");
+            throw new Exception("{\"poruka\":\"" + e.getMessage().toString() + "\"}");
         }
     }
 }

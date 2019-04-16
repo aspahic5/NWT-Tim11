@@ -4,10 +4,10 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.example.demo.Validation;
 import com.example.demo.Entities.Selidba;
 import com.example.demo.Repositories.KosnicaRepository;
 import com.example.demo.Repositories.SelidbaRepository;
-
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +22,9 @@ public class SelidbaService {
     @Autowired
     KosnicaRepository kosnicaRepository;
 
+    @Autowired
+    Validation v;
+
     public Iterable<Selidba> findAll() {
         return selidbaRepository.findAll();
     }
@@ -31,12 +34,8 @@ public class SelidbaService {
     }
 
     public String addSelidba(Selidba s, int idk) {
-        if(!kosnicaRepository.findById(idk).isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Košnica ne postoji");
-            return o1.toString();
-        }
         try {
+            v.PostojiKosnica(idk);
             kosnicaRepository.findById(idk).map(kosnica -> {
             kosnica.setSelidba(s);
             selidbaRepository.save(s);
@@ -58,7 +57,7 @@ public class SelidbaService {
             return o.toString();
         } catch (Exception e) {
             JSONObject o1 = new JSONObject();
-            o1.put("poruka",  e.toString());
+            o1.put("poruka", e.getMessage().toString());
             return o1.toString();
         }
         JSONObject o1 = new JSONObject();
@@ -67,12 +66,8 @@ public class SelidbaService {
     }
 
     public String updateSelidba(int id, Selidba s){
-        if(!selidbaRepository.findById(id).isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Selidba ne postoji");
-            return o1.toString();
-        }
         try{
+            v.PostojiSelidba(id);
             selidbaRepository.findById(id).map(selidba -> {
                 selidba.setBrojkosnica(s.getBrojkosnica());
                 selidba.setDobit(s.getDobit());
@@ -97,7 +92,7 @@ public class SelidbaService {
             return o.toString();
         } catch (Exception e) {
             JSONObject o1 = new JSONObject();
-            o1.put("poruka",  e.toString());
+            o1.put("poruka", e.getMessage().toString());
             return o1.toString();
         }
         JSONObject o1 = new JSONObject();
@@ -106,16 +101,12 @@ public class SelidbaService {
     }
 
     public String delteSelidba(int id){
-        if(!selidbaRepository.findById(id).isPresent()) {
-            JSONObject o1 = new JSONObject();
-            o1.put("poruka",  "Selidba ne postoji");
-            return o1.toString();
-        }
         try{
+            v.PostojiSelidba(id);
             selidbaRepository.deleteById(id);
         } catch(Exception e){
             JSONObject o1 = new JSONObject();
-            o1.put("poruka",  e.toString());
+            o1.put("poruka",   e.getMessage().toString());
             return o1.toString();
         }
         JSONObject o1 = new JSONObject();
@@ -125,13 +116,21 @@ public class SelidbaService {
 
     //Daj selidbe od kosnice
     public Iterable<Selidba> getSelidbeOdKosnica(int idk) throws Exception {
-        if(!kosnicaRepository.findById(idk).isPresent()) {
-            throw new Exception("{\"poruka\":\"Kosnica ne postoji\"}");
-        }
         try {
+            v.PostojiKosnica(idk);
             return selidbaRepository.dajSelidbeOdKosnice(idk);
         } catch (Exception e) {
-            throw new Exception("{\"poruka\":\"" + e.toString() + "\"}");
+            throw new Exception("{\"poruka\":\"" +  e.getMessage().toString() + "\"}");
         }
+    }
+    //Postavi dobit za selidbu
+    public String updateDobitOdSelidba(int ids, double dobit) throws Exception {
+        try {
+            v.PostojiSelidba(ids);
+            selidbaRepository.azurirajDobitOdSelidbe(dobit, ids);
+        } catch(Exception e) {
+            throw new Exception("{\"poruka\":\"" + e.getMessage().toString() + "\"}");
+        }
+        return "{\"poruka\":\"Dobit selidbe " + ids + " uspješno ažurirana\"}";
     }
 }
