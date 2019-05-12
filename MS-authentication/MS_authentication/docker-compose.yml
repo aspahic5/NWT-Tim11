@@ -1,0 +1,8 @@
+version: '2.1'
+
+services:
+  ms_authentication:
+    image: ms_authentication
+    build: .
+    ports:
+      - 8081:8081

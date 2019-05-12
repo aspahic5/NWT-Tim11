@@ -1,0 +1,8 @@
+version: '2.1'
+
+services:
+  eureka-service:
+    image: eureka-service
+    build: .
+    ports:
+      - 8761:8761

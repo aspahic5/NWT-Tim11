@@ -1,0 +1,8 @@
+version: '2.1'
+
+services:
+  proizvodnja:
+    image: proizvodnja
+    build: .
+    ports:
+      - 8084:8084
