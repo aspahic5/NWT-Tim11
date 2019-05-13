@@ -1,10 +1,10 @@
+FROM java:8-jdk-alpine
 
-FROM openjdk:8-jdk-alpine
-VOLUME /tmp
-ARG JAVA_OPTS
-ENV JAVA_OPTS=$JAVA_OPTS
-ADD target/MS_proizvodnja-0.0.1-SNAPSHOT.jar proizvodnja.jar
-EXPOSE 8084
-ENTRYPOINT exec java $JAVA_OPTS -jar proizvodnja.jar
-# For Spring-Boot project, use the entrypoint below to reduce Tomcat startup time.
-#ENTRYPOINT exec java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar proizvodnja.jar
+COPY ./target/MS_proizvodnja-0.0.1-SNAPSHOT.jar /usr/app/
+
+WORKDIR /usr/app
+
+RUN sh -c 'touch MS_proizvodnja-0.0.1-SNAPSHOT.jar'
+
+ENTRYPOINT ["java","-jar","MS_proizvodnja-0.0.1-SNAPSHOT.jar"]  
+

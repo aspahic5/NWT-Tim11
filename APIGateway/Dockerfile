@@ -1,10 +1,10 @@
+FROM java:8-jdk-alpine
 
-FROM openjdk:8-jdk-alpine
-VOLUME /tmp
-ARG JAVA_OPTS
-ENV JAVA_OPTS=$JAVA_OPTS
-ADD target/APIGateway-0.0.1-SNAPSHOT.jar apigateway.jar
-EXPOSE 8050
-ENTRYPOINT exec java $JAVA_OPTS -jar apigateway.jar
-# For Spring-Boot project, use the entrypoint below to reduce Tomcat startup time.
-#ENTRYPOINT exec java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar apigateway.jar
+COPY ./target/APIGateway-0.0.1-SNAPSHOT.jar /usr/app/
+
+WORKDIR /usr/app
+
+RUN sh -c 'touch APIGateway-0.0.1-SNAPSHOT.jar'
+
+ENTRYPOINT ["java","-jar","APIGateway-0.0.1-SNAPSHOT.jar"]  
+
