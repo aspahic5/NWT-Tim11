@@ -1,0 +1,8 @@
+version: '2.1'
+
+services:
+  apigateway:
+    image: apigateway
+    build: .
+    ports:
+      - 8050:8050

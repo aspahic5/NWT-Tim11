@@ -7,3 +7,4 @@ WORKDIR /usr/app
 RUN sh -c 'touch MS_authentication-0.0.1-SNAPSHOT.jar'
 
 ENTRYPOINT ["java","-jar","MS_authentication-0.0.1-SNAPSHOT.jar"]  
+
