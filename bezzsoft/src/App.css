@@ -1,0 +1,128 @@
+.mainpage{
+
+  width: 100%;
+
+}
+
+.header{
+
+  width: 95%;
+  height: 18em;
+  padding: 0px;
+  margin: 0px;
+  margin-left: 2.5%;
+  background-image: url("./hexellence.png");
+  background-repeat: repeat;
+  background-color: #131111;
+  border-radius: 1em;
+  position: relative;
+  box-shadow: 5px 4px #7e7d7d;
+
+}
+
+.logo{
+  height: 23em;
+  width: 25em;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 1em;
+  
+}
+
+.body{
+
+  width: 95%;
+  min-height: 40em;
+  padding: 0px;
+  margin: 0px;
+  margin-left: 2.5%;
+  margin-top:2em;
+  
+  border-radius: 1em;
+  position: relative;
+  box-shadow: 5px 4px #7e7d7d;
+  border: solid 2px #7e7d7d;
+  margin-bottom: 3em;
+ 
+}
+
+.navbar{
+  width: 100%;
+  background-color: #ffffff;
+  padding: 0.5em;
+  margin: 0px;
+  
+}
+
+.textlink{
+  font-size: 1.3em;
+  color: #7e7e7e;
+  padding: 0.5em;
+  margin: 0px;
+ 
+}
+
+.naslov{
+
+  font-size: 2em;
+  color: #535252;
+  padding: 0.5em;
+  margin: 0px;
+  margin-left: 2.5%;
+  margin-top:0.3em;
+  width: 95%;
+
+}
+
+.loginforma{
+  height: 30%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20em;
+  margin-top:15em;
+  
+}
+
+.submit{
+  width: 40%;
+  margin-left: 30%;
+  margin-top:1em;
+  border:0px;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 0.5em;
+  border-radius: 1em;
+  color:#face08;
+  background-image: url("./hexellence.png");
+  background-repeat: repeat;
+  background-color: #131111;
+}
+
+.submit:hover{
+  color:#131111;
+  background-image: url("./hexellence.png");
+  background-repeat: repeat;
+  background-color: #face08;
+}
+
+.submit:hover{
+  color:#131111;
+  background-image: url("./hexellence.png");
+  background-repeat: repeat;
+  background-color: #face08;
+}
+
+.prijavaforma{
+  
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20em;
+  margin-top:18em;
+  
+}
