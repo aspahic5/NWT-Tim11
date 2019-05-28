@@ -30,7 +30,7 @@ class LoginForm extends Component {
   render() {
 
     if(this.state.redirect === true){
-      return <Redirect to="/"></Redirect>
+      return <Redirect to="/home"></Redirect>
     }
 
     return (
