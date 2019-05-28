@@ -6,7 +6,7 @@ import {Redirect} from 'react-router-dom'
 
 
 
-class PrijavaForm extends Component {
+class PrijavaFormAdmin extends Component {
 
   
   constructor(props) {
@@ -30,12 +30,12 @@ class PrijavaForm extends Component {
   render() {
 
     if(this.state.redirect === true){
-      return <Redirect to="/pregledkorisnika"></Redirect>
+      return <Redirect to="/"></Redirect>
     }
 
     return (
      
-      <div className="prijavaforma">
+      <div className="prijavaformaadmin">
 
       <Form >
 
@@ -73,15 +73,23 @@ class PrijavaForm extends Component {
 
           </Form.Group>
           
+          <Form.Group controlId="exampleForm.ControlSelect1">
+          <Form.Label>Rola </Form.Label>
+            <Form.Control as="select" >
+              <option>Admin</option>
+              <option>User</option>
+             
+            </Form.Control>
+        </Form.Group>
           
           
       </Form>
       <button className="submit" onClick={this.onLogin} >
-      PIRJAVI SE
+      DODAJ KORISNIKA
       </button>
       </div>
     )
   }
 }
 
-export default PrijavaForm;
+export default PrijavaFormAdmin;

@@ -3,6 +3,8 @@ import {BrowserRouter ,Route,Switch} from 'react-router-dom';
 import LoginPage from './components/LoginPage/LoginPage';
 import HomePage from './components/HomePage/HomePage';
 import PrijavaPage from './components/PrijavaPage/PrijavaPage';
+import AdminPage from './components/AdminPage/AdminPage';
+import AdminPage1 from './components/AdminPage1/AdminPage1';
 
 
 import './App.css';
@@ -15,6 +17,8 @@ function App() {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/prijava" component={PrijavaPage} />
+          <Route exact path="/pregledkorisnika" component={AdminPage} />
+          <Route exact path="/dodajkorisnika" component={AdminPage1} />
           
         </Switch>
       </BrowserRouter>
