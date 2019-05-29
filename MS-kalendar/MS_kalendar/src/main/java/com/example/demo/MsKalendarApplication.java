@@ -36,20 +36,29 @@ public class MsKalendarApplication implements CommandLineRunner {
 		/*
 		Lokacija lokacija1=new Lokacija("Zenica");
 		Lokacija lokacija2=new Lokacija("Sarajevo");
+		Lokacija lokacija3=new Lokacija("Tuzla");
 		
 		System.out.println(lokacijaService.addLokacija(lokacija1));
 		System.out.println(lokacijaService.addLokacija(lokacija2));
+		System.out.println(lokacijaService.addLokacija(lokacija3));
 		
-		Set<Lokacija> set= new HashSet<Lokacija>(); 
-		set.add(lokacija1);
-		set.add(lokacija2);
+		Set<Lokacija> set1= new HashSet<Lokacija>(); 
+		set1.add(lokacija1);
+		set1.add(lokacija2);
 		
-		Biljka biljka1= new Biljka("bagrem","april","maj",set);
-		Biljka biljka2= new Biljka("malina","maj","jun",set);
+		Set<Lokacija> set2= new HashSet<Lokacija>(); 
+		set2.add(lokacija1);
+		set2.add(lokacija3);
+		
+		Biljka biljka1= new Biljka("Bagrem","april","maj",set1);
+		Biljka biljka2= new Biljka("Lipa","maj","jun",set2);
+		Biljka biljka3= new Biljka("Lijeska","maj","jun",set2);
 		
 		System.out.println(biljkaService.addBiljka(biljka1));
 		System.out.println(biljkaService.addBiljka(biljka2));
+		System.out.println(biljkaService.addBiljka(biljka3));
 		*/
+		
 	}
 
 }

@@ -137,3 +137,33 @@
   margin-top:20em;
 
 }
+
+.forma{
+  height: 30%;
+  position: relative;
+  margin-left: 10%;
+  width: 20em;
+  
+}
+
+.button1{
+  position: relative;
+  margin-left: 10%;
+  width: 20em;
+  color:#face08;
+  background-image: url("./hexellence.png");
+  background-repeat: repeat;
+  background-color: #131111;
+  border:0px;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 0.5em;
+  border-radius: 1em;
+}
+
+.button1:hover{
+  color:#131111;
+  background-image: url("./hexellence.png");
+  background-repeat: repeat;
+  background-color: #face08;
+}
