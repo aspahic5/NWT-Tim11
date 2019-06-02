@@ -102,6 +102,26 @@
   background-color: #131111;
 }
 
+.submittable {
+  width: 80%;
+  margin-left: 10%;
+  margin-top:1em;
+  border:0px;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 0.5em;
+  border-radius: 1em;
+  color:#face08;
+  background-image: url("./hexellence.png");
+  background-repeat: repeat;
+  background-color: #131111;
+}
+.submittable:hover{
+  color:#131111;
+  background-image: url("./hexellence.png");
+  background-repeat: repeat;
+  background-color: #face08;
+}
 .submit:hover{
   color:#131111;
   background-image: url("./hexellence.png");
@@ -166,4 +186,9 @@
   background-image: url("./hexellence.png");
   background-repeat: repeat;
   background-color: #face08;
+}
+
+.table {
+  margin: 0;
+  align-items: center;
 }
