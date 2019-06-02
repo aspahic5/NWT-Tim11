@@ -9,6 +9,7 @@ import UserHomePage from './components/UserHomePage/UserHomePage';
 import Kalendar from './components/KalendarPage/KalendarPage';
 import PregledKosnica from './components/PregledKosnica/PregledKosnica';
 import Kosnica from './components/Kosnica/Kosnica';
+import PregledBiljaka from './components/PregledBiljaka/PregledBiljaka';
 
 
 import './App.css';
@@ -27,6 +28,7 @@ function App() {
           <Route exact path="/kalendar" component={Kalendar} />
           <Route exact path="/pregledkosnica" component={PregledKosnica} />
           <Route exact path="/kosnica" componenet={Kosnica}/>
+          <Route exact path="/pregledbiljaka" component={PregledBiljaka} />
           
         </Switch>
       </BrowserRouter>
