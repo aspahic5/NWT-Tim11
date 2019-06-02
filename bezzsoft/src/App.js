@@ -9,6 +9,10 @@ import UserHomePage from './components/UserHomePage/UserHomePage';
 import Kalendar from './components/KalendarPage/KalendarPage';
 import PregledKosnica from './components/PregledKosnica/PregledKosnica';
 import Kosnica from './components/Kosnica/Kosnica';
+import ProizvodnjaMed from './components/ProizvodnjaMed/ProizvodnjaMed';
+import ProizvodnjaMlijec from './components/ProizvodnjaMlijec/ProizvodnjaMlijec';
+import ProizvodnjaPropolis from './components/ProizvodnjaPropolis/ProizvodnjaPropolis';
+
 
 
 import './App.css';
@@ -27,6 +31,9 @@ function App() {
           <Route exact path="/kalendar" component={Kalendar} />
           <Route exact path="/pregledkosnica" component={PregledKosnica} />
           <Route exact path="/kosnica" componenet={Kosnica}/>
+          <Route exact path="/proizvodnjaMed" component={ProizvodnjaMed}/>
+          <Route exact path="/proizvodnjaMlijec" component={ProizvodnjaMlijec}/>
+          <Route exact path="/proizvodnjaPropolis" component={ProizvodnjaPropolis}/>
           
         </Switch>
       </BrowserRouter>

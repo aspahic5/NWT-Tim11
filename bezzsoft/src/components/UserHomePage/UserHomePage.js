@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import NavBar from '../UserNavBar/UserNavBar';
 import Header from '../Header/Header'
+import UserHomeForm from './UserHomeForm';
 
 class UserHomePage extends Component {
 
@@ -16,7 +17,7 @@ render(){
     
             <div className="body">
                 <h3 className="naslov">Kontrolna ploča</h3>
-        
+                <UserHomeForm></UserHomeForm>
                 
         
             </div>
