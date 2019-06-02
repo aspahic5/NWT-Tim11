@@ -192,3 +192,20 @@
   margin: 0;
   align-items: center;
 }
+.listaProizvodnjaForma{
+  width: 20em;
+  margin-left:8em;
+}
+
+.proizvodnjaForma{
+  width: 20em;
+  margin-left:18em;
+  margin-top: 5em;
+  }
+  
+.biljka{
+
+  width: 80%;
+  margin-left: 5%
+ 
+}

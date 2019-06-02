@@ -13,6 +13,11 @@ import Rojenje from './components/Rojenje/Rojenje';
 import Aktivnost from './components/Aktivnost/Aktivnost';
 import DodajRojenje from './components/Rojenje/DodajRojenje';
 import DodajAktivnost from './components/Aktivnost/DodajAktivnost';
+import ProizvodnjaMed from './components/ProizvodnjaMed/ProizvodnjaMed';
+import ProizvodnjaMlijec from './components/ProizvodnjaMlijec/ProizvodnjaMlijec';
+import ProizvodnjaPropolis from './components/ProizvodnjaPropolis/ProizvodnjaPropolis';
+
+import PregledBiljaka from './components/PregledBiljaka/PregledBiljaka';
 
 
 import './App.css';
@@ -35,6 +40,11 @@ function App() {
           <Route exact path="/Aktivnost" component={Aktivnost} />
           <Route exact path="/dodajaktivnost" component={DodajAktivnost} />
           <Route exact path="/dodajrojenje" component={DodajRojenje} />
+          <Route exact path="/kosnica" componenet={Kosnica}/>
+          <Route exact path="/proizvodnjaMed" component={ProizvodnjaMed}/>
+          <Route exact path="/proizvodnjaMlijec" component={ProizvodnjaMlijec}/>
+          <Route exact path="/proizvodnjaPropolis" component={ProizvodnjaPropolis}/>
+          <Route exact path="/pregledbiljaka" component={PregledBiljaka} />
           
         </Switch>
       </BrowserRouter>
