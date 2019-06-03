@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import NavBar from '../UserNavBar/UserNavBar';
-import Header from '../Header/Header'
+import Header from '../Header/Header';
+import {Redirect} from 'react-router-dom';
+
+
 
 class PregledBiljaka extends Component {
 
@@ -12,7 +15,14 @@ class PregledBiljaka extends Component {
         }
         }
         componentDidMount(){
-        return fetch('/ms_kalendar/BiljkaLokacija/'+this.props.location.state.grad)
+        var grad="";
+        try{
+            grad=this.props.location.state.grad;
+        }   
+        catch(e){
+
+        } 
+        fetch('/ms_kalendar/BiljkaLokacija/'+grad)
         .then((response) => response.json())
         .then((responseJson) => {
         var o=Object.keys(responseJson).length
@@ -29,6 +39,11 @@ class PregledBiljaka extends Component {
         }
 
 render(){
+
+    if(!localStorage.getItem('prijavljen')){
+        return <Redirect to="/login"></Redirect>
+    }
+
     if(this.state.isLoading){
         return(
         <div>Loading</div>

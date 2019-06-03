@@ -15,7 +15,7 @@ render(){
         <Nav.Link href="/home"><p className="textlink">Kontrolna ploča</p> </Nav.Link>
         <Nav.Link href="/pregledkosnica"><p className="textlink">Pregled košnica</p> </Nav.Link>
         <Nav.Link href="/kalendar"><p className="textlink">Kalendar</p> </Nav.Link>
-        <Nav.Link href="/"><p className="textlink">Logout</p> </Nav.Link>
+        <Nav.Link href="/login"><p className="textlink">Logout</p> </Nav.Link>
        
       </Navbar.Collapse>
       </Navbar>

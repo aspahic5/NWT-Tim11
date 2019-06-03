@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Entities.Korisnik;
 import com.example.demo.Entities.Role;
+import com.example.demo.Repositories.KorisnikRepository;
 import com.example.demo.Services.KorisnikService;
 import com.example.demo.Services.RoleService;
 import com.netflix.appinfo.InstanceInfo;
@@ -33,6 +34,9 @@ public class MsAuthenticationApplication implements CommandLineRunner{
 	KorisnikService korisnikService;
 	
 	@Autowired
+	KorisnikRepository korisnikrepo;
+	
+	@Autowired
     RoleService roleService;
 	
 	public static void main(String[] args) {
@@ -44,10 +48,10 @@ public class MsAuthenticationApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		
 
-		Role rola1=new Role("8");
 		
 		
-		System.out.println(rola1.getRole());
+		
+		System.out.println(korisnikrepo.findAll().toString());
 		
 		
 	}

@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
 import NavBar from '../AdminNavBar/AdminNavBar';
-import Header from '../Header/Header'
+import Header from '../Header/Header';
+import {Redirect} from 'react-router-dom';
+
 
 class AdminPage extends Component {
 
+
 render(){
+    if(localStorage.getItem('role')!='admin'){
+        return <Redirect to="/login"></Redirect>
+    }
     return(
         <div className="mainpage">
             
             <NavBar></NavBar>
         
             <Header></Header>
+            
         
         
     

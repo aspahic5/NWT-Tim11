@@ -5,6 +5,11 @@ import Header from '../Header/Header'
 class HomePage extends Component {
 
 render(){
+    localStorage.setItem('username','');
+  localStorage.setItem('password','');
+  localStorage.setItem('id','-1');
+  localStorage.setItem('prijavljen',false);
+  localStorage.setItem('role','neprijavljen');
     return(
         <div className="mainpage">
             

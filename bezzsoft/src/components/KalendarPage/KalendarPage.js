@@ -4,6 +4,8 @@ import Header from '../Header/Header';
 import {Form} from 'react-bootstrap';
 import {Redirect} from 'react-router-dom'
 
+
+
 class KalendarPage extends Component {
 constructor(props){
 super(props);
@@ -15,7 +17,7 @@ redirect:false,
 }
 }
 componentDidMount(){
-return fetch('/ms_kalendar/lokacije')
+fetch('/ms_kalendar/lokacije')
 .then((response) => response.json())
 .then((responseJson) => {
 var o=Object.keys(responseJson).length
@@ -29,6 +31,8 @@ lokacije:l
 }
 )
 })
+
+
 }
 
 prikazibiljke(){
@@ -45,6 +49,8 @@ grad:event.target.value
 
 render(){
 
+
+
 if(this.state.redirect === true){
 return <Redirect to={{
     pathname: '/pregledbiljaka',
@@ -56,6 +62,10 @@ if(this.state.isLoading){
 return(
 <div>Loading</div>
 )
+}
+
+if(!localStorage.getItem('prijavljen')){
+    return <Redirect to="/login"></Redirect>
 }
 
 const lokacije = this.state.lokacije.map(function(lokacija){
