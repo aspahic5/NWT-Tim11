@@ -12,7 +12,7 @@ class PregledBiljaka extends Component {
         }
         }
         componentDidMount(){
-        return fetch('/BiljkaLokacija/'+this.props.location.state.grad)
+        return fetch('/ms_kalendar/BiljkaLokacija/'+this.props.location.state.grad)
         .then((response) => response.json())
         .then((responseJson) => {
         var o=Object.keys(responseJson).length

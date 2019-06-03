@@ -15,7 +15,7 @@ redirect:false,
 }
 }
 componentDidMount(){
-return fetch('/lokacije')
+return fetch('/ms_kalendar/lokacije')
 .then((response) => response.json())
 .then((responseJson) => {
 var o=Object.keys(responseJson).length
