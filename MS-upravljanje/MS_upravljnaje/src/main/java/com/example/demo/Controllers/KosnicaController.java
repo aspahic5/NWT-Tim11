@@ -1,6 +1,10 @@
 package com.example.demo.Controllers;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 
 import com.example.demo.Validation;
 import com.example.demo.Entities.Kosnica;
@@ -69,8 +73,25 @@ public class KosnicaController {
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-    	JSONObject o1 = new JSONObject(k);
-    	Kosnica k1 = new Kosnica(o.getInt("id"), Date.valueOf(o1.getString("maticagod")), o1.getInt("brojramova"), o1.getInt("brojnastavaka"), o1.getDouble("kolstimulansa"), o1.getString("tipstimulansa"), o1.getInt("brojhanemanki"), o1.getString("komentar"), null, null, null); 
+        JSONObject o1 = new JSONObject(k); 
+        String de = o1.getString("maticagod");
+        DateFormat originalFormat = new SimpleDateFormat("dd/mm/yyyy");
+        DateFormat targetFormat = new SimpleDateFormat("yyyy-mm-dd");
+        java.util.Date date;
+        try{
+            date = originalFormat.parse(de);
+        } 
+        catch(Exception e) {
+            return e.getMessage().toString();
+        }
+        
+        Calendar c = Calendar.getInstance(); 
+        c.setTime(date); 
+        c.add(Calendar.DATE, 1);
+        date = c.getTime();
+        String formattedDate = targetFormat.format(date);  
+       
+        Kosnica k1 = new Kosnica(o.getInt("id"), Date.valueOf(formattedDate), o1.getInt("brojramova"), o1.getInt("brojnastavaka"), o1.getDouble("kolstimulansa"), o1.getString("tipstimulansa"), o1.getInt("brojhanemanki"), o1.getString("komentar"), null, null, null); 
         return kosnicaService.addKosnica(k1);
     }
 
