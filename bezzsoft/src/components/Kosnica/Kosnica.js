@@ -13,7 +13,8 @@ class UserHomePage extends Component {
             redirectR: false,
             redirectV: false,
             redirectDA: false,
-            redirectDR: false
+            redirectDR: false,
+            redirectVR: false
         }
     }
 render(){
@@ -38,6 +39,12 @@ render(){
     else if(this.state.redirectDR) {
         return (<Redirect to={{
             pathname: "/dodajrojenje",
+            state: { id: '123' }
+        }}/>);
+    }
+    else if(this.state.redirectVR) {
+        return (<Redirect to={{
+            pathname: "/proizvodnjaMed",
             state: { id: '123' }
         }}/>);
     }
@@ -121,14 +128,14 @@ render(){
                             <tbody className="table"> 
                                 <tr>
                                     <th> <button className="submittable"   onClick = {() => {this.setState({ redirectDA: true})}}> Dodaj aktivnost </button></th>
-                                    <td> <button className="submittable"   onClick = {() => {this.setState({ redirectA: true})}} > Pregled ktivnosti </button></td>
+                                    <td> <button className="submittable"   onClick = {() => {this.setState({ redirectA: true})}} > Pregled aktivnosti </button></td>
                                 </tr>
                                 <tr>
                                     <th> <button className="submittable"  onClick = {() => {this.setState({ redirectDR: true})}}> Dodaj rojenje </button></th>
                                     <td><button className="submittable"    onClick = {() => {this.setState({ redirectR: true})}} >  Trenutno rojenje </button> </td>
                                 </tr>
                                 <tr>
-                                    <td> <button className="submittable"  > Dodaj vrcanje </button> </td>
+                                    <td> <button className="submittable" onClick = {() => {this.setState({ redirectVR: true})}} > Dodaj vrcanje </button> </td>
                                     <td> <button className="submittable"  > Povijest vrcanja </button></td>
                                 </tr>
                                 <tr>

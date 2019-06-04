@@ -27,7 +27,7 @@ render(){
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Mjesec</Form.Label>
-                                <Form.Control placeholder="Npr. Januar/Februar..." />
+                                <Form.Control placeholder="Npr. Januar/Sječanj..." />
                             </Form.Group>
                             </Form>
                             <button className="submittable"> Dodaj aktivnost </button>

@@ -3,7 +3,11 @@
   width: 100%;
 
 }
-
+.naslovaktivnost {
+  font-size: 1.2em;
+  color: #535252;
+  text-align-last: center;
+}
 .header{
 
   width: 95%;

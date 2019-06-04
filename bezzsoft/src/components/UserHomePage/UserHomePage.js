@@ -12,7 +12,7 @@ render(){
             <NavBar></NavBar>
         
             <Header></Header>
-        
+         
         
     
             <div className="body">

@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - MsKalendarApplication",
+            "request": "launch",
+            "mainClass": "com.example.demo.MsKalendarApplication",
+            "projectName": "MS_kalendar"
+        }
+    ]
+}
