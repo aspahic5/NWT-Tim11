@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import NavBar from '../UserNavBar/UserNavBar';
 import Header from '../Header/Header'
-import {ListGroup, Accordion, Card, Button} from 'react-bootstrap';
+import {ListGroup, Accordion, Card, Button, Nav} from 'react-bootstrap';
 import {Redirect} from 'react-router-dom';
 
 class PregledKosnica extends Component {
@@ -10,14 +10,12 @@ class PregledKosnica extends Component {
         this.state = {
             isLoading: true,
             Kosnice: [],
-            redirect: false,
             user: "",
             pass: "",
             id: -1,
             kosnice:  [],
             kosnicaId: -1,
-            prijavljen: false,
-            temp: 0
+            prijavljen: false
         }
     }
 
@@ -50,14 +48,6 @@ class PregledKosnica extends Component {
         }
     }
 render(){
-
-    if(this.state.redirect) {
-        return (<Redirect to={{
-            pathname: "/kosnica",
-            state: { id: '123' }
-        }}/>);
-    }
-
     const kosnica = this.state.kosnice.map(function(kosnica1, i=-1){
         i++;
         return (
@@ -69,11 +59,11 @@ render(){
                     </Card.Header>
                     <Accordion.Collapse eventKey= {i}>
                     <Card.Body>
-                        Komentar
+                        <p>Komentar</p>
                         <br></br>
                         {kosnica1.komentar}
                         <br></br>
-                        <button className="submit" onClick = {(props) => {this.setState({ redirect: true })}}> Detalji </button> 
+                        <Nav.Link href = "/kosnica" ><button className="submit" onClick = {() =>{localStorage.setItem("idKosnice", kosnica1.id)}}> Detalji </button> </Nav.Link>
                     </Card.Body>
                     </Accordion.Collapse>
                 </Card>

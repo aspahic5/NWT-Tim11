@@ -70,28 +70,35 @@ render(){
                       <Col>
                       <Form>
                         <Form.Group>
-                            <Form.Control type="number" placeholder="Broj ramova" value={this.state.brojramova} onChange={(e)=>{this.setState({brojramova:e.target.value})}}/>
+                            <Form.Label>Broj ramova</Form.Label>
+                            <Form.Control type="number" value={this.state.brojramova} onChange={(e)=>{this.setState({brojramova:e.target.value})}}/>
                         </Form.Group>
                         <Form.Group>
-                        <Form.Control type="number" placeholder="Broj nastavaka" value={this.state.brojnastavaka} onChange={(e)=>{this.setState({brojnastavaka:e.target.value})}}/>
+                            <Form.Label>Broj nastavaka</Form.Label>
+                            <Form.Control type="number" value={this.state.brojnastavaka} onChange={(e)=>{this.setState({brojnastavaka:e.target.value})}}/>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Control type="text" placeholder="Godište matice (dd/mm/yyyy)" value={this.state.godistematice} onChange={(e)=>{this.setState({godistematice:e.target.value})}}/>
+                            <Form.Label>Godište matice</Form.Label>
+                            <Form.Control type="text" value={this.state.godistematice} onChange={(e)=>{this.setState({godistematice:e.target.value})}}/>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Control type="number" placeholder="Broj hanemanki" value={this.state.brojhanemanki} onChange={(e)=>{this.setState({brojhanemanki:e.target.value})}}/>
+                            <Form.Label>Broj hanemanki</Form.Label>
+                            <Form.Control type="number" value={this.state.brojhanemanki} onChange={(e)=>{this.setState({brojhanemanki:e.target.value})}}/>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Control type="text" placeholder="Količina stimulansa (kg)" value={this.state.kolicinastimulansa} onChange={(e)=>{this.setState({kolicinastimulansa:e.target.value})}}/>
+                            <Form.Label>Količina stimulansa (kg)</Form.Label>
+                            <Form.Control type="text" value={this.state.kolicinastimulansa} onChange={(e)=>{this.setState({kolicinastimulansa:e.target.value})}}/>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Control type="text"  placeholder="Tip stimulansa" value={this.state.tipstimulansa} onChange={(e)=>{this.setState({tipstimulansa:e.target.value})}}/>
+                            <Form.Label>Tip stimulansa</Form.Label>
+                            <Form.Control type="text"  value={this.state.tipstimulansa} onChange={(e)=>{this.setState({tipstimulansa:e.target.value})}}/>
                         </Form.Group>
                         </Form>
                       </Col>  
                       <Col>
                         <Form.Group>
-                            <Form.Control as="textarea" rows="5" placeholder="Komentar na košnicu" value={this.state.komentar} onChange={(e)=>{this.setState({komentar:e.target.value})}}/>
+                            <Form.Label>Komentar na košnicu</Form.Label>
+                            <Form.Control as="textarea" rows="5"  value={this.state.komentar} onChange={(e)=>{this.setState({komentar:e.target.value})}}/>
                         </Form.Group>
                         <Form.Group>
                             <button className="submittable"  onClick = {this.dodajKosnicu.bind(this)}> Dodaj </button>
