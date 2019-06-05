@@ -12,17 +12,35 @@ class PrijavaForm extends Component {
   constructor(props) {
     super(props);
 
-      this.state = {redirect: false};
+      this.state = {
+        redirect: false,
+        ime:'',
+        prezime:'',
+        username:'',
+        password:'',
+        repeatpassword:'',
+        broj:''
+      };
       this.onLogin = this.onLogin.bind(this)
   }
 
     
   onLogin() {
-    this.setState(
+
+    var data = new FormData();
+    data.append("username",this.state.username)
+    data.append("password",this.state.password)
+    fetch('/autentifikacija/provjeri',{
+      method: "PUT",
+      body: data
+
+    }).then((response) => response.json())
+    /*this.setState(
       ()=>({
         redirect:true
       })
-    )
+    )*/
+   
   }
 
   
@@ -41,35 +59,59 @@ class PrijavaForm extends Component {
 
           <Form.Group>
             
-            <Form.Control type="username" placeholder="Ime" />
+            <Form.Control type="username" placeholder="Ime" value={this.state.ime} onChange={(e)=>{
+              this.setState({
+                ime:e.target.value
+              })
+            }} />
           </Form.Group>
 
           <Form.Group>
             
-            <Form.Control type="username" placeholder="Prezime" />
+            <Form.Control type="username" placeholder="Prezime" value={this.state.prezime} onChange={(e)=>{
+              this.setState({
+                prezime:e.target.value
+              })
+            }}/>
           </Form.Group>
           <Form.Group>
             
-            <Form.Control type="username" placeholder="Username" />
+            <Form.Control type="username" placeholder="Username" value={this.state.username} onChange={(e)=>{
+              this.setState({
+                username:e.target.value
+              })
+            }}/>
 
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
 
-            <Form.Control type="password" placeholder="Password" />
+            <Form.Control type="password" placeholder="Password" value={this.state.password} onChange={(e)=>{
+              this.setState({
+                password:e.target.value
+              })
+            }}/>
 
           </Form.Group>
 
           <Form.Group controlId="formBasicPassword">
 
-            <Form.Control type="password" placeholder="Ponovite Password" />
+            <Form.Control type="password" placeholder="Ponovite Password" value={this.state.repeatpassword} onChange={(e)=>{
+              this.setState({
+                repeatpassword:e.target.value
+              })
+            }}/>
 
           </Form.Group>
 
 
           <Form.Group controlId="formBasicPassword">
 
-            <Form.Control type="username" placeholder="Broj telefona 06x/xxx-xxx" />
+            <Form.Control type="username" placeholder="Broj telefona 06x/xxx-xxx" value={this.state.broj} onChange={(e)=>{
+              this.setState({
+                broj:e.target.value
+              })
+            }}/>
 
           </Form.Group>
           
