@@ -32,7 +32,6 @@ dodajKosnicu() {
         "\"brojnastavaka\":" + this.state.brojnastavaka + " \n" +
     "}";
     var data = new FormData();
-    alert(Kosnica)
     data.append("username",this.state.user);
     data.append("password",this.state.pass);
     data.append("Kosnica", Kosnica);
