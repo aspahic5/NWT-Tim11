@@ -27,19 +27,44 @@ class PrijavaForm extends Component {
     
   onLogin() {
 
+    var adminusername = 'amar';
+    var adminpassword = 'amar';
+    var korisnik = "{ \n" + 
+        "\"ime\":"  + this.state.ime  + ", \n" + 
+        "\"prezime\":" + "\"" + this.state.prezime + "\"" + ", \n" +
+        "\"username\":" +  "\"" +this.state.username  + "\"" + ", \n" +
+        "\"broj_telefona\":" +  "\"" +this.state.broj  + "\"" + ", \n" +
+        "\"password\":" + this.state.password + " \n"+
+    "}";
+    var role="{ \n" + 
+    "\"role\":"  + "user"  + ", \n" + 
+    "\"id\":" + "\"" + "2" + "\"" + " \n" +
+"}";
     var data = new FormData();
-    data.append("username",this.state.username)
-    data.append("password",this.state.password)
-    fetch('/autentifikacija/provjeri',{
+    data.append("username",adminusername);
+    data.append("password",adminpassword);
+    data.append("korisnik", korisnik);
+    data.append("role", role);
+    fetch('/autentifikacija/Korisnik',{
       method: "PUT",
       body: data
 
-    }).then((response) => response.json())
-    /*this.setState(
-      ()=>({
-        redirect:true
-      })
-    )*/
+    }).then((response) => response.json()).then((responseJson) => {
+      if(responseJson.message==="Korisnik saved"){
+          alert("Uspješno ste prijavljeni, sada se možete logovati sa svojim korisničkim podacima");
+          this.setState(
+        
+            ()=>({
+              redirect:true
+            })
+          )
+      }
+      else{
+        alert("Neispravni uneseni podaci")
+      }
+      
+    })
+    
    
   }
 
@@ -48,7 +73,7 @@ class PrijavaForm extends Component {
   render() {
 
     if(this.state.redirect === true){
-      return <Redirect to="/pregledkorisnika"></Redirect>
+      return <Redirect to="/login"></Redirect>
     }
 
     return (
