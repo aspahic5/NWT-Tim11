@@ -34,7 +34,6 @@ class UserHomePage extends Component {
         fetch("/ms_upravljanje/Kosnica/" + this.state.KosnicaId, options).
             then((response) => response.json()).
                 then((responseJson)=>{
-                    alert(JSON.stringify(responseJson))
                     var str = responseJson.maticagod
                     var str2 = str[8] + str[9] + '/' + str[5] + str[6] + '/' + str[0] + str[1] + str[2] + str[3];
                     this.setState({

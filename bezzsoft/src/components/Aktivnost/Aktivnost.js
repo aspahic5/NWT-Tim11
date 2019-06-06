@@ -4,7 +4,22 @@ import Header from '../Header/Header'
 import {Container, Row, Col, Table, Form} from 'react-bootstrap';
 
 class Aktivnost extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            kosnicaId: localStorage.getItem("idKosnice"),
+            Aktivnost: "",
+            mjesec: "",
+            uradjeno: -1
+        }
+    }
 
+    componentDidMount(){
+        var formData = new FormData();
+        formData.append("username", this.state.user);
+        formData.append("password", this.state.pass);
+
+    }
 render(){
     return(
         <div className="mainpage">
