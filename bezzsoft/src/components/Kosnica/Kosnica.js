@@ -19,7 +19,8 @@ class UserHomePage extends Component {
                         kolicinastimulansa: "0",
                         tipstimulansa: "",
                         komentar: ""
-            }
+            },
+            redirect: false
         }
     }
     
@@ -51,51 +52,232 @@ class UserHomePage extends Component {
                     })
                 })
     }
+    azuriraj() {
+        var data = new FormData();
+        data.append("username", localStorage.getItem('username'));
+        data.append("password", localStorage.getItem('password'));
+        var str = this.state.Kosnica.godistematice;
+        var Kosnica = "{ \n" + 
+            "\"kolstimulansa\":"  + this.state.Kosnica.kolicinastimulansa  + ", \n" + 
+            "\"maticagod\":" + "\"" + str + "\"" + ", \n" +
+            "\"tipstimulansa\":" +  "\"" +this.state.Kosnica.tipstimulansa  + "\"" + ", \n" +
+            "\"vlasnik_id\":" + this.state.Kosnica.vlasnik_id + ", \n"+
+            "\"brojhanemanki\":" + this.state.Kosnica.brojhanemanki + ", \n" +
+            "\"brojramova\":" + this.state.Kosnica.brojramova  + ", \n" +
+            "\"komentar\":" +  "\"" + this.state.Kosnica.komentar +  "\"" + ", \n" +
+            "\"brojnastavaka\":" + this.state.Kosnica.brojnastavaka + " \n" +
+        "}";
+        data.append("Kosnica", Kosnica);
+        const options = {
+            method: "PUT",
+            body: data
+        }
+        fetch("/ms_upravljanje/Kosnica/" + this.state.KosnicaId, options).
+            then((response) => response.json()).
+                then((responseJson)=>{
+                    alert(JSON.stringify(responseJson));
+                })
+    }
+    obrisi(){
+        var data = new FormData();
+        data.append("username", localStorage.getItem('username'));
+        data.append("password", localStorage.getItem('password'));
+        const options = {
+            method: "DELETE",
+            body: data
+        }
+        fetch("/ms_upravljanje/Kosnica/" + this.state.KosnicaId, options).
+            then((response) => response.json()).
+                then((responseJson)=>{
+                    alert(JSON.stringify(responseJson));
+                    this.setState({
+                        redirect: true
+                    })
+           })
+    }
     kosnica(Kosnica){
         return(
-            <tbody> 
+        <tbody> 
             <tr>
                 <th>ID</th>
                 <td><Form.Control type="number"  readOnly = {true} value = {Kosnica.id}/> </td>
             </tr>
             <tr>
                 <th>BROJ HANEMANKI</th>
-                <td><Form.Control type="number" placeholder = {Kosnica.brojhanemanki }/> </td>
+                <td><Form.Control type="number"  value={this.state.Kosnica.brojhanemanki } onChange={(e)=>{
+                    var b = this.state.Kosnica.brojramova;
+                    var vl = this.state.Kosnica.vlasnik_id;
+                    var bn = this.state.Kosnica.brojnastavaka;
+                    var godimat = this.state.Kosnica.godistematice;
+                    var koltim = this.state.Kosnica.kolicinastimulansa;
+                    var tips = this.state.Kosnica.tipstimulansa;
+                    var kom = this.state.Kosnica.komentar;
+                    this.setState({ 
+                        Kosnica: { 
+                            brojramova: b,
+                            vlasnik_id: vl,
+                            brojnastavaka: bn,
+                            godistematice: godimat,
+                            brojhanemanki: e.target.value,
+                            kolicinastimulansa: koltim,
+                            tipstimulansa: tips,
+                            komentar: kom
+                        }
+                    })
+                }}/> </td>
             </tr>
             <tr>
                 <th>BROJ NASTAVAKA</th>
-                <td><Form.Control type="number" placeholder = {Kosnica.brojnastavaka }/> </td>
+                <td><Form.Control type="number" placeholder = {Kosnica.brojnastavaka } onChange={(e)=>{
+                    var b = this.state.Kosnica.brojramova;
+                    var vl = this.state.Kosnica.vlasnik_id;
+                    var bh = this.state.Kosnica.brojhanemanki
+                    var godimat = this.state.Kosnica.godistematice;
+                    var koltim = this.state.Kosnica.kolicinastimulansa;
+                    var tips = this.state.Kosnica.tipstimulansa;
+                    var kom = this.state.Kosnica.komentar;
+                    this.setState({ 
+                        Kosnica: { 
+                            brojramova: b,
+                            vlasnik_id: vl,
+                            brojnastavaka: e.target.value,
+                            godistematice: godimat,
+                            brojhanemanki: bh,
+                            kolicinastimulansa: koltim,
+                            tipstimulansa: tips,
+                            komentar: kom
+                        }
+                    })
+                }}/> </td>
             </tr>
             <tr>
                 <th>BROJ RAMOVA</th>
-                <td><Form.Control type="number" placeholder = {Kosnica.brojramova}/> </td>
+                <td><Form.Control type="number" placeholder = {Kosnica.brojramova} onChange={(e)=>{
+                    var bn = this.state.Kosnica.brojnastavaka;
+                    var vl = this.state.Kosnica.vlasnik_id;
+                    var bh = this.state.Kosnica.brojhanemanki
+                    var godimat = this.state.Kosnica.godistematice;
+                    var koltim = this.state.Kosnica.kolicinastimulansa;
+                    var tips = this.state.Kosnica.tipstimulansa;
+                    var kom = this.state.Kosnica.komentar;
+                    this.setState({ 
+                        Kosnica: { 
+                            brojramova:  e.target.value,
+                            vlasnik_id: vl,
+                            brojnastavaka: bn,
+                            godistematice: godimat,
+                            brojhanemanki: bh,
+                            kolicinastimulansa: koltim,
+                            tipstimulansa: tips,
+                            komentar: kom
+                        }
+                    })
+                }}/> </td>
             </tr>
             <tr>
                 <th>STIMULANS</th>
-                <td><Form.Control type="text" placeholder = {Kosnica.tipstimulansa}/> </td>
+                <td><Form.Control type="text" placeholder = {Kosnica.tipstimulansa} onChange={(e)=>{
+                    var bn = this.state.Kosnica.brojnastavaka;
+                    var vl = this.state.Kosnica.vlasnik_id;
+                    var bh = this.state.Kosnica.brojhanemanki
+                    var godimat = this.state.Kosnica.godistematice;
+                    var koltim = this.state.Kosnica.kolicinastimulansa;
+                    var b = this.state.Kosnica.brojramova;
+                    var kom = this.state.Kosnica.komentar;
+                    this.setState({ 
+                        Kosnica: { 
+                            brojramova:  b,
+                            vlasnik_id: vl,
+                            brojnastavaka: bn,
+                            godistematice: godimat,
+                            brojhanemanki: bh,
+                            kolicinastimulansa: koltim,
+                            tipstimulansa: e.target.value,
+                            komentar: kom
+                        }
+                    })
+                }}/> </td>
             </tr>
             <tr>
                 <th>KOLIČINA STIMULANSA</th>
-                <td><Form.Control type="number" placeholder = {Kosnica.kolicinastimulansa}/> </td>
+                <td><Form.Control type="number" placeholder = {Kosnica.kolicinastimulansa} onChange={(e)=>{
+                    var bn = this.state.Kosnica.brojnastavaka;
+                    var vl = this.state.Kosnica.vlasnik_id;
+                    var bh = this.state.Kosnica.brojhanemanki
+                    var godimat = this.state.Kosnica.godistematice;
+                    var tips = this.state.Kosnica.tipstimulansa;
+                    var b = this.state.Kosnica.brojramova;
+                    var kom = this.state.Kosnica.komentar;
+                    this.setState({ 
+                        Kosnica: { 
+                            brojramova:  b,
+                            vlasnik_id: vl,
+                            brojnastavaka: bn,
+                            godistematice: godimat,
+                            brojhanemanki: bh,
+                            kolicinastimulansa: e.target.value,
+                            tipstimulansa: tips,
+                            komentar: kom
+                        }
+                    })
+                }}/> </td>
             </tr>
             <tr>
                 <th>GODIŠTE MATICE</th>
-                <td><Form.Control value = {Kosnica.godistematice} placeholder = "DD/MM/YYYY" /> </td>
-            </tr>
-            <tr>
-                <th>NASTALA ROJENJEM</th>
-                <td><Form.Control defaultValue="null"/> </td>
+                <td><Form.Control value = {Kosnica.godistematice} placeholder = "DD/MM/YYYY" onChange={(e)=>{
+                    var bn = this.state.Kosnica.brojnastavaka;
+                    var vl = this.state.Kosnica.vlasnik_id;
+                    var bh = this.state.Kosnica.brojhanemanki
+                    var kols = this.state.Kosnica.kolicinastimulansa;
+                    var tips = this.state.Kosnica.tipstimulansa;
+                    var b = this.state.Kosnica.brojramova;
+                    var kom = this.state.Kosnica.komentar;
+                    this.setState({ 
+                        Kosnica: { 
+                            brojramova:  b,
+                            vlasnik_id: vl,
+                            brojnastavaka: bn,
+                            godistematice: e.target.value,
+                            brojhanemanki: bh,
+                            kolicinastimulansa: kols,
+                            tipstimulansa: tips,
+                            komentar: kom
+                        }
+                    })
+                }}/> </td>
             </tr>
             <tr>
                 <th>KOMENTAR</th>
-                <td><Form.Control as="textarea" placeholder = {Kosnica.komentar} /></td>
-            </tr>
-            <tr>
-                <td colspan="2"> <button className="submittable"  > Ažuriraj košnicu </button> </td>
+                <td><Form.Control as="textarea" placeholder = {Kosnica.komentar} onChange={(e)=>{
+                    var bn = this.state.Kosnica.brojnastavaka;
+                    var vl = this.state.Kosnica.vlasnik_id;
+                    var bh = this.state.Kosnica.brojhanemanki
+                    var kols = this.state.Kosnica.kolicinastimulansa;
+                    var tips = this.state.Kosnica.tipstimulansa;
+                    var b = this.state.Kosnica.brojramova;
+                    var godm = this.state.Kosnica.godistematice;
+                    this.setState({ 
+                        Kosnica: { 
+                            brojramova:  b,
+                            vlasnik_id: vl,
+                            brojnastavaka: bn,
+                            godistematice: godm,
+                            brojhanemanki: bh,
+                            kolicinastimulansa: kols,
+                            tipstimulansa: tips,
+                            komentar: e.target.value
+                        }
+                    })
+                }}/></td>
             </tr>
         </tbody>
     )}
+
 render(){
+
+    if(this.state.redirect) {
+        return <Redirect to="/pregledkosnica"></Redirect>
+    }
 
     return(
         <div className="mainpage">
@@ -111,7 +293,12 @@ render(){
                     <Row>
                       <Col>
                       <Table striped bordered hover>
-                          {this.kosnica(this.state.Kosnica)}
+                      
+                        {this.kosnica(this.state.Kosnica)}
+                        <tr>
+                            <td colspan="2"> <button className="submittable"  onClick = {() => {this.azuriraj()}}> Ažuriraj košnicu </button> </td>
+                        </tr>
+                       
                         </Table>
                       </Col> 
                       <Col>
@@ -130,7 +317,7 @@ render(){
                                     <td>  <button className="submittable"  > Povijest vrcanja </button></td>
                                 </tr>
                                 <tr>
-                                    <td colspan = "2"> <button className="submittable"  > Obriši košnicu </button></td>
+                                    <td colspan = "2"> <button className="submittable" onClick = {() => this.obrisi()} > Obriši košnicu </button></td>
                                 </tr>
                             </tbody>
                         </Table>

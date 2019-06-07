@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NavBar from '../UserNavBar/UserNavBar';
 import Header from '../Header/Header'
 import {Container, Row, Col, Form, Nav} from 'react-bootstrap';
+import {Redirect} from 'react-router-dom';
 
 class DodajKosnicu extends Component {
     constructor(props) {
@@ -15,7 +16,8 @@ class DodajKosnicu extends Component {
             tipstimulansa: "",
             komentar: "",
             user: "",
-            pass: ""
+            pass: "",
+            redirect: false
         } 
     }
 
@@ -42,7 +44,10 @@ dodajKosnicu() {
     fetch("/ms_upravljanje/Kosnica", options).then((response) => response.json())
         .then((responseJson) => {
             var string = JSON.stringify(responseJson);
-            alert(string)
+            alert(string);
+            this.setState({
+                redirect: true
+            })
         })
 }
 
@@ -54,6 +59,9 @@ componentDidMount() {
 }
 
 render(){
+    if(this.state.redirect){
+        return <Redirect to="/pregledkosnica"></Redirect>
+    }
     return(
         <div className="mainpage">
             

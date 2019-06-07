@@ -137,8 +137,25 @@ public class KosnicaController {
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-    	JSONObject o1 = new JSONObject(k);
-    	Kosnica k1 = new Kosnica(o1.getInt("vlasnik_id"), Date.valueOf(o1.getString("maticagod")), o1.getInt("brojramova"), o1.getInt("brojnastavaka"), o1.getDouble("kolstimulansa"), o1.getString("tipstimulansa"), o1.getInt("brojhanemanki"), o1.getString("komentar"), null, null, null); 
+        
+        JSONObject o1 = new JSONObject(k);
+        String de = o1.getString("maticagod");
+        DateFormat originalFormat = new SimpleDateFormat("dd/mm/yyyy");
+        DateFormat targetFormat = new SimpleDateFormat("yyyy-mm-dd");
+        java.util.Date date;
+        try{
+            date = originalFormat.parse(de);
+        } 
+        catch(Exception e) {
+            return e.getMessage().toString();
+        }
+        
+        Calendar c = Calendar.getInstance(); 
+        c.setTime(date); 
+        c.add(Calendar.DATE, 1);
+        date = c.getTime();
+        String formattedDate = targetFormat.format(date);  
+    	Kosnica k1 = new Kosnica(o1.getInt("vlasnik_id"), Date.valueOf(formattedDate), o1.getInt("brojramova"), o1.getInt("brojnastavaka"), o1.getDouble("kolstimulansa"), o1.getString("tipstimulansa"), o1.getInt("brojhanemanki"), o1.getString("komentar"), null, null, null); 
         return kosnicaService.updateKosnica(id, k1);
     }
 
