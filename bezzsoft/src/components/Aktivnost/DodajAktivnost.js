@@ -58,7 +58,7 @@ render(){
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Mjesec</Form.Label>
-                                <Form.Control value={this.state.mjesec} onChange={(e)=>{this.setState({mjesec:e.target.value})}} placeholder="Npr. Januar/Sječanj..." />
+                                <Form.Control value={this.state.mjesec} onChange={(e)=>{this.setState({mjesec:e.target.value})}} placeholder="Npr. Januar..." />
                             </Form.Group>
                             </Form>
                             <button className="submittable" onClick = {() => {this.dodajAktivnost()}}> Dodaj aktivnost </button>
