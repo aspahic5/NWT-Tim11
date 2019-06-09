@@ -5,7 +5,9 @@ import java.util.Optional;
 import com.example.demo.Entities.Kosnica;
 import com.example.demo.Services.KosnicaService;
 import com.example.demo.config.MessageProducer;
+import com.google.gson.Gson;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,14 +18,30 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class KosnicaController {
+
+    
 	
 	@Autowired
-	MessageProducer messageProducer;
-	
+    MessageProducer messageProducer;
+    
+    @Autowired
+    KosnicaService pS;
+    	
 	@RequestMapping(value="/poruka",method=RequestMethod.POST)
     public String poruka(@RequestPart("message") String poruka) {
     	 messageProducer.sendMessage(poruka);
     	return "Poslana poruka = "+poruka;
+    }
+
+    @RequestMapping(value = "/DajSveKosnice", method = RequestMethod.OPTIONS)
+    public String GetAllKosnice(@RequestPart("username") String username, @RequestPart("password") String password) {
+    	/*try {
+        	JSONObject o=provjeri(username,password);
+        	}
+        	catch(Exception e) {
+        		return e.getMessage().toString();
+        	*/
+    	return new Gson().toJson(pS.findAll());
     }
 	
 		

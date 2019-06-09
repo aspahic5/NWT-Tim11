@@ -32,6 +32,10 @@ public class KosnicaService {
 		
 		return zarada;
 	}
+
+	public Iterable<Kosnica> findAll(){
+		return kosnicaRepository.findAll();
+	}
 	
 	public Optional<Kosnica> findById(int id) {
         return kosnicaRepository.findById(id);

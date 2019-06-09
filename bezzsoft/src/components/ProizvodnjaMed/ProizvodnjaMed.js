@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import NavBar from '../ProizvodnjaNavBar/ProizvodnjaNavBar';
 import Header from '../Header/Header'
 import {ListGroup, Form} from 'react-bootstrap';
+import MedForm from './MedForm';
 
 class ProizvodnjaMed extends Component {
     constructor(props){
         super(props);
         this.state = {
-            isLoading: true,
-            Kosnice: []
+            isLoading: true
         }
     }
 
@@ -26,38 +26,8 @@ render(){
         
     
             <div className="body">
-                <h3 className="naslov">Proizvodnja</h3>
-                <Form>
-                    <Form.Row>
-                    <Form className="listaProizvodnjaForma">
-                        <ListGroup>
-                            <ListGroup.Item action >Košnica 1</ListGroup.Item>
-                            <ListGroup.Item action >Košnica 2</ListGroup.Item>
-                            <ListGroup.Item action >Košnica 3</ListGroup.Item>
-                            <ListGroup.Item action >Košnica 4</ListGroup.Item>
-                            <ListGroup.Item action >Košnica 5</ListGroup.Item>
-                        </ListGroup>
-                    </Form>
-
-                    <Form className="proizvodnjaForma">
-
-                        
-                            <Form.Control
-                            type = "number"
-                            placeholder="Količina"
-                            />
-                            <Form.Control
-                            type = "number"
-                            placeholder="Cijena"
-                            />     
-                            <button className="submit">
-                            UNESI
-                            </button>           
-                        
-                        
-                    </Form>
-                    </Form.Row>
-                </Form>
+                <h3 className="naslov">Med</h3>
+                <MedForm></MedForm>
             </div>
         
         </div>
