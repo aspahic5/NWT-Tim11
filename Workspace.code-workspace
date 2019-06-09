@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "MS-authentication\\MS_authentication"
+		},
+		{
+			"path": "Eureka\\complete\\eureka-service"
+		},
+		{
+			"path": "bezzsoft"
+		},
+		{
+			"path": "APIGateway"
+		},
+		{
+			"path": "MS-kalendar"
+		},
+		{
+			"path": "MS-upravljanje\\MS_upravljnaje"
+		}
+	],
+	"settings": {}
+}

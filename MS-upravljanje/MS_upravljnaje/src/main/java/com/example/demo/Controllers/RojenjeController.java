@@ -1,6 +1,9 @@
 package com.example.demo.Controllers;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 import com.example.demo.Validation;
 import com.example.demo.Entities.Rojenje;
@@ -58,8 +61,26 @@ public class RojenjeController {
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-    	JSONObject o1 = new JSONObject(r);
-    	Rojenje r1 = new Rojenje(null, o1.getInt("brojmaticnjaka"), Date.valueOf(o1.getString("starostmaticnjaka")), o1.getString("tipmaticnjaka"), o1.getString("komentar"));
+        JSONObject o1 = new JSONObject(r);
+        String de = o1.getString("starostmaticnjaka");
+        java.util.Date date;
+        DateFormat originalFormat;
+        DateFormat targetFormat;
+        try{
+            originalFormat = new SimpleDateFormat("dd/mm/yyyy");
+            targetFormat = new SimpleDateFormat("yyyy-mm-dd");
+            date = originalFormat.parse(de);
+        } 
+        catch(Exception e) {
+            return "Neispravan datum";
+        }
+        
+        Calendar c = Calendar.getInstance(); 
+        c.setTime(date); 
+        c.add(Calendar.DATE, 1);
+        date = c.getTime();
+        String formattedDate = targetFormat.format(date);  
+    	Rojenje r1 = new Rojenje(null, o1.getInt("brojmaticnjaka"), Date.valueOf(formattedDate), o1.getString("tipmaticnjaka"), o1.getString("komentar"));
         return rojenjeService.addRojenje(r1, idk);
     }
 
