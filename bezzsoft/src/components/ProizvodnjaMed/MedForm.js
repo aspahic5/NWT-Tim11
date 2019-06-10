@@ -70,6 +70,7 @@ class MedForm extends Component{
             method: "OPTIONS",
             body: data
         }
+        
         if(localStorage.getItem('prijavljen')){
             fetch("/ms_proizvodnja/DajSveKosnice", options).then((response) => response.json())
                 .then((responseJson) => {

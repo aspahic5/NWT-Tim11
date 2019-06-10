@@ -31,6 +31,14 @@ componentDidMount() {
         method: "PATCH",
         body: data
     }
+    var data2 = new FormData();
+        data2.append("username",localStorage.getItem('username'));
+        data2.append("password",localStorage.getItem('password'));
+        const options2 = {
+            method: "POST",
+            body: data
+        }
+        fetch("/ms_upravljanje/DajSveKosnice", options2);
     if(localStorage.getItem('prijavljen')){
         fetch("/ms_upravljanje/Kosnica/" + localStorage.getItem('id'), options).then((response) => response.json())
             .then((responseJson) => {
