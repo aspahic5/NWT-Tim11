@@ -19,6 +19,8 @@ import ProizvodnjaPropolis from './components/ProizvodnjaPropolis/ProizvodnjaPro
 import DodajKosnicu from './components/DodajKosnicu/DodajKosnicu';
 import PregledBiljaka from './components/PregledBiljaka/PregledBiljaka';
 import PregledUnosa from './components/PregledUnosa/PregledUnosa';
+import Selidba from './components/Selidba/Selidba';
+import PregledSelidbi from './components/Selidba/pregledSelidbi';
 
 
 
@@ -51,6 +53,8 @@ function App() {
           <Route exact path="/pregledbiljaka" component={PregledBiljaka} />
           <Route exact path="/dodajkosnicu" component={DodajKosnicu} />
           <Route exact path="/pregledUnosa" component={PregledUnosa} />
+          <Route exact path="/selidba" component={Selidba} />
+          <Route exact path="/pregledSelidbe" component={PregledSelidbi} />
           
         </Switch>
       </BrowserRouter>

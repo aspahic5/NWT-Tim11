@@ -1,6 +1,9 @@
 package com.example.demo.Controllers;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import com.example.demo.Validation;
 import com.example.demo.Entities.Selidba;
@@ -56,13 +59,46 @@ public class SelidbaController {
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-    	JSONObject o1 = new JSONObject(s);
-    	Selidba s1 = new Selidba(o1.getInt("brojkosnica"), o1.getString("lokacija"), Date.valueOf(o1.getString("pocetak")), Date.valueOf(o1.getString("kraj")), o1.getDouble("dobit"));
+        JSONObject o1 = new JSONObject(s);
+        String de = o1.getString("pocetak");
+        DateFormat originalFormat = new SimpleDateFormat("dd/mm/yyyy");
+        DateFormat targetFormat = new SimpleDateFormat("yyyy-mm-dd");
+        java.util.Date date;
+        try{
+            date = originalFormat.parse(de);
+        } 
+        catch(Exception e) {
+            return e.getMessage().toString();
+        }
+        
+        Calendar c = Calendar.getInstance(); 
+        c.setTime(date); 
+        c.add(Calendar.DATE, 1);
+        date = c.getTime();
+        String formattedDate1 = targetFormat.format(date);
+
+        String de1 = o1.getString("kraj");
+        DateFormat originalFormat1 = new SimpleDateFormat("dd/mm/yyyy");
+        DateFormat targetFormat1 = new SimpleDateFormat("yyyy-mm-dd");
+        java.util.Date date1;
+        try{
+            date1 = originalFormat1.parse(de1);
+        } 
+        catch(Exception e) {
+            return e.getMessage().toString();
+        }
+        
+        Calendar c1 = Calendar.getInstance(); 
+        c1.setTime(date1); 
+        c1.add(Calendar.DATE, 1);
+        date1 = c.getTime();
+        String formattedDate = targetFormat1.format(date1);  
+    	Selidba s1 = new Selidba(o1.getInt("brojkosnica"), o1.getString("lokacija"), Date.valueOf(formattedDate1), Date.valueOf(formattedDate), o1.getDouble("dobit"));
         return selidbaServis.addSelidba(s1, idk);
     }
 
     @RequestMapping(value="/Selidba/{id}", method=RequestMethod.PUT)
-    public String updateSelidba(@PathVariable int id, @RequestPart("Selidba") Selidba s, @RequestPart("username") String username, @RequestPart("password") String password) {
+    public String updateSelidba(@PathVariable int id, @RequestPart("Selidba") String s, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=v.provjeri(username,password);
         }

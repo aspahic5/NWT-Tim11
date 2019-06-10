@@ -317,6 +317,10 @@ render(){
                                     <td> <Nav.Link href = "/pregledUnosa" >  <button className="submittable"  > Povijest vrcanja </button></Nav.Link></td>
                                 </tr>
                                 <tr>
+                                    <td> <Nav.Link href = "/selidba" > <button className="submittable"  > Dodaj selidbu </button> </Nav.Link> </td>
+                                    <td> <Nav.Link href = "/pregledSelidbe" >  <button className="submittable"  > Pregled selidbe </button></Nav.Link> </td>
+                                </tr>
+                                <tr>
                                     <td colspan = "2"> <button className="submittable" onClick = {() => this.obrisi()} > Obriši košnicu </button></td>
                                 </tr>
                             </tbody>
