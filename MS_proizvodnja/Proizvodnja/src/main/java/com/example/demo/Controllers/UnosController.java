@@ -1,6 +1,7 @@
 package com.example.demo.Controllers;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import com.example.demo.Entities.Rashodi;
@@ -70,12 +71,11 @@ public class UnosController {
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-    	JSONObject o1 = new JSONObject(pS.findById(id).get());
-        return o1.toString();
+			return new Gson().toJson(pS.findAllK(id));
     }
 
     @RequestMapping(value="/Unos/{id}", method=RequestMethod.POST)
-    public String createUnos(@RequestPart("json") Unos p, @PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
+    public String createUnos(@RequestPart("json") String p, @PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         	}
@@ -83,7 +83,7 @@ public class UnosController {
         		return e.getMessage().toString();
         	}
     	JSONObject o1 = new JSONObject(p);
-    	Unos m = new Unos(o1.getDouble("kolicina"), Date.valueOf(o1.getString("date")));
+    	Unos m = new Unos(o1.getDouble("kolicina"), Date.valueOf(LocalDate.now().toString()));
         return pS.addUnos(m, id);
     }
 

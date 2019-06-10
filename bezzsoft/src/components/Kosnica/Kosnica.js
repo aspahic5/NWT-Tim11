@@ -314,7 +314,7 @@ render(){
                                 </tr>
                                 <tr>
                                     <td> <Nav.Link href = "/proizvodnjaMed" > <button className="submittable"  > Dodaj vrcanje </button></Nav.Link> </td>
-                                    <td>  <button className="submittable"  > Povijest vrcanja </button></td>
+                                    <td> <Nav.Link href = "/pregledUnosa" >  <button className="submittable"  > Povijest vrcanja </button></Nav.Link></td>
                                 </tr>
                                 <tr>
                                     <td colspan = "2"> <button className="submittable" onClick = {() => this.obrisi()} > Obriši košnicu </button></td>

@@ -11,8 +11,50 @@ class MedForm extends Component{
             user: "",
             pass: "",
             id: -1,
-            prijavljen: false
+            prijavljen: false,
+            km_kg: 0,
+            kolicina:0
         }
+    }
+    dodajUnos(){
+        var formData = new FormData();
+        formData.append("username", this.state.user);
+        formData.append("password", this.state.pass);
+        var Unos = "{ \n" + 
+        "\"kolicina\":" + this.state.kolicina + ", \n" + 
+        "\"date\":" + "\" nebitno \"" +  " \n" +
+        "}";
+        formData.append("json", Unos);
+        const options = {
+            method: "POST",
+            body: formData
+        }
+        fetch("/ms_proizvodnja/Unos/" + this.state.id, options).
+            then((response) => response.json()).
+                then((responseJson) =>{
+                    alert(JSON.stringify(responseJson));
+                });
+    }
+    
+
+    dodajVrcanje(){
+        var formData = new FormData();
+        formData.append("username", this.state.user);
+        formData.append("password", this.state.pass);
+        var Vrcanje = "{ \n" + 
+            "\"km_kg\":" + this.state.km_kg + ", \n" + 
+            "\"kolicina\":" + this.state.kolicina + " \n" +
+        "}";
+        formData.append("json", Vrcanje);
+        const options = {
+            method: "POST",
+            body: formData
+        }
+        fetch("/ms_proizvodnja/Vrcanje/" + this.state.id, options).
+            then((response) => response.json()).
+                then((responseJson) =>{
+                    alert(JSON.stringify(responseJson));
+                });
     }
 
     componentDidMount() {
@@ -25,7 +67,7 @@ class MedForm extends Component{
         data.append("username",localStorage.getItem('username'));
         data.append("password",localStorage.getItem('password'));
         const options = {
-            method: "PATCH",
+            method: "OPTIONS",
             body: data
         }
         if(localStorage.getItem('prijavljen')){
@@ -34,7 +76,7 @@ class MedForm extends Component{
                     var o=Object.keys(responseJson).length
                     this.setState({
                       ukupno: o
-                    })
+                    });
                     var l=[]
                     for( var i=0;i<o;i++){
                         l.push(responseJson[i])
@@ -48,19 +90,18 @@ class MedForm extends Component{
     render(){
         const ids = this.state.Kosnice.map((kosnica) => {
             return (
-              <option>{kosnica}</option>
+              <option>{kosnica.id}</option>
             )
           })
 
-        const nesto = this.state.ukupno;
         return(
-            
+            <div>
             <Form>
                     <Form.Row>
                     <Form className="listaProizvodnjaForma">
-                        <Form.Control as="select">
+                        <Form.Control as="select" onChange={(val)=>this.setState({id:val.target.value})}>
                         <option>Odaberite košnicu...</option>
-                        {nesto}
+                        {ids}
                       </Form.Control>
                     </Form>
 
@@ -68,21 +109,27 @@ class MedForm extends Component{
 
                         
                             <Form.Control
+                            onChange={(val)=>{this.setState({kolicina:val.target.value})}}
                             type = "number"
                             placeholder="Količina"
                             />
                             <Form.Control
+                            onChange={(val)=>{this.setState({km_kg:val.target.value})}}
                             type = "number"
                             placeholder="Cijena"
                             />     
-                            <button className="submit">
-                            UNESI
-                            </button>           
+                            
+                                   
                         
                         
                     </Form>
                     </Form.Row>
                 </Form>
+                <button className="unoS" onClick = {() => {this.dodajVrcanje();
+                                                            this.dodajUnos();}}>
+                    UNESI
+                </button>   
+                </div>
         );
     }
 

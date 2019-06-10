@@ -29,6 +29,10 @@ public class UnosService {
 	public Optional<Unos> findById(int id){
 		return pR.findById(id);
 	}
+
+	public Iterable<Unos> findAllK(int id){
+		return pR.getIdsK(id);
+	}
 	
 	public String addUnos(Unos k, int idk) {
 		JSONObject o = new JSONObject();
