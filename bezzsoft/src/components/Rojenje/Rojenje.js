@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import NavBar from '../UserNavBar/UserNavBar';
 import Header from '../Header/Header'
-import {Container, Row, Col, Table, Form, Nav} from 'react-bootstrap';
+import {Row, Container, Col, Accordion, Card, Button, Nav} from 'react-bootstrap';
 
 class Rojenje extends Component {
     constructor(props){
@@ -55,16 +55,28 @@ class Rojenje extends Component {
 
 render(){
 
-    const roj = this.state.Rojenje.map((Jedno) => {
+    const roj = this.state.Rojenje.map((Jedno, i=-1) => {
+        i++;
         return (
-            <tr>
-                <td>{Jedno.id}</td>
-                <td><Form.Control type="number"  readOnly = {true} defaultValue = {Jedno.brojmaticnjaka}/> </td>
-                <td><Form.Control defaultValue = {Jedno.starostmaticnjaka} /> </td>
-                <td><Form.Control defaultValue= {Jedno.tipmaticnjaka}/> </td>
-                <td><Form.Control readOnly = {true} as="textarea" defaultValue={Jedno.komentar} /></td>
-                <td> <Nav.Link href = "/rojenje" > <button className="submittable" onClick = {function(){ this.obrisi(Jedno.id); }.bind(this)} >Obriši </button> </Nav.Link></td>
-            </tr>
+            <Card>
+                <Card.Header>
+                    <Accordion.Toggle as={Button} variant="link" eventKey= {i}>
+                        Rojenje: {Jedno.id}
+                    </Accordion.Toggle>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey= {i}>
+                    <Card.Body>
+                        <p>BROJ MATIČNJAKA:     {Jedno.brojmaticnjaka}</p>
+                        <br></br>
+                        <p>STAROST MATIČNJAKA:     {Jedno.starostmaticnjaka}</p>
+                        <br></br>
+                        <p>TIP MATIČNJAKA:     {Jedno.tipmaticnjaka}</p>
+                        <br></br>
+                        <p>KOMENTAR:     {Jedno.komentar}</p>
+                        <Nav.Link href = "/rojenje" > <button className="submittable" onClick = {function(){ this.obrisi(Jedno.id); }.bind(this)} >Obriši </button> </Nav.Link>
+                    </Card.Body>
+                    </Accordion.Collapse>
+            </Card> 
         )
     });
     
@@ -82,19 +94,9 @@ render(){
                 <Container>
                     <Row>
                         <Col>
-                        <Table striped bordered hover>
-                            <tr>
-                                <th>ID</th>
-                                <th>BROJ MATIČNJAKA</th>
-                                <th>STAROST MATIČNJAKA</th>
-                                <th>TIP MATIČNJAKA</th>
-                                <th>KOMENTAR</th>
-                                <th>           </th>
-                            </tr>
-                        <tbody>
+                        <Accordion>
                             {roj}
-                        </tbody>
-                        </Table>
+                        </Accordion>
                         </Col>
                     </Row>
                 </Container>

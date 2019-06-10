@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.Entities.Korisnik;
 import com.example.demo.Entities.Role;
 import com.example.demo.Services.KorisnikService;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 public class KorisnikController {
@@ -27,6 +29,13 @@ public class KorisnikController {
 	public String provjeri(@RequestPart("username") String username, @RequestPart("password") String password) {
 		
 		return korisnikService.provjeri(username, password).toString();
+	}
+	
+	@RequestMapping(value="/Korisnik", method=RequestMethod.OPTIONS)
+	public Iterable<Korisnik> getAll(@RequestPart("username") String username, @RequestPart("password") String password) {
+		JSONObject o= korisnikService.provjeri(username, password);
+		if(!o.getBoolean("prijavljen"))return null;
+		return korisnikService.getAll();
 	}
 	
 	

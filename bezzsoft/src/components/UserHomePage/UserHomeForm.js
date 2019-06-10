@@ -38,7 +38,7 @@ componentDidMount() {
             method: "POST",
             body: data
         }
-        fetch("/ms_upravljanje/DajSveKosnice", options2);
+    fetch("/ms_upravljanje/DajSveKosnice", options2);
     if(localStorage.getItem('prijavljen')){
         fetch("/ms_upravljanje/Kosnica/" + localStorage.getItem('id'), options).then((response) => response.json())
             .then((responseJson) => {

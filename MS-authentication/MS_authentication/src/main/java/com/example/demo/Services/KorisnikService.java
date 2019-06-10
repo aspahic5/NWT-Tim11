@@ -37,6 +37,9 @@ public class KorisnikService {
 		
 		return n;
 	}
+	public Iterable<Korisnik> getAll() {
+		return korisnikRepository.findAll();
+	}
 	
 	public Optional<Korisnik> getKorisnikById(int id) {
 		
