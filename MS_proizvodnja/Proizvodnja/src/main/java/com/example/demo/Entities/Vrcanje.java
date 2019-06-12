@@ -1,5 +1,7 @@
 package com.example.demo.Entities;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -33,6 +35,9 @@ public class Vrcanje {
 	@Column(name="km_kg", nullable=false)
 	@Min(value = 0, message = "Potrebno je unijeti cijenu po kilogramu!")
 	private double kmkg;
+
+	@Column(name="date", nullable=false)
+	private Date date;
 		
 	@ManyToMany
     Set<Kosnica> kosnice;
@@ -56,6 +61,13 @@ public class Vrcanje {
 	public Set<Kosnica> getKosnice() {
 		return kosnice;
 	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Date getDate() {
+		return date;
+	}
 
 
 	public Vrcanje(double kolicina, double kmkg, Set<Kosnica> kosnice) {
@@ -69,6 +81,7 @@ public class Vrcanje {
 		super();
 		this.kolicina = kolicina;
 		this.kmkg = kmkg;
+		this.date = Date.valueOf(LocalDate.now().plusDays(1).toString());
 	}
 	
 	public Vrcanje() {

@@ -4,10 +4,11 @@ import Header from '../Header/Header';
 import {Container, Row, Col, Table, Form, Nav, Card} from 'react-bootstrap';
 import {Redirect} from 'react-router-dom';
 
-class PregledUnosa extends Component {
+class PregledPropolis extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            ukupno:-1,
             Unosi:[],
             pocetak: "",
             Prvi:[1],
@@ -16,10 +17,8 @@ class PregledUnosa extends Component {
                         id: -1,
             },
             redirect: false,
-            user: "",
-            pass: "",
-            prijavljen: false,
-            ukupno:-1
+            koja:"",
+            i:-1
         }
     }
     
@@ -31,13 +30,14 @@ class PregledUnosa extends Component {
             method: "OPTIONS",
             body: data
         }
-        fetch("/ms_proizvodnja/Unos/" + this.state.KosnicaId, options).
+        fetch("/ms_proizvodnja/Propolis/" + this.state.KosnicaId, options).
             then((response) => response.json()).
                 then((responseJson)=>{
                     var o=Object.keys(responseJson).length
                     this.setState({
                       ukupno: o
                     });
+                    this.state.koja = "Pregled vrcanja propolisa za košnicu - " + this.state.KosnicaId + " -";
                     var l=[];
                     if(o == 0){
                         this.state.pocetak = "Za košnicu nema unosa...";
@@ -54,6 +54,7 @@ class PregledUnosa extends Component {
 
     
 render(){
+        const koja = this.state.koja;
         const pocetak = this.state.pocetak;
         const datumi = this.state.Unosi.map((unos) => {
             return (
@@ -62,7 +63,13 @@ render(){
         });
         const kolicine = this.state.Unosi.map((unos) => {
             return (
-            <option>{unos.kosnica.vrcanje}</option>
+            <option>{unos.kolicina}</option>
+            )
+        });
+
+        const cijene = this.state.Unosi.map((unos) => {
+            return (
+            <option>{unos.kmkg}</option>
             )
         });
     
@@ -76,12 +83,22 @@ render(){
         
             <Header></Header>
             <div className="body">
-            <h3 className="naslov">Pregled unosa za košnicu</h3>
-            
-                <Nav.Link href =  "/pregledMed" ><button className="pregled"> Pregled vrcanja meda</button> </Nav.Link>
-                <Nav.Link href =  "/pregledPropolis" ><button className="pregled"> Pregled vrcanja propolisa</button> </Nav.Link>
-                <Nav.Link href =  "/pregledMaticna" ><button className="pregled">Pregled vrcanja matične mliječi</button> </Nav.Link>
-            
+            <h3 className="naslov">{koja}</h3>
+            <div>
+                    <div className="listaProizvodnjaForma">
+                        <Form.Control as="select" onChange={(val)=>this.setState({i:val.target.selectedIndex})}>
+                        <option>{pocetak}</option>
+                        {datumi}
+                      </Form.Control>
+                    </div>
+
+                    <div className="ispis">
+
+                    <p>Količina vrcanja(kg): {kolicine[this.state.i - 1]} Cijena vrcanja(KM): {cijene[this.state.i - 1]}</p>                                
+                        
+                        
+                    </div>
+            </div>
             </div>  
         </div>
     
@@ -90,4 +107,4 @@ render(){
 
 }
 
-export default PregledUnosa;
+export default PregledPropolis;

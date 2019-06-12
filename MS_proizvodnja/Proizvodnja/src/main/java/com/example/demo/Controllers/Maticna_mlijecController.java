@@ -69,15 +69,14 @@ public class Maticna_mlijecController {
     }
 
     @RequestMapping(value = "/Maticna/{id}", method = RequestMethod.OPTIONS)
-    public String getMaticnaById(@PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
+    public String GetAllMaticneK(@PathVariable int id, @RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         	}
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-    	JSONObject o1 = new JSONObject(pS.findById(id).get());
-        return o1.toString();
+			return new Gson().toJson(pS.findAllK(id));
     }
 
     @RequestMapping(value="/Maticna/{id}", method=RequestMethod.POST)

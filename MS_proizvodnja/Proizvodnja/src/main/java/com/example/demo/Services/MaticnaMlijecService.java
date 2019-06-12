@@ -25,6 +25,10 @@ public class MaticnaMlijecService {
 		return mR.findAll();
 	}
 
+	public Iterable<Maticna_mlijec> findAllK(int idk){
+		return mR.getIdSviK(idk);
+	}
+
 
 	public Optional<Maticna_mlijec> findById(int id){
 		return mR.findById(id);

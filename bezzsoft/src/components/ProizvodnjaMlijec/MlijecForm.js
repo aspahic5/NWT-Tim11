@@ -14,7 +14,8 @@ class MlijecForm extends Component{
             id: -1,
             prijavljen: false,
             km_kg: 0,
-            kolicina:0
+            kolicina:0,
+            ukupno:-1
         }
     }
 

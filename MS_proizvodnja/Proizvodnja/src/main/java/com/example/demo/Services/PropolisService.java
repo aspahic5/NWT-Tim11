@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 
+import java.sql.Date;
 import java.util.Optional;
 
 import com.example.demo.Entities.Propolis;
@@ -23,6 +24,14 @@ public class PropolisService {
 
 	public Iterable<Propolis> findAll(){
 		return pR.findAll();
+	}
+
+	public Iterable<Propolis> findAllK(int idk){
+		return pR.getIdSviK(idk);
+	}
+
+	public Iterable<Propolis> findAllD(Date date){
+		return pR.getPD(date);
 	}
 
 

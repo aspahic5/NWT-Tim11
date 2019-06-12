@@ -1,5 +1,6 @@
 package com.example.demo.Controllers;
 
+import java.sql.Date;
 import java.util.Optional;
 
 import com.example.demo.Entities.Maticna_mlijec;
@@ -63,16 +64,17 @@ public class PropolisController {
     }
 
     @RequestMapping(value = "/Propolis/{id}", method = RequestMethod.OPTIONS)
-    public String getPropolisById(@PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
+    public String GetAllPropolisesK(@PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         	}
         	catch(Exception e) {
         		return e.getMessage().toString();
         	}
-    	JSONObject o1 = new JSONObject(pS.findById(id).get());
-        return o1.toString();
-    }
+    	return new Gson().toJson(pS.findAllK(id));
+	}
+	
+	
 
     @RequestMapping(value="/Propolis/{id}", method=RequestMethod.POST)
     public String createPropolis(@RequestPart("json") String p, @PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {

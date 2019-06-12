@@ -1,5 +1,7 @@
 package com.example.demo.Entities;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -12,12 +14,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
 @Entity
-@Table(name="Maticana_mlijec")
+@Table(name="Maticna_mlijec")
 public class Maticna_mlijec {
 	
 	@Id
     @GeneratedValue
-    @Column(name = "mlijec_id", unique = true, nullable = false)
+    @Column(name = "maticna_mlijec_id", unique = true, nullable = false)
 	private int id;
 
 	
@@ -28,6 +30,9 @@ public class Maticna_mlijec {
 	@Column(name="km_kg", nullable=false)
 	@Min(value = 0, message = "Potrebno je unijeti cijenu po kilogramu!")
 	private double kmkg;
+
+	@Column(name="date", nullable=false)
+	private Date date;
 	
 	public void setKolicina(double kolicina) {
 		this.kolicina = kolicina;
@@ -53,6 +58,13 @@ public class Maticna_mlijec {
 	public double getKmkg() {
 		return kmkg;
 	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public Date getDate() {
+		return date;
+	}
 
 
 
@@ -67,6 +79,7 @@ public class Maticna_mlijec {
 		super();
 		this.kolicina = kolicina;
 		this.kmkg = kmkg;
+		this.date = Date.valueOf(LocalDate.now().plusDays(1).toString());
 	}
 	
 	public Maticna_mlijec() {

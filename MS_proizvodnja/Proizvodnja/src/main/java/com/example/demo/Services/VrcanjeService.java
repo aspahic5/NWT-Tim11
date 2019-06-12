@@ -24,6 +24,10 @@ public class VrcanjeService {
 		return pR.findAll();
 	}
 
+	public Iterable<Vrcanje> findAllK(int idk){
+		return pR.getIdSviK(idk);
+	}
+
 
 	public Optional<Vrcanje> findById(int id){
 		return pR.findById(id);

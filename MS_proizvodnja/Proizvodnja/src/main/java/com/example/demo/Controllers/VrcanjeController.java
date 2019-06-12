@@ -63,15 +63,14 @@ public class VrcanjeController {
     }
 
     @RequestMapping(value = "/Vrcanje/{id}", method = RequestMethod.OPTIONS)
-    public String getVrcanjeById(@PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
+    public String GetAllVrcanjaK(@PathVariable int id,@RequestPart("username") String username, @RequestPart("password") String password) {
     	try {
         	JSONObject o=provjeri(username,password);
         }
         catch(Exception e) {
         	return e.getMessage().toString();
         }
-    	JSONObject o1 = new JSONObject(pS.findById(id).get());
-        return o1.toString();
+    	return new Gson().toJson(pS.findAllK(id));
     }
 
     @RequestMapping(value="/Vrcanje/{id}", method=RequestMethod.POST)

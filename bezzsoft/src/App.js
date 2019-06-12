@@ -21,6 +21,9 @@ import PregledBiljaka from './components/PregledBiljaka/PregledBiljaka';
 import PregledUnosa from './components/PregledUnosa/PregledUnosa';
 import Selidba from './components/Selidba/Selidba';
 import PregledSelidbi from './components/Selidba/pregledSelidbi';
+import PregledMed from './components/PregledUnosa/PregledMed';
+import PregledMaticna from './components/PregledUnosa/PregledMaticna';
+import PregledPropolis from './components/PregledUnosa/PregledPropolis';
 
 
 
@@ -55,6 +58,9 @@ function App() {
           <Route exact path="/pregledUnosa" component={PregledUnosa} />
           <Route exact path="/selidba" component={Selidba} />
           <Route exact path="/pregledSelidbe" component={PregledSelidbi} />
+          <Route exact path="/pregledMed" component={PregledMed} />
+          <Route exact path="/pregledMaticna" component={PregledMaticna} />
+          <Route exact path="/pregledPropolis" component={PregledPropolis} />
           
         </Switch>
       </BrowserRouter>

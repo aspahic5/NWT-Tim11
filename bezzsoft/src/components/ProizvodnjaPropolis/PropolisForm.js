@@ -14,10 +14,30 @@ class PropolisForm extends Component{
             id: -1,
             prijavljen: false,
             km_kg: 0,
-            kolicina:0
+            kolicina:0,
+            ukupno:-1
         }
     }
 
+    dodajUnos(){
+        var formData = new FormData();
+        formData.append("username", this.state.user);
+        formData.append("password", this.state.pass);
+        var Unos = "{ \n" + 
+        "\"kolicina\":" + this.state.kolicina + ", \n" + 
+        "\"date\":" + "\" nebitno \"" +  " \n" +
+        "}";
+        formData.append("json", Unos);
+        const options = {
+            method: "POST",
+            body: formData
+        }
+        fetch("/ms_proizvodnja/Unos/" + this.state.id, options).
+            then((response) => response.json()).
+                then((responseJson) =>{
+                    alert(JSON.stringify(responseJson));
+                });
+    }
     dodajPropolis(){
         var formData = new FormData();
         formData.append("username", this.state.user);
@@ -106,7 +126,7 @@ class PropolisForm extends Component{
                     </Form>
                     </Form.Row>
                 </Form>
-                <button className="unoS" onClick = {() => {this.dodajPropolis()}}>
+                <button className="unoS" onClick = {() => {this.dodajPropolis(); this.dodajUnos();}}>
                     UNESI
                 </button>   
                 </div>

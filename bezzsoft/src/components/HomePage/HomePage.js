@@ -21,6 +21,11 @@ render(){
     
             <div className="body">
                 <h3 className="naslov">O nama</h3>
+                <div className="opis">
+                    <p>
+                    BeeZsoft aplikacija omogućava pčelarima jednostavno vođenje dnevnika dnevnih i mjesečnih aktivnosti, kao i o detaljima za svaku pojedinačnu košnicu. Mogućnost, praćenja troškova i dobiti olakšava pčelaru da efikasno procijeni isplativost svake košnice/društva i da unaprijed predvidi aktivnosti u poboljšanju omjera.
+                    </p>
+                </div>
         
                 
         
