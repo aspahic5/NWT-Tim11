@@ -23,7 +23,7 @@ fetch('/ms_kalendar/lokacije')
 var o=Object.keys(responseJson).length
 var l=[]
 for( var i=0;i<o;i++){
-l.push(responseJson[i].lokacija)
+l.push(responseJson[i].lokcaija)
 }
 this.setState({
 isLoading: false,

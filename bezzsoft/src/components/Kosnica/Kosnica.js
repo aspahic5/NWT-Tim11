@@ -313,10 +313,6 @@ render(){
                                     <td> <Nav.Link href = "/rojenje" ><button className="submittable"    >  Trenutno rojenje </button></Nav.Link> </td>
                                 </tr>
                                 <tr>
-                                    <td> <Nav.Link href = "/proizvodnjaMed" > <button className="submittable"  > Dodaj vrcanje </button></Nav.Link> </td>
-                                    <td> <Nav.Link href = "/pregledUnosa" >  <button className="submittable"  > Povijest vrcanja </button></Nav.Link></td>
-                                </tr>
-                                <tr>
                                     <td> <Nav.Link href = "/selidba" > <button className="submittable"  > Dodaj selidbu </button> </Nav.Link> </td>
                                     <td> <Nav.Link href = "/pregledSelidbe" >  <button className="submittable"  > Pregled selidbe </button></Nav.Link> </td>
                                 </tr>

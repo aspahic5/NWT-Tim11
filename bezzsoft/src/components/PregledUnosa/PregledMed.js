@@ -11,7 +11,7 @@ class PregledMed extends Component {
             Unosi:[],
             pocetak: "",
             Prvi:[1],
-            KosnicaId: localStorage.getItem("idKosnice"),
+            KosnicaId: localStorage.getItem("idOdabrane"),
             Kosnica: {  
                         id: -1,
             },
@@ -23,6 +23,7 @@ class PregledMed extends Component {
     }
     
     componentDidMount(){
+        
         var data = new FormData();
         data.append("username", localStorage.getItem('username'));
         data.append("password", localStorage.getItem('password'));
@@ -76,6 +77,8 @@ render(){
     if(this.state.redirect) {
         return <Redirect to="/pregledkosnica"></Redirect>
     }
+    if(this.state.KosnicaId == "Odaberite košnicu...")
+            return <Redirect to="/home"></Redirect>
 
     return(
         <div className="mainpage">

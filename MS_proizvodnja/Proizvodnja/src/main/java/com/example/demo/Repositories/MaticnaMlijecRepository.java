@@ -13,7 +13,7 @@ public interface MaticnaMlijecRepository extends CrudRepository<Maticna_mlijec,I
 	@Query(value="SELECT SUM(kolicina*km_kg) WHERE kosnica_kosnice_id=?", nativeQuery = true)
 	public String obracunMaticnaMlijecKosnica(int id); 
 
-	@Query(value="SELECT * FROM maticana_mlijec  WHERE maticna_mlijec_id = ANY(SELECT maticna_mlijec_id FROM kosnica_ids_maticna WHERE kosnica_kosnica_id=:id)", nativeQuery = true)
+	@Query(value="SELECT * FROM maticna_mlijec  WHERE maticna_mlijec_id = ANY(SELECT maticna_maticna_mlijec_id FROM kosnica_ids_maticna WHERE kosnica_kosnica_id=:id)", nativeQuery = true)
 	public Iterable<Maticna_mlijec> getIdSviK(@Param("id")int id);
 
 }

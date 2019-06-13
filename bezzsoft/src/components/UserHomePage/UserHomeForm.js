@@ -14,11 +14,13 @@ class UserHomeForm extends Component {
         kosnicaId: -1,
         prijavljen: false,
         aktivnosti: [],
-        ukupanBroj: -1
+        ukupanBroj: -1,
+        redirect: false,
     }
 }
 
 componentDidMount() {
+  localStorage.setItem("idOdabrane", "Odaberite košnicu...");
     this.setState({
         user: localStorage.getItem('username'),
         pass: localStorage.getItem('password'),
@@ -57,6 +59,7 @@ componentDidMount() {
     }
 }
 yourChangeHandler(event){
+  localStorage.setItem("idOdabrane", event.target.value);
   if(event.target.value === "Odaberite košnicu...") return null;
   var formData = new FormData();
   formData.append("username", this.state.user);
@@ -80,6 +83,8 @@ yourChangeHandler(event){
 }
     
       render() {
+
+        var dugmence="";
         
         const ids = this.state.Kosnice.map((kosnica) => {
           return (
@@ -130,14 +135,28 @@ yourChangeHandler(event){
                   <br></br>
                   <h3 clasName="textlink" >Ukupan broj košnica: {this.state.ukupanBroj}</h3>
                   <br></br>
-                  <Nav.Link href = "/dodajkosnicu" ><button className="submittable">
-                     DODAJ KOŠNICU
-                   </button> </Nav.Link>
                 </Col> 
                  <Col>
-                    <Nav.Link href = "/proizvodnjaMed" ><button className="submittable" onClick={this.onProizvodnja} >
-                      PROIZVODNJA
-                     </button> </Nav.Link> 
+                   <Table className="table" striped bordered hover>
+                            <tbody className="table"> 
+                                <tr>
+                                    <th> <Nav.Link href = "/proizvodnjaMed" ><button className="submittableBigger" onClick={this.onProizvodnja} >
+                                      Proizvodnja
+                                    </button> </Nav.Link></th>
+                                    <td> <Nav.Link href =  "/pregledMed" ><button className="submittableBigger"> Pregled vrcanja</button> </Nav.Link></td>
+                                </tr>
+                                <tr>
+                                    <th> <Nav.Link href = "/pregledPropolis" > <button className="submittableBigger" > Pregled propolisa </button></Nav.Link></th>
+                                    <td><Nav.Link href =  "/pregledMaticna" ><button className="submittableBigger">Pregled matične mliječi</button></Nav.Link></td>
+                                </tr>
+                                <tr>
+                                <td colSpan="2"><Nav.Link href = "/dodajkosnicu" ><button className="submittable">
+                                      DODAJ KOŠNICU
+                                    </button> </Nav.Link>
+                                    </td>
+                                </tr>
+                            </tbody>
+                      </Table>
                     
                 </Col>
               </Row>

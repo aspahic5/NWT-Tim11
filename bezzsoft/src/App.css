@@ -121,11 +121,26 @@
   background-color: #131111;
 }
 
-.submit:hover, .unoS:hover, .submittable:hover, .pregled:hover{
+.submit:hover, .unoS:hover, .submittable:hover, .pregled:hover, .submittableBigger:hover{
   color:#131111;
   background-image: url("./hexellence.png");
   background-repeat: repeat;
   background-color: #face08;
+}
+
+.submittableBigger {
+  width: 98%;
+  margin-left: 0.05em;
+  margin-top:1em;
+  border:0px;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 0.5em;
+  border-radius: 1em;
+  color:#face08;
+  background-image: url("./hexellence.png");
+  background-repeat: repeat;
+  background-color: #131111;
 }
 
 .prijavaforma{

@@ -12,7 +12,7 @@ class PregledPropolis extends Component {
             Unosi:[],
             pocetak: "",
             Prvi:[1],
-            KosnicaId: localStorage.getItem("idKosnice"),
+            KosnicaId: localStorage.getItem("idOdabrane"),
             Kosnica: {  
                         id: -1,
             },
@@ -76,6 +76,8 @@ render(){
     if(this.state.redirect) {
         return <Redirect to="/pregledkosnica"></Redirect>
     }
+    if(this.state.KosnicaId == "Odaberite košnicu...")
+            return <Redirect to="/home"></Redirect>
 
     return(
         <div className="mainpage">
